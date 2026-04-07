@@ -1,0 +1,41 @@
+services:
+  create-project-linux:
+    image: mcr.microsoft.com/dotnet/runtime:8.0
+    profiles: ["linux"]
+    working_dir: /model
+    volumes:
+      - ./model:/model
+    entrypoint: ["/bin/bash", "-c", "sed -i 's/\r$//' /model/create-project.sh && bash /model/create-project.sh"]
+
+  create-project-windows:
+    image: mcr.microsoft.com/powershell:latest
+    profiles: ["win"]
+    working_dir: /model
+    volumes:
+      - ./model:/model
+    entrypoint: ["pwsh", "-File", "/model/create-project.ps1"]
+
+  origam-server:
+    profiles: ["app"]
+    image: origam/server:master-latest.linux
+    container_name: origam-server
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    env_file:
+      - ./model/MyOrigamApp/docker/MyOrigamApp_Environments_Linux.env
+    ports:
+      - "443:443"
+    volumes:
+      - "./model/MyOrigamApp/model:/home/origam/projectData/model"
+      - "./model/MyOrigamApp/customAssets:/home/origam/projectData/customAssets"
+    # depends_on:
+    #   create-project-linux:
+    #     condition: service_completed_successfully
+    #     required: false
+    #   create-project-windows:
+    #     condition: service_completed_successfully
+    #     required: false
+
+volumes:
+  mssql_data:
