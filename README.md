@@ -1,5 +1,6 @@
 # origam-template
 
+docker compose --profile mssql --profile linux --profile app up
 
 docker compose --profile postgres --profile linux --profile app down -v
 
