@@ -1,6 +1,6 @@
 $ModelDir = $PSScriptRoot
 
-$ConfigFile = if ($env:ORIGAM_CONFIG_FILE) { $env:ORIGAM_CONFIG_FILE } else { "/origam.env" }
+$ConfigFile = if ($env:ORIGAM_CONFIG_FILE) { $env:ORIGAM_CONFIG_FILE } else { "/.env" }
 if (-not (Test-Path $ConfigFile)) {
     Write-Error "Config file not found: $ConfigFile"
     exit 1

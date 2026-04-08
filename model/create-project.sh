@@ -2,7 +2,7 @@ set -e
 
 MODEL_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-CONFIG_FILE="${ORIGAM_CONFIG_FILE:-/origam.env}"
+CONFIG_FILE="${ORIGAM_CONFIG_FILE:-/.env}"
 if [ ! -f "$CONFIG_FILE" ]; then
   echo "Config file not found: $CONFIG_FILE" >&2
   exit 1
