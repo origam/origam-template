@@ -1,4 +1,5 @@
 services:
+  # TODO: Rename "create-project-linux" and "create-project-windows" to something more generic 
   create-project-linux:
     image: mcr.microsoft.com/dotnet/runtime:8.0
     profiles: ["linux"]
@@ -22,20 +23,67 @@ services:
     restart: unless-stopped
     stdin_open: true
     tty: true
-    env_file:
-      - ./model/MyOrigamApp/docker/MyOrigamApp_Environments_Linux.env
     ports:
       - "443:443"
     volumes:
       - "./model/MyOrigamApp/model:/home/origam/projectData/model"
       - "./model/MyOrigamApp/customAssets:/home/origam/projectData/customAssets"
-    # depends_on:
-    #   create-project-linux:
-    #     condition: service_completed_successfully
-    #     required: false
-    #   create-project-windows:
-    #     condition: service_completed_successfully
-    #     required: false
+      - "./model/MyOrigamApp/docker:/envdir:ro"
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        echo "Waiting for env file..."
+        while [ ! -s /envdir/MyOrigamApp_Environments_Linux.env ]; do sleep 1; done
+        echo "Loading env vars..."
+        while IFS= read -r line || [ -n "$$line" ]; do
+          case "$$line" in ''|\#*) continue ;; esac
+          key=$${line%%=*}
+          value=$${line#*=}
+          export "$$key=$$value"
+        done < /envdir/MyOrigamApp_Environments_Linux.env
+        exec ./entrypoint.sh
+    depends_on:
+      create-project-linux:
+        condition: service_completed_successfully
+        required: false
+      create-project-windows:
+        condition: service_completed_successfully
+        required: false
+
+  origam-architect:
+    profiles: ["app"]
+    image: origam/architect:master-latest.linux
+    container_name: origam-architect
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    ports:
+      - "8081:8081"
+    volumes:
+      - "./model/MyOrigamApp/model:/home/origam/projectData/model"
+      - "./model/MyOrigamApp/docker:/envdir:ro"
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        echo "Waiting for env file..."
+        while [ ! -s /envdir/MyOrigamApp_Environments_Linux.env ]; do sleep 1; done
+        echo "Loading env vars..."
+        while IFS= read -r line || [ -n "$$line" ]; do
+          case "$$line" in ''|\#*) continue ;; esac
+          key=$${line%%=*}
+          value=$${line#*=}
+          export "$$key=$$value"
+        done < /envdir/MyOrigamApp_Environments_Linux.env
+        exec ./entrypoint.sh
+    depends_on:
+      create-project-linux:
+        condition: service_completed_successfully
+        required: false
+      create-project-windows:
+        condition: service_completed_successfully
+        required: false
 
 volumes:
   mssql_data:
