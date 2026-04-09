@@ -1,4 +1,4 @@
-name: ${PROJECT_NAME:-MyOrigamApp}
+﻿name: ${PROJECT_NAME:-MyOrigamApp}
 
 services:
   create-project-linux:
@@ -18,13 +18,19 @@ services:
         required: false
 
   create-project-windows:
-    image: mcr.microsoft.com/powershell:latest
+    image: mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022
     profiles: ["win"]
-    working_dir: /model
+    isolation: process
+    working_dir: c:/model
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
     volumes:
-      - ./model:/model
-      - ./.env:/.env:ro
-    entrypoint: ["pwsh", "-File", "/model/create-project.ps1"]
+      - ./model:c:/model
+      - .:c:/src:ro
+    environment:
+      ORIGAM_CONFIG_FILE: "c:/src/.env"
+    entrypoint: ["powershell", "-File", "c:/model/create-project.ps1"]
     depends_on:
       mssql:
         condition: service_healthy
