@@ -205,10 +205,8 @@ services:
         if (Test-Path $$dataPath) { Remove-Item -Recurse -Force $$dataPath }
         New-Item -ItemType Directory -Path $$dataPath -Force | Out-Null
         Copy-Item -Path "c:\model-src\$$projectName\model" -Destination "$$dataPath\model" -Recurse -Force
-        Write-Host "Fixing template path..."
-        if (Test-Path "C:\home\origam\Architect\_OrigamSettings.template" -and -not (Test-Path "C:\home\origam\_OrigamSettings.template")) {
-            Copy-Item "C:\home\origam\Architect\_OrigamSettings.template" "C:\home\origam\_OrigamSettings.template"
-        }
+        Write-Host "Copying template file..."
+        Copy-Item "C:\home\origam\Architect\_OrigamSettings.template" "C:\home\origam\_OrigamSettings.template" -Force
         Write-Host "Starting EntryPoint.ps1..."
         Set-Location C:\home\origam\Architect
         & .\EntryPoint.ps1
