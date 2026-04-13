@@ -21,6 +21,7 @@ services:
     image: mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022
     profiles: ["win"]
     isolation: process
+    network_mode: nat
     working_dir: c:/model
     dns:
       - 8.8.8.8
@@ -106,6 +107,113 @@ services:
         exec ./entrypoint.sh
     depends_on:
       create-project-linux:
+        condition: service_completed_successfully
+
+  origam-server-windows:
+    profiles: ["win-app"]
+    image: ${ORIGAM_SERVER_IMAGE_WINDOWS:-origam/server:2026.3.0.4198.win-nano}
+    container_name: ${PROJECT_NAME:-MyOrigamApp}-server
+    restart: unless-stopped
+    isolation: process
+    network_mode: nat
+    stdin_open: true
+    tty: true
+    ports:
+      - "${SERVER_PORT:-443}:443"
+      - "8080:8080"
+    environment:
+      PROJECT_NAME: ${PROJECT_NAME:-MyOrigamApp}
+    volumes:
+      - "./model:c:/model-src"
+    entrypoint:
+      - pwsh
+      - -ExecutionPolicy
+      - Bypass
+      - -Command
+      - |
+        $$projectName = $$env:PROJECT_NAME
+        Write-Host "Waiting for $$projectName to be generated..."
+        $$envFile = "c:\model-src\$$projectName\docker\$${projectName}_Environments_Windows.env"
+        $$envFileFallback = "c:\model-src\$$projectName\docker\$${projectName}_Environments_Linux.env"
+        while (-not (Test-Path $$envFile) -and -not (Test-Path $$envFileFallback)) { Start-Sleep -Seconds 1 }
+        if (-not (Test-Path $$envFile)) { $$envFile = $$envFileFallback }
+        Write-Host "Loading env vars from $$envFile..."
+        Get-Content $$envFile | ForEach-Object {
+            $$line = $$_.Trim()
+            if ($$line -and -not $$line.StartsWith('#')) {
+                $$kv = $$line -split '=', 2
+                if ($$kv.Length -eq 2) {
+                    [System.Environment]::SetEnvironmentVariable($$kv[0].Trim(), $$kv[1].Trim(), 'Process')
+                }
+            }
+        }
+        [System.Environment]::SetEnvironmentVariable('CustomAssetsConfig__PathToCustomAssetsFolder', 'C:\home\origam\projectData\customAssets', 'Process')
+        Write-Host "Linking project data..."
+        $$dataPath = "C:\home\origam\projectData"
+        if (Test-Path $$dataPath) { Remove-Item -Recurse -Force $$dataPath }
+        New-Item -ItemType Directory -Path $$dataPath -Force | Out-Null
+        Copy-Item -Path "c:\model-src\$$projectName\model" -Destination "$$dataPath\model" -Recurse -Force
+        if (Test-Path "c:\model-src\$$projectName\customAssets") {
+            Copy-Item -Path "c:\model-src\$$projectName\customAssets" -Destination "$$dataPath\customAssets" -Recurse -Force
+        }
+        Write-Host "Starting EntryPoint.ps1..."
+        Set-Location C:\home\origam
+        & .\EntryPoint.ps1
+    depends_on:
+      create-project-windows:
+        condition: service_completed_successfully
+
+  origam-architect-windows:
+    profiles: ["win-app"]
+    image: ${ORIGAM_ARCHITECT_IMAGE_WINDOWS:-origam/architect:2026.4.alpha.4213.win-nano}
+    container_name: ${PROJECT_NAME:-MyOrigamApp}-architect
+    restart: unless-stopped
+    isolation: process
+    network_mode: nat
+    stdin_open: true
+    tty: true
+    ports:
+      - "${ARCHITECT_PORT:-8081}:8081"
+    environment:
+      PROJECT_NAME: ${PROJECT_NAME:-MyOrigamApp}
+    volumes:
+      - "./model:c:/model-src"
+    entrypoint:
+      - pwsh
+      - -ExecutionPolicy
+      - Bypass
+      - -Command
+      - |
+        $$projectName = $$env:PROJECT_NAME
+        Write-Host "Waiting for $$projectName to be generated..."
+        $$envFile = "c:\model-src\$$projectName\docker\$${projectName}_Environments_Windows.env"
+        $$envFileFallback = "c:\model-src\$$projectName\docker\$${projectName}_Environments_Linux.env"
+        while (-not (Test-Path $$envFile) -and -not (Test-Path $$envFileFallback)) { Start-Sleep -Seconds 1 }
+        if (-not (Test-Path $$envFile)) { $$envFile = $$envFileFallback }
+        Write-Host "Loading env vars from $$envFile..."
+        Get-Content $$envFile | ForEach-Object {
+            $$line = $$_.Trim()
+            if ($$line -and -not $$line.StartsWith('#')) {
+                $$kv = $$line -split '=', 2
+                if ($$kv.Length -eq 2) {
+                    [System.Environment]::SetEnvironmentVariable($$kv[0].Trim(), $$kv[1].Trim(), 'Process')
+                }
+            }
+        }
+        Write-Host "Linking project data..."
+        $$dataPath = "C:\home\origam\projectData"
+        if (Test-Path $$dataPath) { Remove-Item -Recurse -Force $$dataPath }
+        New-Item -ItemType Directory -Path $$dataPath -Force | Out-Null
+        Copy-Item -Path "c:\model-src\$$projectName\model" -Destination "$$dataPath\model" -Recurse -Force
+        Write-Host "Fixing template path..."
+        if (Test-Path "C:\home\origam\Architect\_OrigamSettings.template" -and -not (Test-Path "C:\home\origam\_OrigamSettings.template")) {
+            Copy-Item "C:\home\origam\Architect\_OrigamSettings.template" "C:\home\origam\_OrigamSettings.template"
+        }
+        Write-Host "Starting EntryPoint.ps1..."
+        Set-Location C:\home\origam\Architect
+        & .\EntryPoint.ps1
+    depends_on:
+      create-project-windows:
         condition: service_completed_successfully
 
   mssql:
