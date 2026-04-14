@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Origam.OrigamEngine</name>
+    </assembly>
+    <members>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.AsPanelBuilder">
+            <summary>
+            Summary description for AsPanelBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.AsPanelPropertyBuilder">
+            <summary>
+            Summary description for AsPanelPropertyBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.BlobControlBuilder">
+            <summary>
+            Summary description for DateBoxBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.ChartBuilder">
+            <summary>
+            Summary description for ChartBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.CheckBoxBuilder">
+            <summary>
+            Summary description for CheckBoxBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.CollapsibleContainerBuilder">
+            <summary>
+            Summary description for TabControlBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.CollapsiblePanelBuilder">
+            <summary>
+            Summary description for TabControlBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.ColorPickerBuilder">
+            <summary>
+            Summary description for ColorPickerBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.ComboBoxBuilder">
+            <summary>
+            Summary description for ComboBoxBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.DashboardConfigurationItemBuilder">
+            <summary>
+            Summary description for DashboardConfigurationItemBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.DashboardPanelBuilder">
+            <summary>
+            Summary description for DashboardPanelBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.DashboardSimpleWidgetBuilder">
+            <summary>
+            Summary description for DashboardSimpleWidgetBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.DateBoxBuilder">
+            <summary>
+            Summary description for DateBoxBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.FormLabelBuilder">
+            <summary>
+            Summary description for TextBoxBuilder.
+            </summary>
+        </member>
+        <member name="M:Origam.OrigamEngine.ModelXmlBuilders.FormXmlBuilder.ToWinFormsDockStyle(System.Int32)">
+            <summary>
+            https://docs.microsoft.com/cs-cz/dotnet/api/system.windows.forms.dockstyle?view=netframework-4.7.2
+            </summary>
+            <param name="intVal"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.GridLayoutPanelBuilder">
+            <summary>
+            Summary description for TabControlBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.GridLayoutPanelItemBuilder">
+            <summary>
+            Summary description for GridLayoutPanelItemBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.HBoxBuilder">
+            <summary>
+            Summary description for HBoxBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.ImageBoxBuilder">
+            <summary>
+            Summary description for TextBoxBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.MenuXmlBuilder">
+            <summary>
+            Summary description for MenuXmlBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.PanelBuilder">
+            <summary>
+            Summary description for PanelBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.PanelLabelBuilder">
+            <summary>
+            Summary description for TextBoxBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.PropertyGridBuilder">
+            <summary>
+            Summary description for PropertyGridBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.RadioButtonBuilder">
+            <summary>
+            Summary description for RadioButtonBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.ReportPanelBuilder">
+            <summary>
+            Summary description for ReportPanelBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.SplitPanelBuilder">
+            <summary>
+            Summary description for SplitPanelBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.TabBuilder">
+            <summary>
+            Summary description for TabControlBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.TabControlBuilder">
+            <summary>
+            Summary description for TabControlBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.TagInputBuilder">
+            <summary>
+            Summary description for ComboBoxBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.TextBoxBuilder">
+            <summary>
+            Summary description for TextBoxBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.TreeControlBuilder">
+            <summary>
+            Summary description for TreeControlBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.UIElementRenderData">
+            <summary>
+            An instance of UIElementRenderData holds necessary information for generating of AsPanel's XML.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.ModelXmlBuilders.VBoxBuilder">
+            <summary>
+            Summary description for VBoxBuilder.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.OrigamEngine">
+            <summary>
+            Summary description for OrigamEngine.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamEngine.TranslationBuilder">
+            <summary>
+            Summary description for TranslationBuilder.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Origam.Schema.RuleModel</name>
+    </assembly>
+    <members>
+        <member name="T:Origam.Schema.RuleModel.RuleSchemaItemProvider">
+            <summary>
+            Summary description for RuleSchemaItemProvider.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.RuleModel.AbstractRule">
+            <summary>
+            Summary description for AbstractRule.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.RuleModel.XPathRule">
+            <summary>
+            Summary description for XPathRule.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.RuleModel.XslRule">
+            <summary>
+            Summary description for XslRule.
+            </summary>
+        </member>
+    </members>
+</doc>

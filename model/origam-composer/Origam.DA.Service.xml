@@ -1,0 +1,643 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Origam.DA.Service</name>
+    </assembly>
+    <members>
+        <member name="T:Origam.DA.Service.AbstractDataService">
+            <summary>
+            Abstract implementation of IDataService, based on ORIGAM metadata
+            </summary>
+        </member>
+        <member name="M:Origam.DA.Service.AbstractSqlDataService.ExecuteUpdate(System.String,System.String)">
+            <summary>
+            Executes an arbitrary SQL command on the database.
+            </summary>
+            <param name="command"></param>
+            <param name="transactionId">Existing transaction id. IMPORTANT:
+            if transactionId is NULL the command runs without
+            a transaction!</param>
+            <returns></returns>
+        </member>
+        <member name="T:Origam.DA.Service.CustomParameterService">
+            <summary>
+            Summary description for CustomParameterService.
+            </summary>
+        </member>
+        <member name="T:Origam.DA.Service.CustomParameters.CurrentDateCustomParameter">
+            <summary>
+            Returns current date (without time)
+            </summary>
+        </member>
+        <member name="T:Origam.DA.Service.CustomParameters.CurrentDateLastMinuteCustomParameter">
+            <summary>
+            Returns current date's last minute (DD.MM.YYYY 23:59:59.999)
+            </summary>
+        </member>
+        <member name="T:Origam.DA.Service.CustomParameters.CurrentDateTimeCustomParameter">
+            <summary>
+            Returns current date including time
+            </summary>
+        </member>
+        <member name="T:Origam.DA.Service.CustomParameters.CurrentUserBusinessUnitIdParameter">
+            <summary>
+            Returns current user's id
+            </summary>
+        </member>
+        <member name="T:Origam.DA.Service.CustomParameters.CurrentUserIdParameter">
+            <summary>
+            Returns current user's id
+            </summary>
+        </member>
+        <member name="T:Origam.DA.Service.CustomParameters.CurrentUserOrganizationIdParameter">
+            <summary>
+            Returns current user's id
+            </summary>
+        </member>
+        <member name="T:Origam.DA.Service.CustomParameters.CurrentUserResourceIdCustomParameter">
+            <summary>
+            Returns current user's resource id
+            </summary>
+        </member>
+        <member name="M:Origam.DA.Service.FileEventQueue.Pause">
+            Underlying timer will not process elapsed events.
+        </member>
+        <member name="M:Origam.DA.Service.FileEventQueue.Continue">
+            Underlying timer will process elapsed events.
+        </member>
+        <member name="M:Origam.DA.Service.AbstractSqlCommandGenerator.NewValueParameterName(Origam.Schema.EntityModel.DataStructureColumn,System.Boolean)">
+            <summary>
+            Returns name of new value parameter in Insert/Update/Delete statement
+            </summary>
+        </member>
+        <member name="M:Origam.DA.Service.AbstractSqlCommandGenerator.OriginalParameterName(Origam.Schema.EntityModel.DataStructureColumn,System.Boolean)">
+            <summary>
+            Returns name of original value parameter in Update or Delete statement
+            </summary>
+        </member>
+        <member name="M:Origam.DA.Service.AbstractSqlCommandGenerator.OriginalParameterNameForNullComparison(Origam.Schema.EntityModel.DataStructureColumn,System.Boolean)">
+            <summary>
+            Returns name of original value parameter used for testing NULL value in Update or Delete statement
+            </summary>
+        </member>
+        <member name="T:Origam.DA.Service.DatasetGenerator">
+            <summary>
+            Summary description for DatasetGenerator.
+            </summary>
+        </member>
+        <member name="M:Origam.DA.Service.DatasetGenerator.LookupRelation(Origam.Schema.EntityModel.DataStructureEntity,Origam.Schema.EntityModel.IAssociation)">
+            <summary>
+            We find the relation in this data structure entity relations.
+            There may not be the same relation used twice.
+            </summary>
+            <param name="baseEntity"></param>
+            <param name="relation"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Origam.DA.Service.ICustomParameter">
+            <summary>
+            Summary description for CustomParameter.
+            </summary>
+        </member>
+        <member name="T:Origam.DA.Service.IDbDataAdapterFactory">
+            <summary>
+            Summary description for DbDataAdapterFactory.
+            </summary>
+        </member>
+        <member name="T:Origam.DA.Service.MsSqlDataService">
+            <summary>
+            Summary description for MsSqlDataService.
+            </summary>
+        </member>
+        <member name="T:Origam.DA.Service.Folder">
+            <summary>
+             This class wraps DirectoryInfo because we need it as a key in a
+             dictionary and DirectoryInfo doesn't override hashcode ands Equals.
+            </summary>
+        </member>
+        <member name="M:Origam.DA.Service.OrigamXDocument.AddNamespace(System.String,System.String)">
+             <summary>
+            
+             </summary>
+             <param name="nameSpaceShortCut"> example: "asi"</param>
+             <param name="nameSpace">example: "http://schemas.origam.com/Origam.Schema.ISchemaItem/6.0.0"</param>
+             <returns></returns>
+             <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="T:Origam.DA.Service.PgSqlDataService">
+            <summary>
+            Summary description for PgSqlDataService.
+            </summary>
+        </member>
+        <member name="T:Origam.DA.Service.Strings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.CannotSaveConfig">
+            <summary>
+              Looks up a localized string similar to An error occurred when trying to save values from object id: &quot;{0}&quot; to configuration file: &quot;{1}&quot;.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.CantDDLScript">
+            <summary>
+              Looks up a localized string similar to Cannot generate DDL script for object of type: {0}.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ChildErrors">
+            <summary>
+              Looks up a localized string similar to Child records contain errors..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ColumnNotFoundInParentEntity">
+            <summary>
+              Looks up a localized string similar to Column not found in entity {0}. To solve this problem, please add a data structure column referencing entity {1} and column {2} to the entity {0}..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ColumnNotInStructure">
+            <summary>
+              Looks up a localized string similar to Column &apos;{0}&apos; not found in the data structure..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ConcurrencyViolation">
+            <summary>
+              Looks up a localized string similar to Concurrency violation while updating table {0}.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ConfiguredPropertyNotFound">
+            <summary>
+              Looks up a localized string similar to Error processing runtime configuration. Object with id &quot;{0}&quot; does not have the property named &quot;{1}&quot; or the property is not allowed to be changed in the runtime configuration file. The value cannot be set as requested in the runtime configuration file: &quot;{2}&quot;.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.CouldNotFindObject">
+            <summary>
+              Looks up a localized string similar to Could not find object with id: {0} in file.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.CouldNotFindXmlNamespace">
+            <summary>
+              Looks up a localized string similar to Could not find xmlNamespace for  &quot;{0}&quot; in {1} and its base types.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.CouldNotLoadList">
+            <summary>
+              Looks up a localized string similar to Could not load list. Entity does not exist in the data source..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.DataChangedByOtherUser">
+            <summary>
+              Looks up a localized string similar to Data have been changed by another user..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.DataChangedByOtherUserException">
+            <summary>
+              Looks up a localized string similar to Record &apos;{0}&apos; in &apos;{1}&apos; cannot be saved because it has been changed by &apos;{2}&apos;..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.DataDeletedByOtherUserException">
+            <summary>
+              Looks up a localized string similar to Changes of a record &apos;{0}&apos; in &apos;{1}&apos; cannot be saved because the record has been deleted by another user..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.DataSetMustBeProvided">
+            <summary>
+              Looks up a localized string similar to Dataset must be provided when loading data by DataStructureEntity.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.DataStructureNotFound">
+            <summary>
+              Looks up a localized string similar to DataStructureEntity not found.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.DDLForFunctionsOnly">
+            <summary>
+              Looks up a localized string similar to DDL can be generated only for database functions.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.DefaultSetNotFound">
+            <summary>
+              Looks up a localized string similar to DefaultSet not found.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.DuplicityError">
+            <summary>
+              Looks up a localized string similar to You entered duplicate data..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.DuplicityErrorDetailed">
+            <summary>
+              Looks up a localized string similar to {0} {1} already exists..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.EntityNotInDataSet">
+            <summary>
+              Looks up a localized string similar to Entity with name &apos;{0}&apos; not found in the OrigamPersistenceProvider dataset..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.Error">
+            <summary>
+              Looks up a localized string similar to Error.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorAggregInAggreg">
+            <summary>
+              Looks up a localized string similar to Aggregated field is not supported inside an aggregated data structure column. Column: {0}.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorArgumentEmpty">
+            <summary>
+              Looks up a localized string similar to Argument cannot be empty.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorCouldNotAddRow">
+            <summary>
+              Looks up a localized string similar to Could not add {0}{1}..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorCouldNotDeleteRow">
+            <summary>
+              Looks up a localized string similar to Could not delete {0}{1}..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorCouldNotModifyRow">
+            <summary>
+              Looks up a localized string similar to Could not modify {0}{1}..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorCreateRelation">
+            <summary>
+              Looks up a localized string similar to Could not create relation {0} -&gt; {1} for data structure {2}.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorDataSetClassInvalid">
+            <summary>
+              Looks up a localized string similar to Invalid DataSetClass..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorDatastructureNull">
+            <summary>
+              Looks up a localized string similar to DataStructure cannot be null in order to create DataSet.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorExpressionNotSet">
+            <summary>
+              Looks up a localized string similar to Expression not set for &apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorLeftParamEmpty">
+            <summary>
+              Looks up a localized string similar to Left parameter cannot be empty.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorLoadingData">
+            <summary>
+              Looks up a localized string similar to Error loading data from table &apos;{0}&apos; into entity &apos;{1}&apos;{2}Message: {3}.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorLookupAggreg">
+            <summary>
+              Looks up a localized string similar to Data Structure Field cannot have UseLookupValue and Aggregation both turned on. Field: {0}.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorLookupNotSet">
+            <summary>
+              Looks up a localized string similar to Lookup not set for &apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorNoInitialState">
+            <summary>
+              Looks up a localized string similar to Initial state not set for the state machine on column: {0}.{1}.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorNoParamIN">
+            <summary>
+              Looks up a localized string similar to There has to be at least 1 parameter in the IN clause..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorNumberOfSpaces">
+            <summary>
+              Looks up a localized string similar to NumberOfSpaces argument invalid or missing.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorOneNOTArgument">
+            <summary>
+              Looks up a localized string similar to Only 1 argument can be present to NOT operator..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorParsingConfig">
+            <summary>
+              Looks up a localized string similar to Error when parsing runtime config file: &quot;{0}&quot;.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorRightParamEmpty">
+            <summary>
+              Looks up a localized string similar to Right parameter cannot be empty.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorSettingsNotFound">
+            <summary>
+              Looks up a localized string similar to OrigamSettings not found..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorSortOrder">
+            <summary>
+              Looks up a localized string similar to Invalid DataStructure. SortOrder no. {0} already exists in {1}.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorTwoArguments">
+            <summary>
+              Looks up a localized string similar to There have to be at least 2 arguments for {0}.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorTwoCONCATArguments">
+            <summary>
+              Looks up a localized string similar to There have to be at least 2 strings to concatenate..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorWhenLoadingObjects">
+            <summary>
+              Looks up a localized string similar to Error when loading objects from file: &quot;{0}&quot;.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorWhenProcedure">
+            <summary>
+              Looks up a localized string similar to Exception was encountered while running procedure. {0}.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorWhenScalar">
+            <summary>
+              Looks up a localized string similar to Exception was encountered while getting scalar value.  {0}.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorWhenSettingConfigProperty">
+            <summary>
+              Looks up a localized string similar to An error occurred when trying to set runtime config value &quot;{0}&quot; of property &quot;{1}&quot; on object id: &quot;{2}&quot;. Configuration file: &quot;{3}&quot;.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ErrorWhenSettingParam">
+            <summary>
+              Looks up a localized string similar to Error occured when setting parameter: {0} to value: {1}.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ExceptionWhenUpdate">
+            <summary>
+              Looks up a localized string similar to Exception was encountered while updating data. For more information see Details..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.FailedUpdateRow">
+            <summary>
+              Looks up a localized string similar to Failed updating row with data from the database. DataRowState: {0}.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.FieldMappingNotInModel">
+            <summary>
+              Looks up a localized string similar to Field Mapping not found in the model ({0}).
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.FilterSetNotFound">
+            <summary>
+              Looks up a localized string similar to FilterSet not found.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.IntegrityError">
+            <summary>
+              Looks up a localized string similar to You deleted a record that is being used in another part of the application..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.InvalidAdapterType">
+            <summary>
+              Looks up a localized string similar to Invalid data adapter type..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.InvalidTypeRetrieved">
+            <summary>
+              Looks up a localized string similar to Requested instance of type {1} with id {0}, but type of {2} was found instead..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.LookupListMethodTypeUnsupportedException">
+            <summary>
+              Looks up a localized string similar to Only DataStructureFilterSet method type is supported for nested queries (looked-up fields in data structures)..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.LookupTypeUnsupportedException">
+            <summary>
+              Looks up a localized string similar to Only DataServiceDataLookup is supported for nested queries (looked-up fields in data structures)..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.NoChangesInDataSet">
+            <summary>
+              Looks up a localized string similar to No changes in dataset.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.NoDataForPrimaryKey">
+            <summary>
+              Looks up a localized string similar to Model element not found by provided primary key {0}.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.NoDataRowAfterUpdate">
+            <summary>
+              Looks up a localized string similar to Data row does not exist after update. Row has been deleted by another user..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.NoEntityNameForClass">
+            <summary>
+              Looks up a localized string similar to Class has no entity name definition.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.NoPrimaryKey">
+            <summary>
+              Looks up a localized string similar to Entity &apos;{0}&apos; has no primary key defined. Cannot load original values after update..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.NoProviderForMS">
+            <summary>
+              Looks up a localized string similar to PersistenceProvider not set for MsSqlDataService.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.NoRefreshForNotPersisted">
+            <summary>
+              Looks up a localized string similar to Cannot refresh object that has not been persisted!.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.NoRowsForDerived">
+            <summary>
+              Looks up a localized string similar to Could not find rows for a derived entity {0}.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.NoTransactionsForMSExecutedProcedure">
+            <summary>
+              Looks up a localized string similar to Transactions are not supported by MsSqlDataService.ExecuteProcedure method..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.NoValueFilterSetForLookup">
+            <summary>
+              Looks up a localized string similar to Lookup &apos;{0}&apos; has no ValueFilterSet.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ObjectWithSameKey">
+            <summary>
+              Looks up a localized string similar to Cannot persist the object, another object with the same key exists already..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.OnlyMappedEntitiesToBeProcessed">
+            <summary>
+              Looks up a localized string similar to Only database mapped entities can be processed by the Data Service!.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.ProviderNotInitialized">
+            <summary>
+              Looks up a localized string similar to Persistence provider not initialized. Dataset is empty..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.SortSetNotFound">
+            <summary>
+              Looks up a localized string similar to SortSet not found.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.StructureNotInModel">
+            <summary>
+              Looks up a localized string similar to Data structure not found in the model ({0}).
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.TableMappingNotInModel">
+            <summary>
+              Looks up a localized string similar to Table Mapping not found in the model ({0}).
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.TypeNotImplementedByDSGen">
+            <summary>
+              Looks up a localized string similar to Item type {0} is not implemented by DatasetGenerator.RenderExpression.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.TypeNotImplementedByDSGen1">
+            <summary>
+              Looks up a localized string similar to DataType {0} not implemented for DataConstantReference by DatasetGenerator.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.TypeNotImplementedByMS">
+            <summary>
+              Looks up a localized string similar to DataType {0} not implemented for DataConstantReference by MsSqlCommandGenerator.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.TypeNotSupportedByMS">
+            <summary>
+              Looks up a localized string similar to Type {0} not supported by MsSqlCommandGenerator.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.UnknownDataSource">
+            <summary>
+              Looks up a localized string similar to Unknown data source type..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.UnknownFunction">
+            <summary>
+              Looks up a localized string similar to Function not known.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.UnknownSortDirection">
+            <summary>
+              Looks up a localized string similar to Unknown SortDirection.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.UnknownXmlMapping">
+            <summary>
+              Looks up a localized string similar to Unknown XmlMappingType.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.UnsupportedAggreg">
+            <summary>
+              Looks up a localized string similar to Aggregation type not supported.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.UnsupportedOperator">
+            <summary>
+              Looks up a localized string similar to Operator not supported.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.UnsupportedType">
+            <summary>
+              Looks up a localized string similar to Unsupported Data Type.
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.UpdateFieldUpdate">
+            <summary>
+              Looks up a localized string similar to Update field can only update tables..
+            </summary>
+        </member>
+        <member name="P:Origam.DA.Service.Strings.WrongMetaVersion">
+            <summary>
+              Looks up a localized string similar to The current meta version of type: &quot;{0}&quot; is {1}, but the xml file contains version {2}.
+            </summary>
+        </member>
+        <member name="T:Origam.DA.ObjectPersistence.LocalizationCache">
+            <summary>
+            Summary description for LocalizationCache.
+            </summary>
+        </member>
+        <member name="M:Origam.DA.ObjectPersistence.LocalizationCache.#ctor(System.String)">
+            <summary>
+            Initializes the localization cache with a single file.
+            </summary>
+            <param name="filePath">Path to the file where 5 last characeters of the file name must define a locale
+            e.g. "MyPackageName-en-US.xml</param>
+        </member>
+        <member name="M:Origam.DA.ObjectPersistence.LocalizationCache.LoadFile(System.String)">
+            <summary>
+            Loads a file.
+            </summary>
+            <param name="path">Path to the file where 5 last characeters of the file name must define a locale
+            e.g. "MyPackageName-en-US.xml</param>
+        </member>
+        <member name="T:Origam.DA.DatasetTools">
+            <summary>
+            Summary description for DatasetTools.
+            </summary>
+        </member>
+        <member name="M:Origam.DA.DatasetTools.MergeDataSet(System.Data.DataSet,System.Data.DataSet,System.Collections.Generic.IDictionary{System.String,System.Collections.Generic.IList{System.Collections.Generic.KeyValuePair{System.Object,Origam.DA.DataMergeChange}}},Origam.DA.MergeParams)">
+            <summary>
+            Goes through all source tables and merges them to the target dataset's tables with same names.
+            </summary>
+            <param name="inout_dsTarget"></param>
+            <param name="in_dsSource"></param>
+            <param name="in_bTrueDelete"></param>
+            <param name="in_bPreserveChanges"></param>
+            <param name="in_bSourceIsFragment"></param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Origam.DA.DatasetTools.MergeDataTable(System.Data.DataTable,System.Data.DataTable,System.Collections.Generic.IList{System.Collections.Generic.KeyValuePair{System.Object,Origam.DA.DataMergeChange}},System.Collections.Generic.IDictionary{System.Data.DataColumn,System.String},Origam.DA.MergeParams)" -->
+        <member name="M:Origam.DA.DatasetTools.ApplyPrimaryKey(System.Data.DataRow)">
+            <summary>
+            Assigns a new GUID to a primary key of a row in case the data type
+            is GUID. Otherwise does nothing.
+            </summary>
+            <param name="row"></param>
+        </member>
+        <member name="M:Origam.DA.DatasetTools.GetDeletedRows(System.Data.DataSet,System.Data.DataSet)">
+            <summary>
+            Compares two datasets and returns the top-level deleted rows (in case e.g. whole hierarchy
+            of parent-child rows is deleted) together with their non-deleted parent rows.
+            E.g. SalesOrder -> SalesDelivery -> SalesDeliveryDetail
+            If SalesDelivery is deleted, also SalesDeliveryDetail is deleted.
+            The function will return SalesDelivery row as deleted row and SalesOrder row as parent.
+            </summary>
+            <param name="sourceData"></param>
+            <param name="targetData"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Origam.DA.SchemaDbCompareResult">
+            <summary>
+            Summary description for SchemaCompareResult.
+            </summary>
+        </member>
+    </members>
+</doc>

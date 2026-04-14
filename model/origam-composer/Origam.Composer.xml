@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Origam.Composer</name>
+    </assembly>
+    <members>
+        <member name="T:Origam.Composer.Strings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Actions_to_be_performed">
+            <summary>
+              Looks up a localized string similar to [bold]Actions to be performed[/].
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.All_steps_completed">
+            <summary>
+              Looks up a localized string similar to [orange1]All steps completed. Bye![/].
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Architect_Configuration_Header">
+            <summary>
+              Looks up a localized string similar to [purple]Architect Configuration[/].
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.BuilderTask_Create_database_new_empty">
+            <summary>
+              Looks up a localized string similar to Create database (new empty).
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.BuilderTask_Create_database_structure_from_model">
+            <summary>
+              Looks up a localized string similar to Create database structure (from model).
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.BuilderTask_Create_Docker_run_scripts">
+            <summary>
+              Looks up a localized string similar to Create Docker run scripts.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.BuilderTask_Create_new_Admin_user">
+            <summary>
+              Looks up a localized string similar to Create new Admin user (Client web application).
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.BuilderTask_Create_new_Package">
+            <summary>
+              Looks up a localized string similar to Create new Package.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.BuilderTask_Initialize_Git">
+            <summary>
+              Looks up a localized string similar to Initialize Git.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.BuilderTask_Print_Settings_object">
+            <summary>
+              Looks up a localized string similar to Print OrigamSettings xml object.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Cannot_be_null_or_empty">
+            <summary>
+              Looks up a localized string similar to Cannot be null or empty.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Create_New_Project">
+            <summary>
+              Looks up a localized string similar to Create New Project.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Database_Configuration_Header">
+            <summary>
+              Looks up a localized string similar to [blue]Database Configuration[/].
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Executing_task">
+            <summary>
+              Looks up a localized string similar to [orange1][bold]Executing:[/][/] {0}.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Git_config_set">
+            <summary>
+              Looks up a localized string similar to [orange1][bold]- git config set:[/][/] {0}, {1}.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Git_Configuration_Header">
+            <summary>
+              Looks up a localized string similar to [cyan1]Git Configuration[/].
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Init_commit_message">
+            <summary>
+              Looks up a localized string similar to [orange1][bold]- init commit:[/][/] {0}.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Initial_commit">
+            <summary>
+              Looks up a localized string similar to Initial commit.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Model_root_directory_not_found">
+            <summary>
+              Looks up a localized string similar to Model root directory not found at: {0}.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Project_Configuration_Header">
+            <summary>
+              Looks up a localized string similar to [green]Project Configuration[/].
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Project_Creation_Tasks_Header">
+            <summary>
+              Looks up a localized string similar to [orange1]Project Creation Tasks[/].
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Repository_already_exists">
+            <summary>
+              Looks up a localized string similar to Repository already exists at &apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Repository_created">
+            <summary>
+              Looks up a localized string similar to [orange1][bold]- repository created:[/][/] {0}.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Repository_not_initialized">
+            <summary>
+              Looks up a localized string similar to Repository is not initialized.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.RepositoryZipPath_not_set">
+            <summary>
+              Looks up a localized string similar to RepositoryZipPath is not set..
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Source_directory_not_found">
+            <summary>
+              Looks up a localized string similar to Source directory not found: {0}.
+            </summary>
+        </member>
+        <member name="P:Origam.Composer.Strings.Sources_folder_already_exists">
+            <summary>
+              Looks up a localized string similar to Sources folder {0} already exists and is not empty..
+            </summary>
+        </member>
+    </members>
+</doc>
