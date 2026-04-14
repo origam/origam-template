@@ -1,0 +1,494 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Origam.Schema</name>
+    </assembly>
+    <members>
+        <member name="T:Origam.Schema.AbstractSchemaItem">
+            <summary>
+            This class makes a persistable base for any schema items. It has a special override for Key,
+            it uses a ModelElementKey, which has strongly typed accessors to the primary key of
+            any class that is contained under schema versions.
+            </summary>
+        </member>
+        <member name="M:Origam.Schema.AbstractSchemaItem.SetExtensionRecursive(Origam.Schema.Package)">
+            <summary>
+            Recursively changes extension on all child items of the provided schema item.
+            </summary>
+            <param name="extension"></param>
+        </member>
+        <member name="M:Origam.Schema.AbstractSchemaItem.Persist">
+             <summary>
+             Overriden member from AbstractPersistent. When the item is derived from another item,
+             we cannot save it.
+            
+             We also persist all child items when persisting this one.
+             </summary>
+        </member>
+        <member name="P:Origam.Schema.AbstractSchemaItem.NameableTypes">
+            <summary>
+            By default all NewItemTypes are nameable. Override if only a subset of types can
+            be populated with NewTypeNames.
+            </summary>
+        </member>
+        <member name="P:Origam.Schema.AbstractSchemaItemProvider.NameableTypes">
+            <summary>
+            By default all NewItemTypes are nameable. Override if only a subset of types can
+            be populated with NewTypeNames.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.SchemaItemDescriptionAttribute">
+            <summary>
+            Use this attribute to specify a name and folder name of the schema item.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.Feature">
+            <summary>
+            Summary description for Feature.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.ICaptionSchemaItem">
+            <summary>
+            Summary description for ICaptionSchemaItem.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.IOrigamMetadataConsumer">
+            <summary>
+            Summary description for IOrigamMetadataConsumer.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.IQueryLocalizable">
+            <summary>
+            Summary description for IQueryLocalizable.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.ISchemaItem">
+            <summary>
+            Summary description for SchemaItem.
+            </summary>
+        </member>
+        <member name="P:Origam.Schema.ISchemaItem.Package">
+            <summary>
+            Gets or sets the schema extensions, under which this item was defined.
+            </summary>
+        </member>
+        <member name="P:Origam.Schema.ISchemaItem.ParentItem">
+            <summary>
+            Gets or sets the parent schema item.
+            </summary>
+        </member>
+        <member name="P:Origam.Schema.ISchemaItem.RootItem">
+            <summary>
+            Gets the root schema item.
+            </summary>
+        </member>
+        <member name="P:Origam.Schema.ISchemaItem.Group">
+            <summary>
+            Gets or sets the group where this item is located.
+            </summary>
+        </member>
+        <member name="P:Origam.Schema.ISchemaItem.DerivedFrom">
+            <summary>
+            Gets or sets the item from which this item has been derived
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.ISchemaItemFactory">
+            <summary>
+            Provides interface for generating new schema items.
+            </summary>
+        </member>
+        <member name="M:Origam.Schema.ISchemaItemFactory.NewItem``1(System.Guid,Origam.Schema.SchemaItemGroup)">
+            <summary>
+            Provides a new item of a given type.
+            </summary>
+            <param name="schemaExtensionId"></param>
+            <param name="group"></param>
+            <returns>New schema item.</returns>
+        </member>
+        <member name="M:Origam.Schema.ISchemaItemFactory.NewGroup(System.Guid,System.String)">
+            <summary>
+            Returns new valid group for this item.
+            </summary>
+            <param name="schemaExtensionId"></param>
+            <param name="groupName"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Origam.Schema.ISchemaItemFactory.NewItemTypes">
+            <summary>
+            Gets all possible schema item types that can be asked for with NewItem method.
+            </summary>
+        </member>
+        <member name="P:Origam.Schema.ISchemaItemFactory.NewTypeNames">
+            <summary>
+            Gets optional list of names for new item types. This list will be used to generate a submenu
+            for New > [Type] > [Name1] [Name2] ...
+            </summary>
+        </member>
+        <member name="P:Origam.Schema.ISchemaItemFactory.NameableTypes">
+            <summary>
+            Lists types for which the NewTypeNames can be used since not all NewItemTypes might
+            need to be populated by predefined names.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.ISchemaItemProvider">
+            <summary>
+            Root of different types of schema items (e.g. Form provider, Entity provider, Roles provider).
+            </summary>
+        </member>
+        <member name="P:Origam.Schema.ISchemaItemProvider.ChildItems">
+            <summary>
+            Gets all schema items.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.Package">
+            <summary>
+            Summary description for Schema.
+            </summary>
+        </member>
+        <member name="P:Origam.Schema.Package.VersionString">
+            <summary>
+            Gets or sets the version of this schema extension.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.PackageReference">
+            <summary>
+            Summary description for Schema.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.ParameterReference">
+            <summary>
+            Summary description for ParameterReference.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.SchemaItemAncestor">
+            <summary>
+            Summary description for AncestorItem.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.SchemaItemAncestorCollection">
+            <summary>
+                <para>
+                  A collection that stores <see cref='T:Origam.Schema.SchemaItemAncestor'/> objects.
+               </para>
+            </summary>
+            <seealso cref='T:Origam.Schema.SchemaItemAncestorCollection'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemAncestorCollection.#ctor">
+            <summary>
+                <para>
+                  Initializes a new instance of <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/>.
+               </para>
+            </summary>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemAncestorCollection.#ctor(Origam.Schema.SchemaItemAncestorCollection)">
+            <summary>
+                <para>
+                  Initializes a new instance of <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/> based on another <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/>.
+               </para>
+            </summary>
+            <param name='value'>
+                  A <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/> from which the contents are copied
+            </param>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemAncestorCollection.#ctor(Origam.Schema.SchemaItemAncestor[])">
+            <summary>
+                <para>
+                  Initializes a new instance of <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/> containing any array of <see cref='T:Origam.Schema.SchemaItemAncestor'/> objects.
+               </para>
+            </summary>
+            <param name='value'>
+                  A array of <see cref='T:Origam.Schema.SchemaItemAncestor'/> objects with which to intialize the collection
+            </param>
+        </member>
+        <member name="P:Origam.Schema.SchemaItemAncestorCollection.Item(System.Int32)">
+            <summary>
+            <para>Represents the entry at the specified index of the <see cref='T:Origam.Schema.SchemaItemAncestor'/>.</para>
+            </summary>
+            <param name='index'><para>The zero-based index of the entry to locate in the collection.</para></param>
+            <value>
+               <para> The entry at the specified index of the collection.</para>
+            </value>
+            <exception cref='T:System.ArgumentOutOfRangeException'><paramref name='index'/> is outside the valid range of indexes for the collection.</exception>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemAncestorCollection.Add(Origam.Schema.SchemaItemAncestor)">
+            <summary>
+               <para>Adds a <see cref='T:Origam.Schema.SchemaItemAncestor'/> with the specified value to the
+               <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/> .</para>
+            </summary>
+            <param name='value'>The <see cref='T:Origam.Schema.SchemaItemAncestor'/> to add.</param>
+            <returns>
+               <para>The index at which the new element was inserted.</para>
+            </returns>
+            <seealso cref='M:Origam.Schema.SchemaItemAncestorCollection.AddRange(Origam.Schema.SchemaItemAncestor[])'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemAncestorCollection.AddRange(Origam.Schema.SchemaItemAncestor[])">
+            <summary>
+            <para>Copies the elements of an array to the end of the <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/>.</para>
+            </summary>
+            <param name='value'>
+               An array of type <see cref='T:Origam.Schema.SchemaItemAncestor'/> containing the objects to add to the collection.
+            </param>
+            <returns>
+              <para>None.</para>
+            </returns>
+            <seealso cref='M:Origam.Schema.SchemaItemAncestorCollection.Add(Origam.Schema.SchemaItemAncestor)'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemAncestorCollection.AddRange(Origam.Schema.SchemaItemAncestorCollection)">
+            <summary>
+                <para>
+                  Adds the contents of another <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/> to the end of the collection.
+               </para>
+            </summary>
+            <param name='value'>
+               A <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/> containing the objects to add to the collection.
+            </param>
+            <returns>
+              <para>None.</para>
+            </returns>
+            <seealso cref='M:Origam.Schema.SchemaItemAncestorCollection.Add(Origam.Schema.SchemaItemAncestor)'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemAncestorCollection.Contains(Origam.Schema.SchemaItemAncestor)">
+            <summary>
+            <para>Gets a value indicating whether the
+               <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/> contains the specified <see cref='T:Origam.Schema.SchemaItemAncestor'/>.</para>
+            </summary>
+            <param name='value'>The <see cref='T:Origam.Schema.SchemaItemAncestor'/> to locate.</param>
+            <returns>
+            <para><see langword='true'/> if the <see cref='T:Origam.Schema.SchemaItemAncestor'/> is contained in the collection;
+              otherwise, <see langword='false'/>.</para>
+            </returns>
+            <seealso cref='M:Origam.Schema.SchemaItemAncestorCollection.IndexOf(Origam.Schema.SchemaItemAncestor)'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemAncestorCollection.CopyTo(Origam.Schema.SchemaItemAncestor[],System.Int32)">
+            <summary>
+            <para>Copies the <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/> values to a one-dimensional <see cref='T:System.Array'/> instance at the
+               specified index.</para>
+            </summary>
+            <param name='array'><para>The one-dimensional <see cref='T:System.Array'/> that is the destination of the values copied from <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/> .</para></param>
+            <param name='index'>The index in <paramref name='array'/> where copying begins.</param>
+            <returns>
+              <para>None.</para>
+            </returns>
+            <exception cref='T:System.ArgumentException'><para><paramref name='array'/> is multidimensional.</para> <para>-or-</para> <para>The number of elements in the <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/> is greater than the available space between <paramref name='arrayIndex'/> and the end of <paramref name='array'/>.</para></exception>
+            <exception cref='T:System.ArgumentNullException'><paramref name='array'/> is <see langword='null'/>. </exception>
+            <exception cref='T:System.ArgumentOutOfRangeException'><paramref name='arrayIndex'/> is less than <paramref name='array'/>'s lowbound. </exception>
+            <seealso cref='T:System.Array'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemAncestorCollection.IndexOf(Origam.Schema.SchemaItemAncestor)">
+            <summary>
+               <para>Returns the index of a <see cref='T:Origam.Schema.SchemaItemAncestor'/> in
+                  the <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/> .</para>
+            </summary>
+            <param name='value'>The <see cref='T:Origam.Schema.SchemaItemAncestor'/> to locate.</param>
+            <returns>
+            <para>The index of the <see cref='T:Origam.Schema.SchemaItemAncestor'/> of <paramref name='value'/> in the
+            <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/>, if found; otherwise, -1.</para>
+            </returns>
+            <seealso cref='M:Origam.Schema.SchemaItemAncestorCollection.Contains(Origam.Schema.SchemaItemAncestor)'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemAncestorCollection.Insert(System.Int32,Origam.Schema.SchemaItemAncestor)">
+            <summary>
+            <para>Inserts a <see cref='T:Origam.Schema.SchemaItemAncestor'/> into the <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/> at the specified index.</para>
+            </summary>
+            <param name='index'>The zero-based index where <paramref name='value'/> should be inserted.</param>
+            <param name=' value'>The <see cref='T:Origam.Schema.SchemaItemAncestor'/> to insert.</param>
+            <returns><para>None.</para></returns>
+            <seealso cref='M:Origam.Schema.SchemaItemAncestorCollection.Add(Origam.Schema.SchemaItemAncestor)'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemAncestorCollection.GetEnumerator">
+            <summary>
+               <para>Returns an enumerator that can iterate through
+                  the <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/> .</para>
+            </summary>
+            <returns><para>None.</para></returns>
+            <seealso cref='T:System.Collections.IEnumerator'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemAncestorCollection.Remove(Origam.Schema.SchemaItemAncestor)">
+            <summary>
+               <para> Removes a specific <see cref='T:Origam.Schema.SchemaItemAncestor'/> from the
+               <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/> .</para>
+            </summary>
+            <param name='value'>The <see cref='T:Origam.Schema.SchemaItemAncestor'/> to remove from the <see cref='T:Origam.Schema.SchemaItemAncestorCollection'/> .</param>
+            <returns><para>None.</para></returns>
+            <exception cref='T:System.ArgumentException'><paramref name='value'/> is not found in the Collection. </exception>
+        </member>
+        <member name="P:Origam.Schema.SchemaItemGroup.NameableTypes">
+            <summary>
+            By default all NewItemTypes are nameable. Override if only a subset of types can
+            be populated with NewTypeNames.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.SchemaItemParameter">
+            <summary>
+            Parameter that can be used to parametrize any kind of schema item.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.SchemaItemProviderCollection">
+            <summary>
+                <para>
+                  A collection that stores <see cref='T:Origam.Schema.ISchemaItemProvider'/> objects.
+               </para>
+            </summary>
+            <seealso cref='T:Origam.Schema.SchemaItemProviderCollection'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemProviderCollection.#ctor">
+            <summary>
+                <para>
+                  Initializes a new instance of <see cref='T:Origam.Schema.SchemaItemProviderCollection'/>.
+               </para>
+            </summary>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemProviderCollection.#ctor(Origam.Schema.SchemaItemProviderCollection)">
+            <summary>
+                <para>
+                  Initializes a new instance of <see cref='T:Origam.Schema.SchemaItemProviderCollection'/> based on another <see cref='T:Origam.Schema.SchemaItemProviderCollection'/>.
+               </para>
+            </summary>
+            <param name='value'>
+                  A <see cref='T:Origam.Schema.SchemaItemProviderCollection'/> from which the contents are copied
+            </param>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemProviderCollection.#ctor(Origam.Schema.ISchemaItemProvider[])">
+            <summary>
+                <para>
+                  Initializes a new instance of <see cref='T:Origam.Schema.SchemaItemProviderCollection'/> containing any array of <see cref='T:Origam.Schema.ISchemaItemProvider'/> objects.
+               </para>
+            </summary>
+            <param name='value'>
+                  A array of <see cref='T:Origam.Schema.ISchemaItemProvider'/> objects with which to intialize the collection
+            </param>
+        </member>
+        <member name="P:Origam.Schema.SchemaItemProviderCollection.Item(System.Int32)">
+            <summary>
+            <para>Represents the entry at the specified index of the <see cref='T:Origam.Schema.ISchemaItemProvider'/>.</para>
+            </summary>
+            <param name='index'><para>The zero-based index of the entry to locate in the collection.</para></param>
+            <value>
+               <para> The entry at the specified index of the collection.</para>
+            </value>
+            <exception cref='T:System.ArgumentOutOfRangeException'><paramref name='index'/> is outside the valid range of indexes for the collection.</exception>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemProviderCollection.Add(Origam.Schema.ISchemaItemProvider)">
+            <summary>
+               <para>Adds a <see cref='T:Origam.Schema.ISchemaItemProvider'/> with the specified value to the
+               <see cref='T:Origam.Schema.SchemaItemProviderCollection'/> .</para>
+            </summary>
+            <param name='value'>The <see cref='T:Origam.Schema.ISchemaItemProvider'/> to add.</param>
+            <returns>
+               <para>The index at which the new element was inserted.</para>
+            </returns>
+            <seealso cref='M:Origam.Schema.SchemaItemProviderCollection.AddRange(Origam.Schema.ISchemaItemProvider[])'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemProviderCollection.AddRange(Origam.Schema.ISchemaItemProvider[])">
+            <summary>
+            <para>Copies the elements of an array to the end of the <see cref='T:Origam.Schema.SchemaItemProviderCollection'/>.</para>
+            </summary>
+            <param name='value'>
+               An array of type <see cref='T:Origam.Schema.ISchemaItemProvider'/> containing the objects to add to the collection.
+            </param>
+            <returns>
+              <para>None.</para>
+            </returns>
+            <seealso cref='M:Origam.Schema.SchemaItemProviderCollection.Add(Origam.Schema.ISchemaItemProvider)'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemProviderCollection.AddRange(Origam.Schema.SchemaItemProviderCollection)">
+            <summary>
+                <para>
+                  Adds the contents of another <see cref='T:Origam.Schema.SchemaItemProviderCollection'/> to the end of the collection.
+               </para>
+            </summary>
+            <param name='value'>
+               A <see cref='T:Origam.Schema.SchemaItemProviderCollection'/> containing the objects to add to the collection.
+            </param>
+            <returns>
+              <para>None.</para>
+            </returns>
+            <seealso cref='M:Origam.Schema.SchemaItemProviderCollection.Add(Origam.Schema.ISchemaItemProvider)'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemProviderCollection.Contains(Origam.Schema.ISchemaItemProvider)">
+            <summary>
+            <para>Gets a value indicating whether the
+               <see cref='T:Origam.Schema.SchemaItemProviderCollection'/> contains the specified <see cref='T:Origam.Schema.ISchemaItemProvider'/>.</para>
+            </summary>
+            <param name='value'>The <see cref='T:Origam.Schema.ISchemaItemProvider'/> to locate.</param>
+            <returns>
+            <para><see langword='true'/> if the <see cref='T:Origam.Schema.ISchemaItemProvider'/> is contained in the collection;
+              otherwise, <see langword='false'/>.</para>
+            </returns>
+            <seealso cref='M:Origam.Schema.SchemaItemProviderCollection.IndexOf(Origam.Schema.ISchemaItemProvider)'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemProviderCollection.CopyTo(Origam.Schema.ISchemaItemProvider[],System.Int32)">
+            <summary>
+            <para>Copies the <see cref='T:Origam.Schema.SchemaItemProviderCollection'/> values to a one-dimensional <see cref='T:System.Array'/> instance at the
+               specified index.</para>
+            </summary>
+            <param name='array'><para>The one-dimensional <see cref='T:System.Array'/> that is the destination of the values copied from <see cref='T:Origam.Schema.SchemaItemProviderCollection'/> .</para></param>
+            <param name='index'>The index in <paramref name='array'/> where copying begins.</param>
+            <returns>
+              <para>None.</para>
+            </returns>
+            <exception cref='T:System.ArgumentException'><para><paramref name='array'/> is multidimensional.</para> <para>-or-</para> <para>The number of elements in the <see cref='T:Origam.Schema.SchemaItemProviderCollection'/> is greater than the available space between <paramref name='arrayIndex'/> and the end of <paramref name='array'/>.</para></exception>
+            <exception cref='T:System.ArgumentNullException'><paramref name='array'/> is <see langword='null'/>. </exception>
+            <exception cref='T:System.ArgumentOutOfRangeException'><paramref name='arrayIndex'/> is less than <paramref name='array'/>'s lowbound. </exception>
+            <seealso cref='T:System.Array'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemProviderCollection.IndexOf(Origam.Schema.ISchemaItemProvider)">
+            <summary>
+               <para>Returns the index of a <see cref='T:Origam.Schema.ISchemaItemProvider'/> in
+                  the <see cref='T:Origam.Schema.SchemaItemProviderCollection'/> .</para>
+            </summary>
+            <param name='value'>The <see cref='T:Origam.Schema.ISchemaItemProvider'/> to locate.</param>
+            <returns>
+            <para>The index of the <see cref='T:Origam.Schema.ISchemaItemProvider'/> of <paramref name='value'/> in the
+            <see cref='T:Origam.Schema.SchemaItemProviderCollection'/>, if found; otherwise, -1.</para>
+            </returns>
+            <seealso cref='M:Origam.Schema.SchemaItemProviderCollection.Contains(Origam.Schema.ISchemaItemProvider)'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemProviderCollection.Insert(System.Int32,Origam.Schema.ISchemaItemProvider)">
+            <summary>
+            <para>Inserts a <see cref='T:Origam.Schema.ISchemaItemProvider'/> into the <see cref='T:Origam.Schema.SchemaItemProviderCollection'/> at the specified index.</para>
+            </summary>
+            <param name='index'>The zero-based index where <paramref name='value'/> should be inserted.</param>
+            <param name=' value'>The <see cref='T:Origam.Schema.ISchemaItemProvider'/> to insert.</param>
+            <returns><para>None.</para></returns>
+            <seealso cref='M:Origam.Schema.SchemaItemProviderCollection.Add(Origam.Schema.ISchemaItemProvider)'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemProviderCollection.GetEnumerator">
+            <summary>
+               <para>Returns an enumerator that can iterate through
+                  the <see cref='T:Origam.Schema.SchemaItemProviderCollection'/> .</para>
+            </summary>
+            <returns><para>None.</para></returns>
+            <seealso cref='T:System.Collections.IEnumerator'/>
+        </member>
+        <member name="M:Origam.Schema.SchemaItemProviderCollection.Remove(Origam.Schema.ISchemaItemProvider)">
+            <summary>
+               <para> Removes a specific <see cref='T:Origam.Schema.ISchemaItemProvider'/> from the
+               <see cref='T:Origam.Schema.SchemaItemProviderCollection'/> .</para>
+            </summary>
+            <param name='value'>The <see cref='T:Origam.Schema.ISchemaItemProvider'/> to remove from the <see cref='T:Origam.Schema.SchemaItemProviderCollection'/> .</param>
+            <returns><para>None.</para></returns>
+            <exception cref='T:System.ArgumentException'><paramref name='value'/> is not found in the Collection. </exception>
+        </member>
+        <member name="T:Origam.Schema.SchemaItemProviderGroup">
+            <summary>
+            Summary description for SchemaItemProviderGroup.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.ModelElementKey">
+            <summary>
+            Standard collection of primary key columns for any version related schema item.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.StringItem">
+            <summary>
+            Summary description for String.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.TestItem">
+            <summary>
+            Summary description for TestItem.
+            </summary>
+        </member>
+    </members>
+</doc>

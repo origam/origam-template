@@ -1,0 +1,388 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Origam</name>
+    </assembly>
+    <members>
+        <member name="T:Origam.AsXmlTextWriter">
+            <summary>
+            Summary description for AsXmlTextWriter.
+            </summary>
+        </member>
+        <member name="T:Origam.Debug">
+            <summary>
+            Summary description for Debug.
+            </summary>
+        </member>
+        <member name="M:Origam.Extensions.DictionaryExtensions.Invert``2(System.Collections.Generic.IDictionary{``0,``1})">
+            <summary>
+            Will fail if source dictionary contains duplicate values!
+            </summary>
+            <param name="source"></param>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="T:Origam.FileDeleteTransaction">
+            <summary>
+            Summary description for FileTransaction.
+            </summary>
+        </member>
+        <member name="T:Origam.HelpTopicAttribute">
+            <summary>
+            Use this attribute on all classes that require help for the users.
+            </summary>
+        </member>
+        <member name="M:Origam.HelpTopicAttribute.#ctor(System.String)">
+            <summary>
+            The constructor for the Topic attribute.
+            </summary>
+            <param name="topic">Help topic (part of url that will be appended to the base Help url).</param>
+        </member>
+        <member name="P:Origam.HelpTopicAttribute.Topic">
+            <summary>
+            The name of the data structure entity used to store instances of this class.
+            </summary>
+        </member>
+        <member name="M:Origam.IHttpTools.EscapeDataStringLong(System.String)">
+            <summary>
+            http://stackoverflow.com/questions/6695208/uri-escapedatastring-invalid-uri-the-uri-string-is-too-long
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Origam.IAuthorizationContextContainer">
+            <summary>
+            Summary description for IAuthorizationContextContainer.
+            </summary>
+        </member>
+        <member name="T:Origam.Key">
+            <summary>
+            This class represents a collection of column names/values that make a unique key of an entity.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamException">
+            <summary>
+            Summary description for OrigamException.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamSettings">
+            <summary>
+            Holds settings for ORIGAM Architect
+            </summary>
+        </member>
+        <member name="P:Origam.Platform.Name">
+            <remarks/>
+        </member>
+        <member name="T:Origam.OrigamSettingsCollection">
+            <summary>
+                <para>
+                  A collection that stores <see cref='T:Origam.OrigamSettings'/> objects.
+               </para>
+            </summary>
+            <seealso cref='T:Origam.OrigamSettingsCollection'/>
+        </member>
+        <member name="M:Origam.OrigamSettingsCollection.#ctor">
+            <summary>
+                <para>
+                  Initializes a new instance of <see cref='T:Origam.OrigamSettingsCollection'/>.
+               </para>
+            </summary>
+        </member>
+        <member name="M:Origam.OrigamSettingsCollection.#ctor(Origam.OrigamSettingsCollection)">
+            <summary>
+                <para>
+                  Initializes a new instance of <see cref='T:Origam.OrigamSettingsCollection'/> based on another <see cref='T:Origam.OrigamSettingsCollection'/>.
+               </para>
+            </summary>
+            <param name='value'>
+                  A <see cref='T:Origam.OrigamSettingsCollection'/> from which the contents are copied
+            </param>
+        </member>
+        <member name="M:Origam.OrigamSettingsCollection.#ctor(Origam.OrigamSettings[])">
+            <summary>
+                <para>
+                  Initializes a new instance of <see cref='T:Origam.OrigamSettingsCollection'/> containing any array of <see cref='T:Origam.OrigamSettings'/> objects.
+               </para>
+            </summary>
+            <param name='value'>
+                  A array of <see cref='T:Origam.OrigamSettings'/> objects with which to intialize the collection
+            </param>
+        </member>
+        <member name="P:Origam.OrigamSettingsCollection.Item(System.Int32)">
+            <summary>
+            <para>Represents the entry at the specified index of the <see cref='T:Origam.OrigamSettings'/>.</para>
+            </summary>
+            <param name='index'><para>The zero-based index of the entry to locate in the collection.</para></param>
+            <value>
+               <para> The entry at the specified index of the collection.</para>
+            </value>
+            <exception cref='T:System.ArgumentOutOfRangeException'><paramref name='index'/> is outside the valid range of indexes for the collection.</exception>
+        </member>
+        <member name="M:Origam.OrigamSettingsCollection.Add(Origam.OrigamSettings)">
+            <summary>
+               <para>Adds a <see cref='T:Origam.OrigamSettings'/> with the specified value to the
+               <see cref='T:Origam.OrigamSettingsCollection'/> .</para>
+            </summary>
+            <param name='value'>The <see cref='T:Origam.OrigamSettings'/> to add.</param>
+            <returns>
+               <para>The index at which the new element was inserted.</para>
+            </returns>
+            <seealso cref='M:Origam.OrigamSettingsCollection.AddRange(Origam.OrigamSettings[])'/>
+        </member>
+        <member name="M:Origam.OrigamSettingsCollection.AddRange(Origam.OrigamSettings[])">
+            <summary>
+            <para>Copies the elements of an array to the end of the <see cref='T:Origam.OrigamSettingsCollection'/>.</para>
+            </summary>
+            <param name='value'>
+               An array of type <see cref='T:Origam.OrigamSettings'/> containing the objects to add to the collection.
+            </param>
+            <returns>
+              <para>None.</para>
+            </returns>
+            <seealso cref='M:Origam.OrigamSettingsCollection.Add(Origam.OrigamSettings)'/>
+        </member>
+        <member name="M:Origam.OrigamSettingsCollection.AddRange(Origam.OrigamSettingsCollection)">
+            <summary>
+                <para>
+                  Adds the contents of another <see cref='T:Origam.OrigamSettingsCollection'/> to the end of the collection.
+               </para>
+            </summary>
+            <param name='value'>
+               A <see cref='T:Origam.OrigamSettingsCollection'/> containing the objects to add to the collection.
+            </param>
+            <returns>
+              <para>None.</para>
+            </returns>
+            <seealso cref='M:Origam.OrigamSettingsCollection.Add(Origam.OrigamSettings)'/>
+        </member>
+        <member name="M:Origam.OrigamSettingsCollection.Contains(Origam.OrigamSettings)">
+            <summary>
+            <para>Gets a value indicating whether the
+               <see cref='T:Origam.OrigamSettingsCollection'/> contains the specified <see cref='T:Origam.OrigamSettings'/>.</para>
+            </summary>
+            <param name='value'>The <see cref='T:Origam.OrigamSettings'/> to locate.</param>
+            <returns>
+            <para><see langword='true'/> if the <see cref='T:Origam.OrigamSettings'/> is contained in the collection;
+              otherwise, <see langword='false'/>.</para>
+            </returns>
+            <seealso cref='M:Origam.OrigamSettingsCollection.IndexOf(Origam.OrigamSettings)'/>
+        </member>
+        <member name="M:Origam.OrigamSettingsCollection.CopyTo(Origam.OrigamSettings[],System.Int32)">
+            <summary>
+            <para>Copies the <see cref='T:Origam.OrigamSettingsCollection'/> values to a one-dimensional <see cref='T:System.Array'/> instance at the
+               specified index.</para>
+            </summary>
+            <param name='array'><para>The one-dimensional <see cref='T:System.Array'/> that is the destination of the values copied from <see cref='T:Origam.OrigamSettingsCollection'/> .</para></param>
+            <param name='index'>The index in <paramref name='array'/> where copying begins.</param>
+            <returns>
+              <para>None.</para>
+            </returns>
+            <exception cref='T:System.ArgumentException'><para><paramref name='array'/> is multidimensional.</para> <para>-or-</para> <para>The number of elements in the <see cref='T:Origam.OrigamSettingsCollection'/> is greater than the available space between <paramref name='arrayIndex'/> and the end of <paramref name='array'/>.</para></exception>
+            <exception cref='T:System.ArgumentNullException'><paramref name='array'/> is <see langword='null'/>. </exception>
+            <exception cref='T:System.ArgumentOutOfRangeException'><paramref name='arrayIndex'/> is less than <paramref name='array'/>'s lowbound. </exception>
+            <seealso cref='T:System.Array'/>
+        </member>
+        <member name="M:Origam.OrigamSettingsCollection.IndexOf(Origam.OrigamSettings)">
+            <summary>
+               <para>Returns the index of a <see cref='T:Origam.OrigamSettings'/> in
+                  the <see cref='T:Origam.OrigamSettingsCollection'/> .</para>
+            </summary>
+            <param name='value'>The <see cref='T:Origam.OrigamSettings'/> to locate.</param>
+            <returns>
+            <para>The index of the <see cref='T:Origam.OrigamSettings'/> of <paramref name='value'/> in the
+            <see cref='T:Origam.OrigamSettingsCollection'/>, if found; otherwise, -1.</para>
+            </returns>
+            <seealso cref='M:Origam.OrigamSettingsCollection.Contains(Origam.OrigamSettings)'/>
+        </member>
+        <member name="M:Origam.OrigamSettingsCollection.Insert(System.Int32,Origam.OrigamSettings)">
+            <summary>
+            <para>Inserts a <see cref='T:Origam.OrigamSettings'/> into the <see cref='T:Origam.OrigamSettingsCollection'/> at the specified index.</para>
+            </summary>
+            <param name='index'>The zero-based index where <paramref name='value'/> should be inserted.</param>
+            <param name=' value'>The <see cref='T:Origam.OrigamSettings'/> to insert.</param>
+            <returns><para>None.</para></returns>
+            <seealso cref='M:Origam.OrigamSettingsCollection.Add(Origam.OrigamSettings)'/>
+        </member>
+        <member name="M:Origam.OrigamSettingsCollection.GetEnumerator">
+            <summary>
+               <para>Returns an enumerator that can iterate through
+                  the <see cref='T:Origam.OrigamSettingsCollection'/> .</para>
+            </summary>
+            <returns><para>None.</para></returns>
+            <seealso cref='T:System.Collections.IEnumerator'/>
+        </member>
+        <member name="M:Origam.OrigamSettingsCollection.Remove(Origam.OrigamSettings)">
+            <summary>
+               <para> Removes a specific <see cref='T:Origam.OrigamSettings'/> from the
+               <see cref='T:Origam.OrigamSettingsCollection'/> .</para>
+            </summary>
+            <param name='value'>The <see cref='T:Origam.OrigamSettings'/> to remove from the <see cref='T:Origam.OrigamSettingsCollection'/> .</param>
+            <returns><para>None.</para></returns>
+            <exception cref='T:System.ArgumentException'><paramref name='value'/> is not found in the Collection. </exception>
+        </member>
+        <member name="T:Origam.OrigamUserContext">
+            <summary>
+            Summary description for OrigamUserContext.
+            </summary>
+        </member>
+        <member name="T:Origam.Strings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.ArrayCannotBeConverted">
+            <summary>
+              Looks up a localized string similar to Array cannot be converted to string..
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.CannotParseAssemblyAndClass">
+            <summary>
+              Looks up a localized string similar to Cannot parse Assembly and Class name from &quot;type&quot; attribute in &quot;{0}&quot; node.
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.CannotReadType">
+            <summary>
+              Looks up a localized string similar to Cannot read &quot;type&quot; attribute from &quot;{0}&quot; node.
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.CantSaveConfig">
+            <summary>
+              Looks up a localized string similar to Cannot save configuration..
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.CantSaveConfigDuplicateName">
+            <summary>
+              Looks up a localized string similar to Cannot save configuration. Configuration names must be unique..
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.ErrorsDuringPartialRollback">
+            <summary>
+              Looks up a localized string similar to Errors occured while partially rolling back transaction.{0}.
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.ErrorsDuringRollback">
+            <summary>
+              Looks up a localized string similar to Errors occured while rolling back transaction.{0}.
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.ExceptionSavingTransaction">
+            <summary>
+              Looks up a localized string similar to Exception occured while saving transaction..
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.InvalidProperty">
+            <summary>
+              Looks up a localized string similar to Invalid property or field name.
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.OrigamSettingsExceptionPrefix">
+            <summary>
+              Looks up a localized string similar to Cannot read OrigamSettings.config... .
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.PartialRollbackNotSupported">
+            <summary>
+              Looks up a localized string similar to Partial rollback of transaction is not supported by {0}.
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.PathNotFound">
+            <summary>
+              Looks up a localized string similar to Could not find path &quot;{0}&quot;.
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.SavingNotSupported">
+            <summary>
+              Looks up a localized string similar to Saving of transaction is not supported by {0}.
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.SessionStoreDisposed">
+            <summary>
+              Looks up a localized string similar to Session store has already been disposed.
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.ShortGnu">
+             <summary>
+               Looks up a localized string similar to {0} Copyright (C) 2022  Advantage Solutions, s.r.o 
+            This program comes with ABSOLUTELY NO WARRANTY.
+            This is free software, and you are welcome to redistribute it
+            under certain conditions..
+             </summary>
+        </member>
+        <member name="P:Origam.Strings.TransactionRegistered">
+            <summary>
+              Looks up a localized string similar to Transaction is already registered..
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.UnsuportedType">
+            <summary>
+              Looks up a localized string similar to Unsupported member type..
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.UrlPartParameterNull">
+            <summary>
+              Looks up a localized string similar to Url part is to be replaced by a parameter value but the value provided is NULL. Cannot construct URL..
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.UserNotLoggedInException">
+            <summary>
+              Looks up a localized string similar to User not logged in..
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.XmlNoRoot">
+            <summary>
+              Looks up a localized string similar to Attempting to merge an XML document that has a root element with attributes. Root element should have no attributes. This is probably a result of an XSLT transformation that does not produce a proper root element..
+            </summary>
+        </member>
+        <member name="P:Origam.Strings.XPathIsNull">
+            <summary>
+              Looks up a localized string similar to Property XPath of object: {0} is null, references could not be indexed..
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.TextReaderOptions">
+            <summary>
+            Summary description for TextReaderAgentSettings.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.TextReaderOptionsField">
+            <summary>
+            Summary description for TextReaderAgentSeparator.
+            </summary>
+        </member>
+        <member name="T:Origam.OrigamTransaction">
+            <summary>
+            Summary description for OrigamTransaction.
+            </summary>
+        </member>
+        <member name="T:Origam.UserProfile">
+            <summary>
+            Summary description for UserProfile.
+            </summary>
+        </member>
+        <member name="T:Origam.XmlTools">
+            <summary>
+            Summary description for XmlTools.
+            </summary>
+        </member>
+        <member name="M:Origam.XmlTools.GetXmlSlice(System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Returns current iterator's node with all its child nodes and also parent nodes,
+            excluding any other parent's children.
+            </summary>
+            <param name="iter"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

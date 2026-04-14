@@ -1,0 +1,524 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Origam.Workflow</name>
+    </assembly>
+    <members>
+        <member name="P:Origam.Workflow.WorkflowEngine.InputContexts">
+            <summary>
+            Input context stores when this block is called as a subworkflow
+            </summary>
+        </member>
+        <member name="P:Origam.Workflow.WorkflowEngine.ParentContexts">
+            <summary>
+            Context stores of the parent block that this block will use
+            </summary>
+        </member>
+        <member name="M:Origam.Workflow.WorkflowEngine.IsFailureHandled(Origam.Schema.WorkflowModel.IWorkflowStep)">
+            <summary>
+            Returns true if there is a task in the workflow that handles failures.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Origam.Workflow.IWorkflowEngineTask">
+            <summary>
+            Summary description for IWorkflowEngineTask.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.DataServiceAgent">
+            <summary>
+            Summary description for DataService.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.FileSystemServiceAgent">
+            <summary>
+            Summary description for FileSystemServiceAgent.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.MailServiceAgent">
+            <summary>
+            Summary description for DataService.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.MultiRecordTextReaderOptions">
+            <summary>
+            Summary description for TextReaderAgentSettings.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.MultiRecordTextReaderRecordType">
+            <summary>
+            Summary description for TextReaderAgentSettings.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.TransformationAgent">
+            <summary>
+            Summary description for TransformationAgent.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowServiceAgent">
+            <summary>
+            Summary description for WorkflowServiceAgent.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueueServiceAgent">
+            <summary>
+            Summary description for WorkQueueServiceAgent.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.SimpleModelData">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.SimpleModelData.OrigamEntityDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.SimpleModelData.OrigamFieldDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.SimpleModelData.OrigamEntityRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.SimpleModelData.OrigamFieldRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.SimpleModelData.OrigamEntityRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.SimpleModelData.OrigamFieldRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.StateMachineQueueEntry">
+            <summary>
+            Summary description for StateMachineQueueEntry.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.StateMachineService">
+            <summary>
+            Summary description for StateMachineService.
+            </summary>
+        </member>
+        <member name="M:Origam.Workflow.StateMachineService.FieldsChanged(System.Collections.Generic.List{Origam.Schema.WorkflowModel.StateMachineEventFieldDependency},System.Data.DataRow,Origam.DA.StateMachineServiceStatelessEventType)">
+            <summary>
+            Test if any of the field dependencies were updated in the data.
+            </summary>
+            <param name="fields">List of fields to test.</param>
+            <param name="row">Data row with the data on which the test will be done.</param>
+            <param name="type">State machine event type.</param>
+            <returns>True if the field changed (on update) or if the field has a value (on create).
+            For deletes this function will always return True because on delete operation basically
+            all fields were changed, no matter if there are any dependencies or not. Also if there are
+            no dependencies True is always returned.</returns>
+        </member>
+        <member name="T:Origam.Workflow.Tasks.AbstractWorkflowEngineTask">
+            <summary>
+            Summary description for CheckRuleTask.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.Tasks.CheckRuleEngineTask">
+            <summary>
+            Summary description for CheckRuleTask.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.Tasks.ForEachBlockEngineTask">
+            <summary>
+            Summary description for ForEachBlockEngineTask.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.Tasks.LoopBlockEngineTask">
+            <summary>
+            Summary description for ForEachBlockEngineTask.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.Tasks.ServiceMethodCallEngineTask">
+            <summary>
+            Summary description for ServiceMethodCallTask.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.Tasks.SetWorkflowPropertyEngineTask">
+            <summary>
+            Summary description for SetWorkflowPropertyEngineTask.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.Tasks.TransactionBlockEngineTask">
+            <summary>
+            Summary description for TransactionBlockEngineTask.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.Tasks.UIEngineTask">
+            <summary>
+            Summary description for UIEngineTask.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.Tasks.UpdateContextEngineTask">
+            <summary>
+            Summary description for UpdateContextEngineTask.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.Tasks.WaitEngineTask">
+            <summary>
+            Summary description for SetWorkflowPropertyEngineTask.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.Tasks.WorkflowCallEngineTask">
+            <summary>
+            Summary description for WorkflowCallEngineTask.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowCancelledByUserException">
+            <summary>
+            Summary description for WorkflowCancelledByUserException.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowEngineTaskEventArgs">
+            <summary>
+            Summary description for WorkflowEngineTaskEventArgs.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowException">
+            <summary>
+            Summary description for WorkflowException.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowHost">
+            <summary>
+            Summary description for WorkflowHost.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowHostEventArgs">
+            <summary>
+            Summary description for WorkflowHostEventArgs.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowHostFormEventArgs">
+            <summary>
+            Summary description for WorkflowHostFormEventArgs.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowHostMessageEventArgs">
+            <summary>
+            Summary description for WorkflowHostMessageEventArgs.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowStateData">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowStateData.WorkflowStateDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowStateData.WorkflowStateContextDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowStateData.WorkflowStateStepDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowStateData.WorkflowStateRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowStateData.WorkflowStateContextRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowStateData.WorkflowStateStepRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowStateData.WorkflowStateRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowStateData.WorkflowStateContextRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkflowStateData.WorkflowStateStepRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.OrigamNotificationContactData">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.OrigamNotificationContactData.OrigamNotificationContactDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.OrigamNotificationContactData.OrigamNotificationContactRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.OrigamNotificationContactData.OrigamNotificationContactRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueAdapterFactory">
+            <summary>
+            Summary description for WorkQueueAdapterFactory.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueAdapterResult">
+            <summary>
+            Summary description for WorkQueueAdapterResult.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueData">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueData.WorkQueueDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueData.WorkQueueCommandDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueData.WorkQueueNotificationDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueData.WorkQueueNotificationContact_SendersDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueData.WorkQueueNotificationContact_RecipientsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueData.WorkQueueRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueData.WorkQueueCommandRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueData.WorkQueueNotificationRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueData.WorkQueueNotificationContact_SendersRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueData.WorkQueueNotificationContact_RecipientsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueData.WorkQueueRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueData.WorkQueueCommandRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueData.WorkQueueNotificationRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueData.WorkQueueNotificationContact_SendersRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueData.WorkQueueNotificationContact_RecipientsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueItemLockedException">
+            <summary>
+            Summary description for WorkQueueItemLockedException.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueLoaderAdapter">
+            <summary>
+            Summary description for WorkQueueLoaderAdapter.
+            </summary>
+        </member>
+        <member name="M:Origam.Workflow.WorkQueue.WorkQueueService.GenerateNotificationMessage(System.Guid,Origam.Service.Core.IXmlContainer,System.Data.DataRow,System.Data.DataRow,System.String)">
+            <summary>
+            Prepare a data to be sent as a notification.
+            </summary>
+            <param name="notificationTemplateId">Id of message template</param>
+            <param name="notificationSource">notificationSource Input context for transformation - data taken either from WorkQueue Entry or fetched by refId </param>
+            <param name="recipientRow">Recipient info</param>
+            <param name="transactionId">current db transaction</param>
+            <returns>Xml containing in the first row of the first table non-empty fields named "Body" and "Subject"</returns>
+        </member>
+        <member name="M:Origam.Workflow.WorkQueue.WorkQueueService.HandleAction(System.Guid,System.String,System.Data.DataTable,System.Guid,System.String,System.String,System.String,System.Object)">
+            <summary>
+            Handles work queue actions from the UI. WILL NOT CREATE TRANSACTIONS!
+            </summary>
+            <param name="workQueueClassIdentifier"></param>
+            <param name="selectedRows"></param>
+            <param name="commandType"></param>
+            <param name="command"></param>
+            <param name="param1"></param>
+            <param name="param2"></param>
+            <param name="errorQueueId"></param>
+        </member>
+        <member name="M:Origam.Workflow.WorkQueue.WorkQueueService.UnlockQueueItems(System.Data.DataTable,System.Boolean)">
+            <summary>
+            Unlocks work queue entries in a separate (new) database transaction
+            </summary>
+            <param name="selectedRows">Work queue entries to unlock </param>
+            <param name="rejectChangesWhenDeleted">This should be set if you call the
+            function from within catch handler. In that case the original transaction
+            has been rollbacked and even already removed entries has been recreated.
+            We need to reflect that state in the dataset (reject changes)
+            and that way unlock deleted rows.
+            </param>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueWebLoader">
+            <summary>
+            Summary description for WorkQueueFileLoader.
+            </summary>
+        </member>
+        <member name="T:Origam.Workflow.WorkQueue.WorkQueueWorkflowLoader">
+            <summary>
+            Connection string:
+            name - name of the workflowLoader defined at the WorkQueueClass.
+            The workflow called must implement IWorkQueueLoader workflow defined in the OrigamRoot model.
+            anything else - input workflow parameters - constant text values as defined in the connection string
+            </summary>
+        </member>
+        <member name="T:GsmLink.EncodingScheme">
+            <summary>
+            Specifies the method to use in encoding the data contained in the
+            <see cref="!:SmsMessage.Body"/> property of an <see cref="!:SmsMessage"/>
+            instance.
+            </summary>
+        </member>
+        <member name="F:GsmLink.EncodingScheme.Text">
+            <summary>
+            Specifies that the data is encoded as text, using the GSM 7-bit
+            default character set.
+            </summary>
+        </member>
+        <member name="F:GsmLink.EncodingScheme.Data">
+            <summary>
+            Specifies that the data is encoded as 8-bit binary data.
+            </summary>
+        </member>
+        <member name="F:GsmLink.EncodingScheme.Unknown">
+            <summary>
+            Specifies that the type of encoding is unknown.
+            </summary>
+        </member>
+        <member name="T:GsmLink.MessageType">
+            <summary>
+            Specifies the type of the SMS message.
+            </summary>
+        </member>
+        <member name="F:GsmLink.MessageType.SmsDeliver">
+            <summary>
+            Specifies that the SMS message originated from the SMSC
+            and delivered to the GSM device.
+            </summary>
+        </member>
+        <member name="F:GsmLink.MessageType.SmsSubmit">
+            <summary>
+            Specifies that the SMS message originated from the GSM device
+            and submitted to the SMSC for delivery to another GSM device.
+            </summary>
+        </member>
+        <member name="F:GsmLink.MessageType.Unknown">
+            <summary>
+            Specifies that the SMS message is of unknown type.
+            </summary>
+        </member>
+        <member name="T:GsmLink.SyncOptions">
+            <summary>
+            Specifies the synchronization options used by the <see cref="!:GsmDevice"/>
+            class.
+            </summary>
+            <remarks>
+            This enumeration is a bit field.
+            </remarks>
+        </member>
+        <member name="F:GsmLink.SyncOptions.None">
+            <summary>
+            Specifies that synchronization is turned off.
+            </summary>
+        </member>
+        <member name="F:GsmLink.SyncOptions.AutoSendReceive">
+            <summary>
+            Specifies that the <see cref="!:GsmDevice"/> will continuously poll
+            the physical GSM device for new messages, send queued messages,
+            and check the status of the GSM device.
+            </summary>
+        </member>
+        <member name="F:GsmLink.SyncOptions.AutoDelete">
+            <summary>
+            Specifies that when <see cref="!:GsmDevice"/> copies new SMS messages
+            from the physical GSM device to its internal message caches (i.e.
+            Inbox, Outbox, Sent), the original SMS messages left in the GSM device
+            are deleted.
+            </summary>
+        </member>
+        <member name="F:GsmLink.SyncOptions.AutoNotify">
+            <summary>
+            Specifies that the <see cref="!:GsmDevice"/> will raise events.
+            </summary>
+        </member>
+        <member name="F:GsmLink.SyncOptions.AutoPersist">
+            <summary>
+            Specifies that the <see cref="!:GsmDevice"/> will automatically
+            save the contents of its internal message caches (i.e. Inbox, Outbox,
+            Sent) using a <see cref="!:GsmLink.Persistence.PersistenceProvider"/>.
+            </summary>
+        </member>
+        <member name="F:GsmLink.SyncOptions.All">
+            <summary>
+            Specifies that all options are turned on.
+            </summary>
+        </member>
+    </members>
+</doc>

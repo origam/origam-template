@@ -1,0 +1,200 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Origam.Schema.WorkflowModel</name>
+    </assembly>
+    <members>
+        <member name="T:Origam.Schema.WorkflowModel.IContextReference">
+            <summary>
+            Summary description for IContextReference.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.IContextStore">
+            <summary>
+            Summary description for IContextStore.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.IService">
+            <summary>
+            Summary description for IService.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.IServiceMethod">
+            <summary>
+            Summary description for IServiceMethod.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.IWorkflowBlock">
+            <summary>
+            Summary description for IWorkflowBlock.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.IWorkflowStep">
+            <summary>
+            Summary description for IWorkflowStep.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.IWorkflowTask">
+            <summary>
+            Summary description for IWorkflowTask.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.IWorkflowTransaction">
+            <summary>
+            Summary description for IWorkflowTransaction.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.AbstractScheduleTime">
+            <summary>
+            Summary description for AbstractScheduleTime.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.AbstractWorkflowBlock">
+            <summary>
+            Summary description for AbstractWorkflowBlock.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.AbstractWorkflowStep">
+            <summary>
+            Summary description for AbstractWorkflowStep.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.ContextReference">
+            <summary>
+            Summary description for ContextReference.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.ContextStore">
+            <summary>
+            Summary description for ContextStore.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.ContextStoreLink">
+            <summary>
+            Summary description for ContextStoreLink.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.DataStructureWorkflowMethod">
+            <summary>
+            Summary description for DataStructureWorkflowMethod.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.ForeachWorkflowBlock">
+            <summary>
+            Summary description for ForeachWorkflowBlock.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.LoopWorkflowBlock">
+            <summary>
+            Summary description for ForeachWorkflowBlock.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.AbstractWorkflowPageAction">
+            <summary>
+            Summary description for ServiceMethod.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.RedirectWorkflowPageAction">
+            <summary>
+            Summary description for RedirectWorkflowPageAction.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.ServiceMethodParameter">
+            <summary>
+            Parameter that can be used to parametrize any kind of schema item.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.StateMachineDynamicLookupParameterMapping">
+            <summary>
+            Summary description for ContextStoreLink.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.StateMachineEvent">
+            <summary>
+            Summary description for StateMachineState.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.StateMachineEventFieldDependency">
+            <summary>
+            Summary description for ContextStoreLink.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.StateMachineEventParameterMapping">
+            <summary>
+            Summary description for ContextStoreLink.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.StateMachineOperation">
+            <summary>
+            Summary description for StateMachineState.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.SystemFunctionCall">
+            <summary>
+            Summary description for SystemFunctionCall.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.TransactionWorkflowBlock">
+            <summary>
+            Summary description for TransactionWorkflowBlock.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.Workflow">
+            <summary>
+            Summary description for Workflow.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.WorkflowReference">
+            <summary>
+            Summary description for RuleReference.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.WorkflowTaskDependency">
+            <summary>
+            Summary description for WorkflowTaskDependency.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.CheckRuleStep">
+            <summary>
+            Summary description for WorkflowCallTask.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.UpdateContextTaskValidModelElementRuleAttribute">
+            <summary>
+            Checks a validity of a workflow update context task schemaitem - whether the name defined in "FieldName"
+            corresponds with either a column defined on datastructure level or with an entity column
+            provided that AllFields flag on datastructure entity is set.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.WaitTask">
+            <summary>
+            Summary description for WorkflowCallTask.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.WorkflowTask">
+            <summary>
+            Summary description for WorkflowTask.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.WorkQueueClassEntityMapping">
+            <summary>
+            Summary description for ContextStore.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.WorkqueueLoader">
+            <summary>
+            Summary description for WorkqueueLoader.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.WorkQueueWorkflowCommand">
+            <summary>
+            Summary description for WorkQueueWorkflowCommand.
+            </summary>
+        </member>
+        <member name="T:Origam.Schema.WorkflowModel.WorkQueueWorkflowCommandParameterMapping">
+            <summary>
+            Summary description for EntitySecurityRule.
+            </summary>
+        </member>
+    </members>
+</doc>
