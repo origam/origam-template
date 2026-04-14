@@ -94,9 +94,17 @@ System.Console.WriteLine("Granted CREATE on public schema (template1) for Postgr
 $ComposerDir = Join-Path $ModelDir "origam-composer"
 $ComposerExe = Join-Path $ComposerDir "Origam.Composer.exe"
 
+$FinalProjectFolder = Join-Path $ModelDir $env:PROJECT_NAME
+
+# Skip Composer if project files already exist
+if ((Test-Path (Join-Path $FinalProjectFolder "model")) -and
+    (Test-Path (Join-Path $FinalProjectFolder "docker"))) {
+    Write-Host "Project '$($env:PROJECT_NAME)' already exists at $FinalProjectFolder, skipping Composer."
+    exit 0
+}
+
 # Use a local temp folder for Composer output (avoids volume mount write issues)
 $TempProjectFolder = "C:\temp\$($env:PROJECT_NAME)"
-$FinalProjectFolder = Join-Path $ModelDir $env:PROJECT_NAME
 
 # Clean up any previous temp folder
 if (Test-Path $TempProjectFolder) {
