@@ -21,7 +21,8 @@ services:
     image: mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022
     profiles: ["win"]
     isolation: process
-    network_mode: nat
+    networks:
+      - stable-nat
     working_dir: c:/model
     dns:
       - 8.8.8.8
@@ -115,7 +116,8 @@ services:
     container_name: ${PROJECT_NAME:-MyOrigamApp}-server
     restart: unless-stopped
     isolation: process
-    network_mode: nat
+    networks:
+      - stable-nat
     stdin_open: true
     tty: true
     ports:
@@ -169,7 +171,8 @@ services:
     container_name: ${PROJECT_NAME:-MyOrigamApp}-architect
     restart: unless-stopped
     isolation: process
-    network_mode: nat
+    networks:
+      - stable-nat
     stdin_open: true
     tty: true
     ports:
@@ -258,3 +261,12 @@ services:
 volumes:
   mssql_data:
   postgres_data:
+
+networks:
+  stable-nat:
+    name: stable-nat
+    driver: nat
+    ipam:
+      config:
+        - subnet: 172.20.0.0/20
+          gateway: 172.20.0.1

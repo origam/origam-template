@@ -15,41 +15,7 @@ Get-Content $ConfigFile | ForEach-Object {
     }
 }
 
-# Resolve DB host for Windows containers
-# If DB_HOST_WINDOWS=auto-detect: find NAT gateway IP, then verify the DB port is reachable
 $dbHost = $env:DB_HOST_WINDOWS
-if (-not $dbHost -or $dbHost -eq "auto-detect") {
-    $dbPort = if ($env:DB_PORT) { [int]$env:DB_PORT } else { if ($env:DB_TYPE -eq "postgres") { 5432 } else { 1433 } }
-    $gateway = $null
-    try {
-        $gateway = (Get-NetRoute -DestinationPrefix '0.0.0.0/0' | Select-Object -First 1).NextHop
-    } catch {}
-
-    # Try NAT gateway first (works with firewall rules on vEthernet(nat))
-    # Then fall back to host.docker.internal
-    $candidates = @($gateway, "host.docker.internal") | Where-Object { $_ }
-
-    $dbHost = $null
-    foreach ($candidate in $candidates) {
-        Write-Host "Testing DB connectivity: ${candidate}:${dbPort} ..."
-        $tcp = New-Object System.Net.Sockets.TcpClient
-        try {
-            $result = $tcp.BeginConnect($candidate, $dbPort, $null, $null)
-            $success = $result.AsyncWaitHandle.WaitOne(3000)
-            if ($success -and $tcp.Connected) {
-                $dbHost = $candidate
-                Write-Host "DB host resolved: $dbHost"
-                break
-            }
-        } catch {} finally { $tcp.Dispose() }
-    }
-
-    if (-not $dbHost) {
-        $dbHost = if ($gateway) { $gateway } else { "host.docker.internal" }
-        Write-Warning "Could not verify DB connectivity, using: $dbHost"
-    }
-}
-$env:DB_HOST_WINDOWS = $dbHost
 
 # Grant CREATE on public schema (required for PostgreSQL 15+)
 # Uses dotnet CLI because Windows PowerShell 5.1 (.NET Framework) cannot load .NET 8 Npgsql.dll
