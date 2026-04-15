@@ -97,11 +97,6 @@ $ComposerArgs = @(
     "--arch-docker-image-win", $env:ORIGAM_ARCHITECT_IMAGE_WINDOWS,
     "--arch-port", $env:ARCHITECT_PORT
 )
-if ($env:GIT_ENABLED -eq "true") {
-    $ComposerArgs += "--git-enabled"
-    $ComposerArgs += "--git-user", $env:GIT_USER
-    $ComposerArgs += "--git-email", $env:GIT_EMAIL
-}
 
 & $ComposerExe @ComposerArgs
 

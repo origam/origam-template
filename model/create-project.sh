@@ -15,11 +15,6 @@ COMPOSER_DLL="$MODEL_DIR/origam-composer/Origam.Composer.dll"
 
 PROJECT_FOLDER="$MODEL_DIR/$PROJECT_NAME"
 
-GIT_ARGS=()
-if [ "${GIT_ENABLED:-false}" = "true" ]; then
-  GIT_ARGS+=(--git-enabled --git-user "$GIT_USER" --git-email "$GIT_EMAIL")
-fi
-
 dotnet "$COMPOSER_DLL" create \
   --commands-output-format cmd \
   --db-type "$DB_TYPE" \
@@ -37,5 +32,4 @@ dotnet "$COMPOSER_DLL" create \
   --p-docker-image-win "$ORIGAM_SERVER_IMAGE_WINDOWS" \
   --arch-docker-image-linux "$ORIGAM_ARCHITECT_IMAGE_LINUX" \
   --arch-docker-image-win "$ORIGAM_ARCHITECT_IMAGE_WINDOWS" \
-  --arch-port "$ARCHITECT_PORT" \
-  "${GIT_ARGS[@]}"
+  --arch-port "$ARCHITECT_PORT" 
