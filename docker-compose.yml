@@ -1,8 +1,8 @@
-﻿name: ${PROJECT_NAME:-MyOrigamApp}
+﻿name: ${PROJECT_NAME}
 
 services:
   create-project-linux:
-    image: mcr.microsoft.com/dotnet/runtime:8.0
+    image: ${CREATE_PROJECT_IMAGE_LINUX}
     profiles: ["linux"]
     working_dir: /model
     volumes:
@@ -18,7 +18,7 @@ services:
         required: false
 
   create-project-windows:
-    image: mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022
+    image: ${CREATE_PROJECT_IMAGE_WINDOWS}
     profiles: ["win"]
     isolation: process
     networks:
@@ -43,15 +43,15 @@ services:
 
   origam-server:
     profiles: ["app"]
-    image: origam/server:master-latest.linux
-    container_name: ${PROJECT_NAME:-MyOrigamApp}-server
+    image: ${ORIGAM_SERVER_IMAGE_LINUX}
+    container_name: ${PROJECT_NAME}-server-linux
     restart: unless-stopped
     stdin_open: true
     tty: true
     ports:
-      - "${SERVER_PORT:-443}:443"
+      - "${SERVER_PORT}:443"
     environment:
-      PROJECT_NAME: ${PROJECT_NAME:-MyOrigamApp}
+      PROJECT_NAME: ${PROJECT_NAME}
     volumes:
       - "./model:/model-src"
     entrypoint:
@@ -78,15 +78,15 @@ services:
 
   origam-architect:
     profiles: ["app"]
-    image: origam/architect:master-latest.linux
-    container_name: ${PROJECT_NAME:-MyOrigamApp}-architect
+    image: ${ORIGAM_ARCHITECT_IMAGE_LINUX}
+    container_name: ${PROJECT_NAME}-architect-linux
     restart: unless-stopped
     stdin_open: true
     tty: true
     ports:
-      - "${ARCHITECT_PORT:-8081}:8081"
+      - "${ARCHITECT_PORT}:8081"
     environment:
-      PROJECT_NAME: ${PROJECT_NAME:-MyOrigamApp}
+      PROJECT_NAME: ${PROJECT_NAME}
     volumes:
       - "./model:/model-src"
     entrypoint:
@@ -112,8 +112,8 @@ services:
 
   origam-server-windows:
     profiles: ["win-app"]
-    image: ${ORIGAM_SERVER_IMAGE_WINDOWS:-origam/server:2026.3.0.4198.win-nano}
-    container_name: ${PROJECT_NAME:-MyOrigamApp}-server
+    image: ${ORIGAM_SERVER_IMAGE_WINDOWS}
+    container_name: ${PROJECT_NAME}-server-windows
     restart: unless-stopped
     isolation: process
     networks:
@@ -121,10 +121,10 @@ services:
     stdin_open: true
     tty: true
     ports:
-      - "${SERVER_PORT:-443}:443"
+      - "${SERVER_PORT}:443"
       - "8080:8080"
     environment:
-      PROJECT_NAME: ${PROJECT_NAME:-MyOrigamApp}
+      PROJECT_NAME: ${PROJECT_NAME}
     volumes:
       - "./model:c:/model-src"
     entrypoint:
@@ -167,8 +167,8 @@ services:
 
   origam-architect-windows:
     profiles: ["win-app"]
-    image: ${ORIGAM_ARCHITECT_IMAGE_WINDOWS:-origam/architect:2026.4.alpha.4213.win-nano}
-    container_name: ${PROJECT_NAME:-MyOrigamApp}-architect
+    image: ${ORIGAM_ARCHITECT_IMAGE_WINDOWS}
+    container_name: ${PROJECT_NAME}-architect-windows
     restart: unless-stopped
     isolation: process
     networks:
@@ -176,9 +176,9 @@ services:
     stdin_open: true
     tty: true
     ports:
-      - "${ARCHITECT_PORT:-8081}:8081"
+      - "${ARCHITECT_PORT}:8081"
     environment:
-      PROJECT_NAME: ${PROJECT_NAME:-MyOrigamApp}
+      PROJECT_NAME: ${PROJECT_NAME}
     volumes:
       - "./model:c:/model-src"
     entrypoint:
@@ -219,14 +219,14 @@ services:
 
   mssql:
     profiles: ["mssql"]
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: ${PROJECT_NAME:-MyOrigamApp}-mssql
+    image: ${MSSQL_IMAGE}
+    container_name: ${PROJECT_NAME}-mssql
     restart: unless-stopped
     ports:
-      - "${DB_PORT:-1433}:1433"
+      - "${DB_PORT}:1433"
     environment:
       ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: ${DB_PASSWORD:-yourStrong(!)Password}
+      MSSQL_SA_PASSWORD: ${DB_PASSWORD}
       MSSQL_PID: Developer
     volumes:
       - mssql_data:/var/opt/mssql
@@ -239,16 +239,16 @@ services:
 
   postgres:
     profiles: ["postgres"]
-    image: postgres:16
-    container_name: ${PROJECT_NAME:-MyOrigamApp}-postgres
+    image: ${POSTGRES_IMAGE}
+    container_name: ${PROJECT_NAME}-postgres
     restart: unless-stopped
     ports:
-      - "${DB_PORT:-5432}:5432"
+      - "${DB_PORT}:5432"
     environment:
-      POSTGRES_USER: ${DB_USERNAME:-postgres}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: postgres
-      PGUSER: ${DB_USERNAME:-postgres}
+      PGUSER: ${DB_USERNAME}
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./model/postgres-init:/docker-entrypoint-initdb.d:ro
