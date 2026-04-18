@@ -48,7 +48,7 @@ services:
     container_name: ${PROJECT_NAME}-composer-windows
     isolation: hyperv
     volumes:
-      - model_win_data:c:/work
+      - "./model:c:/work"
     networks:
       - stable-nat
     dns:
@@ -190,7 +190,7 @@ services:
     environment:
       PROJECT_NAME: ${PROJECT_NAME}
     volumes:
-      - model_win_data:c:/model-src
+      - "./model:c:/model-src"
     entrypoint:
       - pwsh
       - -ExecutionPolicy
@@ -244,7 +244,7 @@ services:
     environment:
       PROJECT_NAME: ${PROJECT_NAME}
     volumes:
-      - model_win_data:c:/model-src
+      - "./model:c:/model-src"
     entrypoint:
       - pwsh
       - -ExecutionPolicy
@@ -323,7 +323,6 @@ services:
       retries: 10
 
 volumes:
-  model_win_data:
   mssql_data:
   postgres_data:
 
@@ -335,6 +334,8 @@ networks:
       config:
         - subnet: 172.20.0.0/20
           gateway: 172.20.0.1
+
+
 
 
 
