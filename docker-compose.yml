@@ -54,13 +54,6 @@ services:
     dns:
       - 8.8.8.8
       - 8.8.4.4
-    environment:
-      DOTNET_CLI_UI_LANGUAGE: en
-      DOTNET_DbgEnableMiniDump: "1"
-      DOTNET_DbgMiniDumpType: "4"
-      DOTNET_DbgMiniDumpName: c:/work/composer-crash.dmp
-      DOTNET_EnableDiagnostics: "1"
-      COMPlus_DebugWriteToStdErr: "1"
     command:
       - create
       - --commands-output-format
