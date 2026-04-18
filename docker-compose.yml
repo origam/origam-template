@@ -1,14 +1,39 @@
-﻿name: ${PROJECT_NAME}
+name: ${PROJECT_NAME}
 
 services:
   create-project-linux:
-    image: ${CREATE_PROJECT_IMAGE_LINUX}
+    image: ${COMPOSER_IMAGE_LINUX}
     profiles: ["linux"]
-    working_dir: /model
     volumes:
       - ./model:/model
-      - ./.env:/.env:ro
-    entrypoint: ["/bin/bash", "-c", "sed -i 's/\r$//' /model/create-project.sh && bash /model/create-project.sh"]
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        set -e
+        PROJECT_DIR="/model/${PROJECT_NAME}"
+        if [ -d "$$PROJECT_DIR/model" ] && [ -d "$$PROJECT_DIR/docker" ]; then
+          echo "Project '${PROJECT_NAME}' already exists at $$PROJECT_DIR, skipping Composer."
+          exit 0
+        fi
+        exec dotnet /home/origam/Composer/Origam.Composer.dll create \
+          --commands-output-format cmd \
+          --db-type "${DB_TYPE}" \
+          --db-host "${DB_HOST_LINUX}" \
+          --db-port "${DB_PORT}" \
+          --db-name "${DB_NAME}" \
+          --db-username "${DB_USERNAME}" \
+          --db-password "${DB_PASSWORD}" \
+          --p-name "${PROJECT_NAME}" \
+          --p-folder "$$PROJECT_DIR" \
+          --p-admin-username "${ADMIN_USERNAME}" \
+          --p-admin-password "${ADMIN_PASSWORD}" \
+          --p-admin-email "${ADMIN_EMAIL}" \
+          --p-docker-image-linux "${ORIGAM_SERVER_IMAGE_LINUX}" \
+          --p-docker-image-win "${ORIGAM_SERVER_IMAGE_WINDOWS}" \
+          --arch-docker-image-linux "${ORIGAM_ARCHITECT_IMAGE_LINUX}" \
+          --arch-docker-image-win "${ORIGAM_ARCHITECT_IMAGE_WINDOWS}" \
+          --arch-port "${ARCHITECT_PORT}"
     depends_on:
       mssql:
         condition: service_healthy
@@ -18,21 +43,58 @@ services:
         required: false
 
   create-project-windows:
-    image: ${CREATE_PROJECT_IMAGE_WINDOWS}
+    image: ${COMPOSER_IMAGE_WINDOWS}
     profiles: ["win"]
+    container_name: ${PROJECT_NAME}-composer-windows
     isolation: process
     networks:
       - stable-nat
-    working_dir: c:/model
     dns:
       - 8.8.8.8
       - 8.8.4.4
-    volumes:
-      - ./model:c:/model
-      - .:c:/src:ro
     environment:
-      ORIGAM_CONFIG_FILE: "c:/src/.env"
-    entrypoint: ["powershell", "-File", "c:/model/create-project.ps1"]
+      DOTNET_CLI_UI_LANGUAGE: en
+      DOTNET_DbgEnableMiniDump: "1"
+      DOTNET_DbgMiniDumpType: "4"
+      DOTNET_DbgMiniDumpName: c:/work/composer-crash.dmp
+      DOTNET_EnableDiagnostics: "1"
+      COMPlus_DebugWriteToStdErr: "1"
+    command:
+      - create
+      - --commands-output-format
+      - cmd
+      - --db-type
+      - ${DB_TYPE}
+      - --db-host
+      - ${DB_HOST_WINDOWS}
+      - --db-port
+      - "${DB_PORT}"
+      - --db-name
+      - ${DB_NAME}
+      - --db-username
+      - ${DB_USERNAME}
+      - --db-password
+      - ${DB_PASSWORD}
+      - --p-name
+      - ${PROJECT_NAME}
+      - --p-folder
+      - c:\\work\\${PROJECT_NAME}
+      - --p-admin-username
+      - ${ADMIN_USERNAME}
+      - --p-admin-password
+      - ${ADMIN_PASSWORD}
+      - --p-admin-email
+      - ${ADMIN_EMAIL}
+      - --p-docker-image-linux
+      - ${ORIGAM_SERVER_IMAGE_LINUX}
+      - --p-docker-image-win
+      - ${ORIGAM_SERVER_IMAGE_WINDOWS}
+      - --arch-docker-image-linux
+      - ${ORIGAM_ARCHITECT_IMAGE_LINUX}
+      - --arch-docker-image-win
+      - ${ORIGAM_ARCHITECT_IMAGE_WINDOWS}
+      - --arch-port
+      - "${ARCHITECT_PORT}"
     depends_on:
       mssql:
         condition: service_healthy
@@ -270,3 +332,10 @@ networks:
       config:
         - subnet: 172.20.0.0/20
           gateway: 172.20.0.1
+
+
+
+
+
+
+
