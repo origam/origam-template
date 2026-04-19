@@ -55,32 +55,22 @@ DB_PASSWORD=postgres
 ### Generate a project + run on Linux containers (MSSQL from compose):
 
 ```
-docker compose --profile mssql --profile linux --profile app up
+docker compose --profile mssql-internal --profile linux up
 ```
 
 ### Generate a project + run on Linux containers (bundled PostgreSQL):
 
 ```
-docker compose --profile postgres --profile linux --profile app up
+docker compose --profile postgres-internal --profile linux --profile app up
 ```
 
 ### Generate a project + run on Windows containers:
 
 ```
-docker compose --profile mssql --profile win --profile win-app up
-```
-
-### Tear down and clear volumes:
-
-```
-docker compose --profile postgres --profile linux --profile app down -v
+docker compose --profile windows up
 ```
 
 ## How it works
-
-The `create-project-linux` / `create-project-windows` services use
-`origam/composer:<tag>` directly — the entrypoint runs
-`dotnet Origam.Composer.dll create` with args populated from `.env`.
 
 If `./model/<PROJECT_NAME>/docker` already exists, the Composer step is
 skipped, so `up` is idempotent. To regenerate, delete that folder first.
