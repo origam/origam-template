@@ -8,6 +8,50 @@ required.
 
 All image tags and project settings live in `.env`.
 
+## Configuration via `.env`
+
+### Required values
+
+- `DB_TYPE` — database type:
+  - `mssql` (recommended default)
+  - `postgres`
+- `PROJECT_NAME` — project name (for example `Test2`)
+- `DB_PASSWORD` — database password
+
+### Recommended defaults
+
+- `DB_TYPE=mssql`
+- `DB_PORT=1433` for `mssql`
+- `DB_PORT=5432` for `postgres`
+- `SERVER_PORT=443`
+- `ARCHITECT_PORT=8081`
+
+### Example: MSSQL (default)
+
+```env
+DB_TYPE=mssql
+DB_HOST_LINUX=mssql
+DB_HOST_WINDOWS=172.20.0.1
+DB_PORT=1433
+DB_NAME=origam
+DB_USERNAME=sa
+DB_PASSWORD='yourStrong(!)Password'
+```
+
+`DB_HOST_WINDOWS=172.20.0.1` is used because Windows containers in this setup run on the `stable-nat` Docker network, where `172.20.0.1` acts as the host gateway (effectively the container-side equivalent of localhost for reaching host services).
+
+### Example: PostgreSQL (default)
+
+```env
+DB_TYPE=postgres
+DB_HOST_LINUX=postgres
+DB_HOST_WINDOWS=172.20.0.1
+DB_PORT=5432
+DB_NAME=origam
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+```
+
 ### Generate a project + run on Linux containers (MSSQL from compose):
 
 ```

@@ -2,7 +2,7 @@ name: ${PROJECT_NAME}
 
 services:
   create-project-linux:
-    image: ${COMPOSER_IMAGE_LINUX}
+    image: ${ORIGAM_COMPOSER_IMAGE_LINUX}
     profiles: ["linux"]
     volumes:
       - ./model:/model
@@ -43,7 +43,7 @@ services:
         required: false
 
   create-project-windows:
-    image: ${COMPOSER_IMAGE_WINDOWS}
+    image: ${ORIGAM_COMPOSER_IMAGE_WINDOWS}
     profiles: ["win"]
     container_name: ${PROJECT_NAME}-composer-windows
     isolation: hyperv
