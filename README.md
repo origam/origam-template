@@ -1,4 +1,4 @@
-# ORIGAM Template
+﻿# ORIGAM Template
 
 Docker Compose template that:
 
@@ -25,6 +25,7 @@ No local ORIGAM binaries are required.
 |---|---|---|
 | Linux + internal MSSQL | `docker compose --profile mssql-internal --profile linux up` | Default local development flow |
 | Linux + internal PostgreSQL | `docker compose --profile postgres-internal --profile linux up` | You want PostgreSQL locally |
+| Linux + external database | `docker compose --profile linux up` | You use an existing external MSSQL/PostgreSQL database (requires updating .env host/port) |
 | Windows containers | `docker compose --profile windows up` | You run ORIGAM in Windows container mode |
 
 Tip: add `-d` for detached mode.
