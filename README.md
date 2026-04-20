@@ -38,7 +38,7 @@ DB_USERNAME=sa
 DB_PASSWORD='yourStrong(!)Password'
 ```
 
-`DB_HOST_WINDOWS=172.20.0.1` is used because Windows containers in this setup run on the `stable-nat` Docker network, where `172.20.0.1` acts as the host gateway (effectively the container-side equivalent of localhost for reaching host services).
+`DB_HOST_WINDOWS=172.20.0.1` is localhost in this Windows Docker setup. It's used because Windows containers in this setup run on the `stable-nat` Docker network, where `172.20.0.1` acts as the host gateway (effectively the container-side equivalent of localhost for reaching host services).
 
 ### Example: PostgreSQL (default)
 
@@ -61,7 +61,7 @@ docker compose --profile mssql-internal --profile linux up
 ### Generate a project + run on Linux containers (bundled PostgreSQL):
 
 ```
-docker compose --profile postgres-internal --profile linux --profile app up
+docker compose --profile postgres-internal --profile linux up
 ```
 
 ### Generate a project + run on Windows containers:
@@ -74,3 +74,15 @@ docker compose --profile windows up
 
 If `./model/<PROJECT_NAME>/docker` already exists, the Composer step is
 skipped, so `up` is idempotent. To regenerate, delete that folder first.
+
+
+For windows docker containers add Firewall Rule 
+
+```
+New-NetFirewallRule `
+  -DisplayName "Allow from stable-nat" `
+  -Direction Inbound `
+  -Action Allow `
+  -RemoteAddress 172.20.0.0/20 `
+  -Profile Any
+```
