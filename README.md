@@ -109,7 +109,8 @@ To regenerate project files from scratch:
 
 1. Stop stack: `docker compose down`
 2. Remove `./model/<PROJECT_NAME>`
-3. Run `docker compose up` again with your desired profiles
+3. (Optional) Delete the `origam` database if you need to start with a clean database
+4. Run `docker compose up` again with your desired profiles
 
 ## Windows-only note (Firewall)
 
