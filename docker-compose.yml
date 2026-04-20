@@ -1,4 +1,4 @@
-name: ${PROJECT_NAME}
+﻿name: ${PROJECT_NAME}
 
 services:
   origam-composer-linux:
@@ -58,7 +58,6 @@ services:
         mkdir -p /home/origam/projectData
         ln -sfn /model-src/$${PROJECT_NAME}/model /home/origam/projectData/model
         ln -sfn /model-src/$${PROJECT_NAME}/customAssets /home/origam/projectData/customAssets
-        echo "Loading env vars..."
         while IFS= read -r line || [ -n "$$line" ]; do
           case "$$line" in ''|\#*) continue ;; esac
           key=$${line%%=*}
@@ -92,7 +91,6 @@ services:
         echo "Linking project data..."
         mkdir -p /home/origam/projectData
         ln -sfn /model-src/$${PROJECT_NAME}/model /home/origam/projectData/model
-        echo "Loading env vars..."
         while IFS= read -r line || [ -n "$$line" ]; do
           case "$$line" in ''|\#*) continue ;; esac
           key=$${line%%=*}
@@ -113,9 +111,6 @@ services:
       - "./model:c:/work"
     networks:
       - stable-nat
-    dns:
-      - 8.8.8.8
-      - 8.8.4.4
     command:
       - create
       - --commands-output-format
@@ -182,7 +177,6 @@ services:
         $$envFileFallback = "c:\model-src\$$projectName\docker\$${projectName}_Environments_Linux.env"
         while (-not (Test-Path $$envFile) -and -not (Test-Path $$envFileFallback)) { Start-Sleep -Seconds 1 }
         if (-not (Test-Path $$envFile)) { $$envFile = $$envFileFallback }
-        Write-Host "Loading env vars from $$envFile..."
         Get-Content $$envFile | ForEach-Object {
             $$line = $$_.Trim()
             if ($$line -and -not $$line.StartsWith('#')) {
@@ -236,7 +230,6 @@ services:
         $$envFileFallback = "c:\model-src\$$projectName\docker\$${projectName}_Environments_Linux.env"
         while (-not (Test-Path $$envFile) -and -not (Test-Path $$envFileFallback)) { Start-Sleep -Seconds 1 }
         if (-not (Test-Path $$envFile)) { $$envFile = $$envFileFallback }
-        Write-Host "Loading env vars from $$envFile..."
         Get-Content $$envFile | ForEach-Object {
             $$line = $$_.Trim()
             if ($$line -and -not $$line.StartsWith('#')) {
@@ -273,12 +266,6 @@ services:
       MSSQL_PID: Developer
     volumes:
       - mssql_data:/var/opt/mssql
-    healthcheck:
-      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$${MSSQL_SA_PASSWORD}\" -C -Q 'SELECT 1' || /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P \"$${MSSQL_SA_PASSWORD}\" -Q 'SELECT 1'"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 20s
 
   postgres:
     profiles: ["postgres-internal"]
@@ -295,11 +282,6 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./model/postgres-init:/docker-entrypoint-initdb.d:ro
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
 
 volumes:
   mssql_data:
