@@ -1,31 +1,40 @@
-﻿name: ${PROJECT_NAME}
+# Copyright 2005 - 2026 Advantage Solutions, s. r. o.
+#This file is part of ORIGAM (http://www.origam.org).
+#ORIGAM is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+#ORIGAM is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#GNU General Public License for more details.
+#You should have received a copy of the GNU General Public License
+#along with ORIGAM. If not, see <http://www.gnu.org/licenses/>.
+
+name: ${PROJECT_NAME}
 
 services:
   origam-composer-linux:
     image: ${ORIGAM_COMPOSER_IMAGE_LINUX}
     profiles: ["linux"]
     volumes:
-      - ./model:/model
+      - .:/model
     entrypoint:
       - /bin/bash
       - -c
       - |
         set -e
-        PROJECT_DIR="/model/${PROJECT_NAME}"
-        if [ -d "$$PROJECT_DIR/model" ] && [ -d "$$PROJECT_DIR/docker" ]; then
-          echo "Project '${PROJECT_NAME}' already exists at $$PROJECT_DIR, skipping Composer."
-          exit 0
-        fi
+       
         exec dotnet /home/origam/Composer/Origam.Composer.dll create \
           --commands-output-format cmd \
-          --db-type "${DB_TYPE}" \
-          --db-host "${DB_HOST_LINUX}" \
-          --db-port "${DB_PORT}" \
+          --db-type "postgres" \
+          --db-host "postgres" \
+          --db-port "5432" \
           --db-name "${DB_NAME}" \
           --db-username "${DB_USERNAME}" \
           --db-password "${DB_PASSWORD}" \
           --p-name "${PROJECT_NAME}" \
-          --p-folder "$$PROJECT_DIR" \
+          --p-folder "/model" \
           --p-admin-username "${ADMIN_USERNAME}" \
           --p-admin-password "${ADMIN_PASSWORD}" \
           --p-admin-email "${ADMIN_EMAIL}" \
@@ -33,7 +42,7 @@ services:
           --p-docker-image-win "${ORIGAM_SERVER_IMAGE_WINDOWS}" \
           --arch-docker-image-linux "${ORIGAM_ARCHITECT_IMAGE_LINUX}" \
           --arch-docker-image-win "${ORIGAM_ARCHITECT_IMAGE_WINDOWS}" \
-          --arch-port "${ARCHITECT_PORT}"
+          --arch-port "8081"
 
   origam-server-linux:
     profiles: ["linux"]
@@ -43,27 +52,27 @@ services:
     stdin_open: true
     tty: true
     ports:
-      - "${SERVER_PORT}:443"
+      - "443:443"
     environment:
       PROJECT_NAME: ${PROJECT_NAME}
     volumes:
-      - "./model:/model-src"
+      - "./:/model-src"
     entrypoint:
       - /bin/bash
       - -c
       - |
         echo "Waiting for $${PROJECT_NAME} to be generated..."
-        while [ ! -f /model-src/$${PROJECT_NAME}/docker/$${PROJECT_NAME}_Environments_Linux.env ]; do sleep 1; done
+        while [ ! -f /model-src/$${PROJECT_NAME}_Environments.env ]; do sleep 1; done
         echo "Linking project data..."
         mkdir -p /home/origam/projectData
-        ln -sfn /model-src/$${PROJECT_NAME}/model /home/origam/projectData/model
-        ln -sfn /model-src/$${PROJECT_NAME}/customAssets /home/origam/projectData/customAssets
+        ln -sfn /model-src/model /home/origam/projectData/model
+        ln -sfn /model-src/customAssets /home/origam/projectData/customAssets
         while IFS= read -r line || [ -n "$$line" ]; do
           case "$$line" in ''|\#*) continue ;; esac
           key=$${line%%=*}
           value=$${line#*=}
           export "$$key=$$value"
-        done < /model-src/$${PROJECT_NAME}/docker/$${PROJECT_NAME}_Environments_Linux.env
+        done < /model-src/$${PROJECT_NAME}_Environments.env
         exec ./entrypoint.sh
     depends_on:
       origam-composer-linux:
@@ -77,26 +86,26 @@ services:
     stdin_open: true
     tty: true
     ports:
-      - "${ARCHITECT_PORT}:8081"
+      - "8081:8081"
     environment:
       PROJECT_NAME: ${PROJECT_NAME}
     volumes:
-      - "./model:/model-src"
+      - "./:/model-src"
     entrypoint:
       - /bin/bash
       - -c
       - |
         echo "Waiting for $${PROJECT_NAME} to be generated..."
-        while [ ! -f /model-src/$${PROJECT_NAME}/docker/$${PROJECT_NAME}_Environments_Linux.env ]; do sleep 1; done
+        while [ ! -f /model-src/$${PROJECT_NAME}_Environments.env ]; do sleep 1; done
         echo "Linking project data..."
         mkdir -p /home/origam/projectData
-        ln -sfn /model-src/$${PROJECT_NAME}/model /home/origam/projectData/model
+        ln -sfn /model-src/model /home/origam/projectData/model
         while IFS= read -r line || [ -n "$$line" ]; do
           case "$$line" in ''|\#*) continue ;; esac
           key=$${line%%=*}
           value=$${line#*=}
           export "$$key=$$value"
-        done < /model-src/$${PROJECT_NAME}/docker/$${PROJECT_NAME}_Environments_Linux.env
+        done < /model-src/$${PROJECT_NAME}_Environments.env
         exec ./entrypoint.sh
     depends_on:
       origam-composer-linux:
@@ -108,7 +117,7 @@ services:
     container_name: ${PROJECT_NAME}-composer-windows
     isolation: hyperv
     volumes:
-      - "./model:c:/work"
+      - "./:c:/work"
     networks:
       - stable-nat
     command:
@@ -116,11 +125,11 @@ services:
       - --commands-output-format
       - cmd
       - --db-type
-      - ${DB_TYPE}
+      - postgres
       - --db-host
-      - ${DB_HOST_WINDOWS}
+      - 172.20.0.1
       - --db-port
-      - "${DB_PORT}"
+      - "5432"
       - --db-name
       - ${DB_NAME}
       - --db-username
@@ -146,7 +155,7 @@ services:
       - --arch-docker-image-win
       - ${ORIGAM_ARCHITECT_IMAGE_WINDOWS}
       - --arch-port
-      - "${ARCHITECT_PORT}"
+      - "8081"
 
   origam-server-windows:
     profiles: ["windows"]
@@ -159,12 +168,12 @@ services:
     stdin_open: true
     tty: true
     ports:
-      - "${SERVER_PORT}:443"
+      - "443:443"
       - "8080:8080"
     environment:
       PROJECT_NAME: ${PROJECT_NAME}
     volumes:
-      - "./model:c:/model-src"
+      - "./:c:/model-src"
     entrypoint:
       - pwsh
       - -ExecutionPolicy
@@ -173,10 +182,8 @@ services:
       - |
         $$projectName = $$env:PROJECT_NAME
         Write-Host "Waiting for $$projectName to be generated..."
-        $$envFile = "c:\model-src\$$projectName\docker\$${projectName}_Environments_Windows.env"
-        $$envFileFallback = "c:\model-src\$$projectName\docker\$${projectName}_Environments_Linux.env"
-        while (-not (Test-Path $$envFile) -and -not (Test-Path $$envFileFallback)) { Start-Sleep -Seconds 1 }
-        if (-not (Test-Path $$envFile)) { $$envFile = $$envFileFallback }
+        $$envFile = "c:\model-src\$${projectName}_Environments.env"
+        while (-not (Test-Path $$envFile)) { Start-Sleep -Seconds 1 }
         Get-Content $$envFile | ForEach-Object {
             $$line = $$_.Trim()
             if ($$line -and -not $$line.StartsWith('#')) {
@@ -191,9 +198,9 @@ services:
         $$dataPath = "C:\home\origam\projectData"
         if (Test-Path $$dataPath) { Remove-Item -Recurse -Force $$dataPath }
         New-Item -ItemType Directory -Path $$dataPath -Force | Out-Null
-        Copy-Item -Path "c:\model-src\$$projectName\model" -Destination "$$dataPath\model" -Recurse -Force
-        if (Test-Path "c:\model-src\$$projectName\customAssets") {
-            Copy-Item -Path "c:\model-src\$$projectName\customAssets" -Destination "$$dataPath\customAssets" -Recurse -Force
+        Copy-Item -Path "c:\model-src\model" -Destination "$$dataPath\model" -Recurse -Force
+        if (Test-Path "c:\model-src\customAssets") {
+            Copy-Item -Path "c:\model-src\customAssets" -Destination "$$dataPath\customAssets" -Recurse -Force
         }
         Write-Host "Starting EntryPoint.ps1..."
         Set-Location C:\home\origam
@@ -213,11 +220,11 @@ services:
     stdin_open: true
     tty: true
     ports:
-      - "${ARCHITECT_PORT}:8081"
+      - "8081:8081"
     environment:
       PROJECT_NAME: ${PROJECT_NAME}
     volumes:
-      - "./model:c:/model-src"
+      - "./:c:/model-src"
     entrypoint:
       - pwsh
       - -ExecutionPolicy
@@ -226,10 +233,8 @@ services:
       - |
         $$projectName = $$env:PROJECT_NAME
         Write-Host "Waiting for $$projectName to be generated..."
-        $$envFile = "c:\model-src\$$projectName\docker\$${projectName}_Environments_Windows.env"
-        $$envFileFallback = "c:\model-src\$$projectName\docker\$${projectName}_Environments_Linux.env"
-        while (-not (Test-Path $$envFile) -and -not (Test-Path $$envFileFallback)) { Start-Sleep -Seconds 1 }
-        if (-not (Test-Path $$envFile)) { $$envFile = $$envFileFallback }
+        $$envFile = "c:\model-src\$${projectName}_Environments.env"
+        while (-not (Test-Path $$envFile)) { Start-Sleep -Seconds 1 }
         Get-Content $$envFile | ForEach-Object {
             $$line = $$_.Trim()
             if ($$line -and -not $$line.StartsWith('#')) {
@@ -243,7 +248,7 @@ services:
         $$dataPath = "C:\home\origam\projectData"
         if (Test-Path $$dataPath) { Remove-Item -Recurse -Force $$dataPath }
         New-Item -ItemType Directory -Path $$dataPath -Force | Out-Null
-        Copy-Item -Path "c:\model-src\$$projectName\model" -Destination "$$dataPath\model" -Recurse -Force
+        Copy-Item -Path "c:\model-src\model" -Destination "$$dataPath\model" -Recurse -Force
         Write-Host "Copying template file..."
         Copy-Item "C:\home\origam\Architect\_OrigamSettings.template" "C:\home\origam\_OrigamSettings.template" -Force
         Write-Host "Starting EntryPoint.ps1..."
@@ -255,11 +260,11 @@ services:
 
   mssql:
     profiles: ["mssql-internal"]
-    image: ${MSSQL_IMAGE}
+    image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: ${PROJECT_NAME}-mssql
     restart: unless-stopped
     ports:
-      - "${DB_PORT}:1433"
+      - "1433:1433"
     environment:
       ACCEPT_EULA: "Y"
       MSSQL_SA_PASSWORD: ${DB_PASSWORD}
@@ -269,11 +274,11 @@ services:
 
   postgres:
     profiles: ["postgres-internal"]
-    image: ${POSTGRES_IMAGE}
+    image: postgres:16
     container_name: ${PROJECT_NAME}-postgres
     restart: unless-stopped
     ports:
-      - "${DB_PORT}:5432"
+      - "5432:5432"
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -281,7 +286,6 @@ services:
       PGUSER: ${DB_USERNAME}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./model/postgres-init:/docker-entrypoint-initdb.d:ro
 
 volumes:
   mssql_data:
@@ -295,13 +299,3 @@ networks:
       config:
         - subnet: 172.20.0.0/20
           gateway: 172.20.0.1
-
-
-
-
-
-
-
-
-
-
