@@ -27,8 +27,8 @@ services:
        
         exec dotnet /home/origam/Composer/Origam.Composer.dll create \
           --commands-output-format cmd \
-          --db-type "postgres" \
-          --db-host "postgres" \
+          --db-type "${DB_TYPE}" \
+          --db-host "${DB_HOST}" \
           --db-port "5432" \
           --db-name "${DB_NAME}" \
           --db-username "${DB_USERNAME}" \
@@ -100,9 +100,9 @@ services:
       - --commands-output-format
       - cmd
       - --db-type
-      - postgres
+      - ${DB_TYPE}
       - --db-host
-      - 172.20.0.1
+      - ${DB_HOST}
       - --db-port
       - "5432"
       - --db-name
@@ -191,7 +191,7 @@ services:
         condition: service_completed_successfully
 
   mssql:
-    profiles: ["mssql-internal"]
+    profiles: ["mssql"]
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: ${PROJECT_NAME}-mssql
     restart: unless-stopped
@@ -205,7 +205,7 @@ services:
       - mssql_data:/var/opt/mssql
 
   postgres:
-    profiles: ["postgres-internal"]
+    profiles: ["postgres"]
     image: postgres:16
     container_name: ${PROJECT_NAME}-postgres
     restart: unless-stopped

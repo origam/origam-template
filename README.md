@@ -1,5 +1,33 @@
 ﻿# ORIGAM Template
 
+```
+set "DB_NAME=origam" && set "DB_USERNAME=postgres" && set "DB_PASSWORD=postgres" && set "PROJECT_NAME=MainOrigam2" && set "ADMIN_USERNAME=admin" && set "ADMIN_PASSWORD=5axg1zr8" && set "ADMIN_EMAIL=no-reply@origam.com" && docker compose --profile windows up
+```
+
+set "DB_NAME=origam" && set "DB_USERNAME=postgres" && set "DB_PASSWORD=postgres" && set "PROJECT_NAME=MainOrigam2" && set "ADMIN_USERNAME=admin" && set "ADMIN_PASSWORD=5axg1zr8" && set "ADMIN_EMAIL=no-reply@origam.com" && docker compose --profile postgres-internal --profile linux up
+
+### PowerShell
+
+```powershell
+$env:DB_TYPE="postgres"; $env:DB_HOST="postgres"; $env:DB_NAME="origam"; $env:DB_USERNAME="postgres"; $env:DB_PASSWORD="postgres"; $env:PROJECT_NAME="MainOrigam2"; $env:ADMIN_USERNAME="admin"; $env:ADMIN_PASSWORD="5axg1zr8"; $env:ADMIN_EMAIL="no-reply@origam.com"; $env:COMPOSE_PROFILES="$env:DB_TYPE,linux"; docker compose up
+```
+
+### bash
+
+```bash
+export DB_TYPE=postgres; export DB_HOST=postgres; export DB_NAME=origam; export DB_USERNAME=postgres; export DB_PASSWORD=postgres; export PROJECT_NAME=MainOrigam2; export ADMIN_USERNAME=admin; export ADMIN_PASSWORD=5axg1zr8; export ADMIN_EMAIL=no-reply@origam.com; export COMPOSE_PROFILES=$DB_TYPE,linux; docker compose up
+```
+
+### cmd (with delayed expansion)
+
+```cmd
+cmd /v:on /c "set "DB_TYPE=postgres" && set "DB_HOST=172.20.0.1" && set "DB_NAME=origam" && set "DB_USERNAME=postgres" && set "DB_PASSWORD=postgres" && set "PROJECT_NAME=MainOrigam2" && set "ADMIN_USERNAME=admin" && set "ADMIN_PASSWORD=5axg1zr8" && set "ADMIN_EMAIL=no-reply@origam.com" && set "COMPOSE_PROFILES=windows" && docker compose up"
+```
+
+cmd /v:on /c "set DB_TYPE=postgres && set DB_HOST=172.20.0.1 && set DB_NAME=origam && set DB_USERNAME=postgres && set DB_PASSWORD=postgres && set PROJECT_NAME=MainOrigam2 && set ADMIN_USERNAME=admin && set ADMIN_PASSWORD=5axg1zr8 && set ADMIN_EMAIL=no-reply@origam.com && set COMPOSE_PROFILES=windows && docker compose up"
+
+for need of updating configuration put some examples 
+
 Docker Compose template that:
 
 - generates a new ORIGAM project with `Origam.Composer`
@@ -48,15 +76,14 @@ All settings and image tags live in `.env`.
 ### Required minimum
 
 - `PROJECT_NAME` - output project name in `./model/<PROJECT_NAME>`
-- `DB_TYPE` - `mssql` or `postgres`
 - `DB_PASSWORD` - DB user password
 - `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `ADMIN_EMAIL` - initial app admin
 
 ### Practical defaults
 
-- `DB_TYPE=mssql`
-- `DB_PORT=1433` for MSSQL
-- `DB_PORT=5432` for PostgreSQL
+- Database runtime parameters are defined directly in `docker-compose.yml`:
+  - Linux composer uses PostgreSQL at `postgres:5432`
+  - Windows composer uses PostgreSQL at `172.20.0.1:5432`
 - `SERVER_PORT=443`
 - `ARCHITECT_PORT=8081`
 
@@ -83,10 +110,6 @@ DB_PASSWORD='yourStrong(!)Password'
 ### Example: PostgreSQL (default)
 
 ```env
-DB_TYPE=postgres
-DB_HOST_LINUX=postgres
-DB_HOST_WINDOWS=172.20.0.1
-DB_PORT=5432
 DB_NAME=origam
 DB_USERNAME=postgres
 DB_PASSWORD=postgres
