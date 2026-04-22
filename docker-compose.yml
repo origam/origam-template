@@ -55,25 +55,12 @@ services:
       - "443:443"
     environment:
       PROJECT_NAME: ${PROJECT_NAME}
+      ORIGAM_PROJECT_BOOTSTRAP: ${ORIGAM_PROJECT_BOOTSTRAP:-true}
     volumes:
       - "./:/model-src"
     entrypoint:
       - /bin/bash
-      - -c
-      - |
-        echo "Waiting for $${PROJECT_NAME} to be generated..."
-        while [ ! -f /model-src/$${PROJECT_NAME}_Environments.env ]; do sleep 1; done
-        echo "Linking project data..."
-        mkdir -p /home/origam/projectData
-        ln -sfn /model-src/model /home/origam/projectData/model
-        ln -sfn /model-src/customAssets /home/origam/projectData/customAssets
-        while IFS= read -r line || [ -n "$$line" ]; do
-          case "$$line" in ''|\#*) continue ;; esac
-          key=$${line%%=*}
-          value=$${line#*=}
-          export "$$key=$$value"
-        done < /model-src/$${PROJECT_NAME}_Environments.env
-        exec ./entrypoint.sh
+      - /model-src/docker/linux/bootstrap-entrypoint.sh
     depends_on:
       origam-composer-linux:
         condition: service_completed_successfully
@@ -89,24 +76,12 @@ services:
       - "8081:8081"
     environment:
       PROJECT_NAME: ${PROJECT_NAME}
+      ORIGAM_PROJECT_BOOTSTRAP: ${ORIGAM_PROJECT_BOOTSTRAP:-true}
     volumes:
       - "./:/model-src"
     entrypoint:
       - /bin/bash
-      - -c
-      - |
-        echo "Waiting for $${PROJECT_NAME} to be generated..."
-        while [ ! -f /model-src/$${PROJECT_NAME}_Environments.env ]; do sleep 1; done
-        echo "Linking project data..."
-        mkdir -p /home/origam/projectData
-        ln -sfn /model-src/model /home/origam/projectData/model
-        while IFS= read -r line || [ -n "$$line" ]; do
-          case "$$line" in ''|\#*) continue ;; esac
-          key=$${line%%=*}
-          value=$${line#*=}
-          export "$$key=$$value"
-        done < /model-src/$${PROJECT_NAME}_Environments.env
-        exec ./entrypoint.sh
+      - /model-src/docker/linux/bootstrap-entrypoint.sh
     depends_on:
       origam-composer-linux:
         condition: service_completed_successfully
@@ -139,7 +114,7 @@ services:
       - --p-name
       - ${PROJECT_NAME}
       - --p-folder
-      - c:\\work\\${PROJECT_NAME}
+      - c:\\work
       - --p-admin-username
       - ${ADMIN_USERNAME}
       - --p-admin-password
@@ -172,39 +147,15 @@ services:
       - "8080:8080"
     environment:
       PROJECT_NAME: ${PROJECT_NAME}
+      ORIGAM_PROJECT_BOOTSTRAP: ${ORIGAM_PROJECT_BOOTSTRAP:-true}
     volumes:
       - "./:c:/model-src"
     entrypoint:
       - pwsh
       - -ExecutionPolicy
       - Bypass
-      - -Command
-      - |
-        $$projectName = $$env:PROJECT_NAME
-        Write-Host "Waiting for $$projectName to be generated..."
-        $$envFile = "c:\model-src\$${projectName}_Environments.env"
-        while (-not (Test-Path $$envFile)) { Start-Sleep -Seconds 1 }
-        Get-Content $$envFile | ForEach-Object {
-            $$line = $$_.Trim()
-            if ($$line -and -not $$line.StartsWith('#')) {
-                $$kv = $$line -split '=', 2
-                if ($$kv.Length -eq 2) {
-                    [System.Environment]::SetEnvironmentVariable($$kv[0].Trim(), $$kv[1].Trim(), 'Process')
-                }
-            }
-        }
-        [System.Environment]::SetEnvironmentVariable('CustomAssetsConfig__PathToCustomAssetsFolder', 'C:\home\origam\projectData\customAssets', 'Process')
-        Write-Host "Linking project data..."
-        $$dataPath = "C:\home\origam\projectData"
-        if (Test-Path $$dataPath) { Remove-Item -Recurse -Force $$dataPath }
-        New-Item -ItemType Directory -Path $$dataPath -Force | Out-Null
-        Copy-Item -Path "c:\model-src\model" -Destination "$$dataPath\model" -Recurse -Force
-        if (Test-Path "c:\model-src\customAssets") {
-            Copy-Item -Path "c:\model-src\customAssets" -Destination "$$dataPath\customAssets" -Recurse -Force
-        }
-        Write-Host "Starting EntryPoint.ps1..."
-        Set-Location C:\home\origam
-        & .\EntryPoint.ps1
+      - -File
+      - c:\model-src\docker\windows\bootstrap-entrypoint.ps1
     depends_on:
       origam-composer-windows:
         condition: service_completed_successfully
@@ -223,37 +174,18 @@ services:
       - "8081:8081"
     environment:
       PROJECT_NAME: ${PROJECT_NAME}
+      ORIGAM_PROJECT_BOOTSTRAP: ${ORIGAM_PROJECT_BOOTSTRAP:-true}
     volumes:
       - "./:c:/model-src"
     entrypoint:
       - pwsh
       - -ExecutionPolicy
       - Bypass
-      - -Command
-      - |
-        $$projectName = $$env:PROJECT_NAME
-        Write-Host "Waiting for $$projectName to be generated..."
-        $$envFile = "c:\model-src\$${projectName}_Environments.env"
-        while (-not (Test-Path $$envFile)) { Start-Sleep -Seconds 1 }
-        Get-Content $$envFile | ForEach-Object {
-            $$line = $$_.Trim()
-            if ($$line -and -not $$line.StartsWith('#')) {
-                $$kv = $$line -split '=', 2
-                if ($$kv.Length -eq 2) {
-                    [System.Environment]::SetEnvironmentVariable($$kv[0].Trim(), $$kv[1].Trim(), 'Process')
-                }
-            }
-        }
-        Write-Host "Linking project data..."
-        $$dataPath = "C:\home\origam\projectData"
-        if (Test-Path $$dataPath) { Remove-Item -Recurse -Force $$dataPath }
-        New-Item -ItemType Directory -Path $$dataPath -Force | Out-Null
-        Copy-Item -Path "c:\model-src\model" -Destination "$$dataPath\model" -Recurse -Force
-        Write-Host "Copying template file..."
-        Copy-Item "C:\home\origam\Architect\_OrigamSettings.template" "C:\home\origam\_OrigamSettings.template" -Force
-        Write-Host "Starting EntryPoint.ps1..."
-        Set-Location C:\home\origam\Architect
-        & .\EntryPoint.ps1
+      - -File
+      - c:\model-src\docker\windows\bootstrap-entrypoint.ps1
+      - -EntryPointDir
+      - C:\home\origam\Architect
+      - -CopyTemplate
     depends_on:
       origam-composer-windows:
         condition: service_completed_successfully
@@ -299,3 +231,6 @@ networks:
       config:
         - subnet: 172.20.0.0/20
           gateway: 172.20.0.1
+
+
+
