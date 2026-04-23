@@ -15,7 +15,7 @@ name: ${PROJECT_NAME}
 
 services:
   origam-composer-linux:
-    image: ${ORIGAM_COMPOSER_IMAGE_LINUX}
+    image: origam/composer:local.linux
     profiles: ["linux"]
     volumes:
       - .:/model
@@ -38,15 +38,15 @@ services:
           --p-admin-username "${ADMIN_USERNAME}" \
           --p-admin-password "${ADMIN_PASSWORD}" \
           --p-admin-email "${ADMIN_EMAIL}" \
-          --p-docker-image-linux "${ORIGAM_SERVER_IMAGE_LINUX}" \
-          --p-docker-image-win "${ORIGAM_SERVER_IMAGE_WINDOWS}" \
-          --arch-docker-image-linux "${ORIGAM_ARCHITECT_IMAGE_LINUX}" \
-          --arch-docker-image-win "${ORIGAM_ARCHITECT_IMAGE_WINDOWS}" \
+          --p-docker-image-linux "origam/server:local.linux" \
+          --p-docker-image-win "origam/server:local.win-nano" \
+          --arch-docker-image-linux "origam/architect:local.linux" \
+          --arch-docker-image-win "origam/architect:local.win-nano" \
           --arch-port "8081"
 
   origam-server-linux:
     profiles: ["linux"]
-    image: ${ORIGAM_SERVER_IMAGE_LINUX}
+    image: origam/server:local.linux
     container_name: ${PROJECT_NAME}-server-linux
     restart: unless-stopped
     stdin_open: true
@@ -64,7 +64,7 @@ services:
 
   origam-architect-linux:
     profiles: ["linux"]
-    image: ${ORIGAM_ARCHITECT_IMAGE_LINUX}
+    image: origam/architect:local.linux
     container_name: ${PROJECT_NAME}-architect-linux
     restart: unless-stopped
     stdin_open: true
@@ -81,7 +81,7 @@ services:
         condition: service_completed_successfully
 
   origam-composer-windows:
-    image: ${ORIGAM_COMPOSER_IMAGE_WINDOWS}
+    image: origam/composer:local.win-nano
     profiles: ["windows"]
     container_name: ${PROJECT_NAME}-composer-windows
     isolation: hyperv
@@ -116,19 +116,19 @@ services:
       - --p-admin-email
       - ${ADMIN_EMAIL}
       - --p-docker-image-linux
-      - ${ORIGAM_SERVER_IMAGE_LINUX}
+      - origam/server:local.linux
       - --p-docker-image-win
-      - ${ORIGAM_SERVER_IMAGE_WINDOWS}
+      - origam/server:local.win-nano
       - --arch-docker-image-linux
-      - ${ORIGAM_ARCHITECT_IMAGE_LINUX}
+      - origam/architect:local.linux
       - --arch-docker-image-win
-      - ${ORIGAM_ARCHITECT_IMAGE_WINDOWS}
+      - origam/architect:local.win-nano
       - --arch-port
       - "8081"
 
   origam-server-windows:
     profiles: ["windows"]
-    image: ${ORIGAM_SERVER_IMAGE_WINDOWS}
+    image: origam/server:local.win-nano
     container_name: ${PROJECT_NAME}-server-windows
     restart: unless-stopped
     isolation: process
@@ -150,7 +150,7 @@ services:
 
   origam-architect-windows:
     profiles: ["windows"]
-    image: ${ORIGAM_ARCHITECT_IMAGE_WINDOWS}
+    image: origam/architect:local.win-nano
     container_name: ${PROJECT_NAME}-architect-windows
     restart: unless-stopped
     isolation: process
