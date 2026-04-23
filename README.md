@@ -18,14 +18,32 @@ You need:
 
 ORIGAM is configured via environment variables (no `.env` file in this template).
 
+Important: run commands in the folder that contains `docker-compose.yml`.
+If you run from another folder, use `-f <full-path-to-docker-compose.yml>`.
+
 ## Choose your environment
 
 ### Install with Docker on WSL / Docker Desktop
 
 Use this when Docker Desktop runs in Linux containers mode.
+Pick the command for your shell.
+
+#### WSL terminal (bash)
 
 ```bash
 export DB_TYPE=postgres; export DB_HOST=postgres; export DB_NAME=origam; export DB_USERNAME=postgres; export DB_PASSWORD=postgres; export PROJECT_NAME=MainOrigam2; export ADMIN_USERNAME=admin; export ADMIN_PASSWORD=change-me; export ADMIN_EMAIL=no-reply@origam.com; export COMPOSE_PROFILES=$DB_TYPE,linux; docker compose up
+```
+
+#### PowerShell on Windows
+
+```powershell
+$env:DB_TYPE="postgres"; $env:DB_HOST="postgres"; $env:DB_NAME="origam"; $env:DB_USERNAME="postgres"; $env:DB_PASSWORD="postgres"; $env:PROJECT_NAME="MainOrigam2"; $env:ADMIN_USERNAME="admin"; $env:ADMIN_PASSWORD="change-me"; $env:ADMIN_EMAIL="no-reply@origam.com"; $env:COMPOSE_PROFILES="$env:DB_TYPE,linux"; docker compose up
+```
+
+#### Command Prompt CMD
+
+```bat
+set DB_TYPE=postgres&& set DB_HOST=postgres&& set DB_NAME=origam&& set DB_USERNAME=postgres&& set DB_PASSWORD=postgres&& set PROJECT_NAME=MainOrigam2&& set ADMIN_USERNAME=admin&& set ADMIN_PASSWORD=change-me&& set ADMIN_EMAIL=no-reply@origam.com&& set COMPOSE_PROFILES=%DB_TYPE%,linux&& docker compose up
 ```
 
 ### Install with Docker on Linux
