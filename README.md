@@ -1,144 +1,88 @@
-﻿# ORIGAM Template
+# ORIGAM Template
 
-```
-set "DB_NAME=origam" && set "DB_USERNAME=postgres" && set "DB_PASSWORD=postgres" && set "PROJECT_NAME=MainOrigam2" && set "ADMIN_USERNAME=admin" && set "ADMIN_PASSWORD=5axg1zr8" && set "ADMIN_EMAIL=no-reply@origam.com" && docker compose --profile windows up
-```
+Docker Compose template that bootstraps a new ORIGAM project and starts the Server + Architect containers. Optionally runs an internal PostgreSQL or MSSQL database alongside. No local ORIGAM binaries required.
 
-set "DB_NAME=origam" && set "DB_USERNAME=postgres" && set "DB_PASSWORD=postgres" && set "PROJECT_NAME=MainOrigam2" && set "ADMIN_USERNAME=admin" && set "ADMIN_PASSWORD=5axg1zr8" && set "ADMIN_EMAIL=no-reply@origam.com" && docker compose --profile postgres-internal --profile linux up
+## Quick start
 
-### PowerShell
+Pick the one-liner for your shell. It sets the required environment variables and starts the stack.
+
+### PowerShell (Windows / Docker Desktop)
 
 ```powershell
 $env:DB_TYPE="postgres"; $env:DB_HOST="postgres"; $env:DB_NAME="origam"; $env:DB_USERNAME="postgres"; $env:DB_PASSWORD="postgres"; $env:PROJECT_NAME="MainOrigam2"; $env:ADMIN_USERNAME="admin"; $env:ADMIN_PASSWORD="5axg1zr8"; $env:ADMIN_EMAIL="no-reply@origam.com"; $env:COMPOSE_PROFILES="$env:DB_TYPE,linux"; docker compose up
 ```
 
-### bash
+### bash (Linux / macOS / WSL)
 
 ```bash
 export DB_TYPE=postgres; export DB_HOST=postgres; export DB_NAME=origam; export DB_USERNAME=postgres; export DB_PASSWORD=postgres; export PROJECT_NAME=MainOrigam2; export ADMIN_USERNAME=admin; export ADMIN_PASSWORD=5axg1zr8; export ADMIN_EMAIL=no-reply@origam.com; export COMPOSE_PROFILES=$DB_TYPE,linux; docker compose up
 ```
 
-### cmd (with delayed expansion)
+Once the stack is up:
 
-```cmd
-cmd /v:on /c "set "DB_TYPE=postgres" && set "DB_HOST=172.20.0.1" && set "DB_NAME=origam" && set "DB_USERNAME=postgres" && set "DB_PASSWORD=postgres" && set "PROJECT_NAME=MainOrigam2" && set "ADMIN_USERNAME=admin" && set "ADMIN_PASSWORD=5axg1zr8" && set "ADMIN_EMAIL=no-reply@origam.com" && set "COMPOSE_PROFILES=windows" && docker compose up"
-```
+- Server — https://localhost:443
+- Architect — http://localhost:8081
 
-cmd /v:on /c "set DB_TYPE=postgres && set DB_HOST=172.20.0.1 && set DB_NAME=origam && set DB_USERNAME=postgres && set DB_PASSWORD=postgres && set PROJECT_NAME=MainOrigam2 && set ADMIN_USERNAME=admin && set ADMIN_PASSWORD=5axg1zr8 && set ADMIN_EMAIL=no-reply@origam.com && set COMPOSE_PROFILES=windows && docker compose up"
+## Environment variables
 
-for need of updating configuration put some examples 
+All configuration is passed via environment variables (there is no `.env` file).
 
-Docker Compose template that:
-
-- generates a new ORIGAM project with `Origam.Composer`
-- starts ORIGAM Server + Architect
-- optionally starts an internal MSSQL or PostgreSQL database
-
-No local ORIGAM binaries are required.
-
-## Quick Start (60 seconds)
-
-1. Edit `.env`:
-   - set `PROJECT_NAME`
-   - set `DB_TYPE` (`mssql` or `postgres`)
-   - set strong `DB_PASSWORD`, `ADMIN_PASSWORD`
-2. Run one of startup profiles (see table below).
-3. Open:
-   - Server: `https://localhost:${SERVER_PORT}`
-   - Architect: `http://localhost:${ARCHITECT_PORT}`
-
-## Run Profiles
-
-| Scenario | Command | Use when |
+| Variable | Meaning | Example |
 |---|---|---|
-| Linux + internal MSSQL | `docker compose --profile mssql-internal --profile linux up` | Default local development flow |
-| Linux + internal PostgreSQL | `docker compose --profile postgres-internal --profile linux up` | You want PostgreSQL locally |
-| Linux + external database | `docker compose --profile linux up` | You use an existing external MSSQL/PostgreSQL database (requires updating .env host/port) |
-| Windows containers | `docker compose --profile windows up` | You run ORIGAM in Windows container mode |
+| `PROJECT_NAME` | Compose project name and output folder `./model/<PROJECT_NAME>` | `MainOrigam2` |
+| `DB_TYPE` | `postgres` or `mssql` — also used to pick the DB profile | `postgres` |
+| `DB_HOST` | Host the composer uses to reach the DB (see table below) | `postgres` |
+| `DB_NAME` | Database name | `origam` |
+| `DB_USERNAME` | Database user | `postgres` |
+| `DB_PASSWORD` | Database password | `postgres` |
+| `ADMIN_USERNAME` | Initial ORIGAM admin login | `admin` |
+| `ADMIN_PASSWORD` | Initial ORIGAM admin password | `5axg1zr8` |
+| `ADMIN_EMAIL` | Initial ORIGAM admin email | `no-reply@origam.com` |
+| `COMPOSE_PROFILES` | Profiles to activate — combine one DB and one runtime profile | `postgres,linux` |
 
-Tip: add `-d` for detached mode.
+### Picking `DB_HOST`
 
-### Linux profile on Windows (WSL2)
+| Runtime profile | `DB_HOST` value |
+|---|---|
+| `linux` with internal DB | service name — `postgres` or `mssql` |
+| `windows` with internal DB | `172.20.0.1` (gateway on the `stable-nat` network) |
+| external DB | hostname / IP of your external database |
 
-If Docker Desktop is using Linux containers, then Windows + WSL2 is effectively the same runtime as Linux for this project.
+## Profiles
 
-Use Linux profile commands in both cases:
+Compose profiles control which services start. Combine **one runtime** (`linux` or `windows`) with **one database** (`postgres` or `mssql`), or drop the database profile if you bring your own.
 
-- `docker compose --profile mssql-internal --profile linux up`
-- `docker compose --profile postgres-internal --profile linux up`
+| `COMPOSE_PROFILES` | Starts |
+|---|---|
+| `postgres,linux` | PostgreSQL + Composer/Server/Architect in Linux containers |
+| `mssql,linux` | MSSQL + Composer/Server/Architect in Linux containers |
+| `postgres,windows` | PostgreSQL + Composer/Server/Architect in Windows containers |
+| `mssql,windows` | MSSQL + Composer/Server/Architect in Windows containers |
+| `linux` | ORIGAM Linux stack only — external DB required (`DB_HOST` → your DB) |
 
-Use `--profile windows` only when you explicitly switch Docker Desktop to Windows containers.
+On Windows with Docker Desktop in Linux-containers mode, use the `linux` runtime profile. Switch to `windows` only when Docker Desktop is in Windows-containers mode.
 
-## Configuration (`.env`)
+## How it works
 
-All settings and image tags live in `.env`.
+1. The composer container (`origam-composer-linux` or `origam-composer-windows`) generates project files into `./model/<PROJECT_NAME>`.
+2. Server and Architect wait for the composer to finish (`service_completed_successfully`).
+3. Server starts on **443**, Architect on **8081**.
 
-### Required minimum
+Re-running `docker compose up` is idempotent — if `./model/<PROJECT_NAME>` already exists, the composer skips generation and only the services start.
 
-- `PROJECT_NAME` - output project name in `./model/<PROJECT_NAME>`
-- `DB_PASSWORD` - DB user password
-- `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `ADMIN_EMAIL` - initial app admin
+## Regenerate the project from scratch
 
-### Practical defaults
-
-- Database runtime parameters are defined directly in `docker-compose.yml`:
-  - Linux composer uses PostgreSQL at `postgres:5432`
-  - Windows composer uses PostgreSQL at `172.20.0.1:5432`
-- `SERVER_PORT=443`
-- `ARCHITECT_PORT=8081`
-
-### Host values by runtime
-
-- Linux containers use `DB_HOST_LINUX` (default: service name, e.g. `mssql`/`postgres`)
-- Windows containers use `DB_HOST_WINDOWS`
-
-`DB_HOST_WINDOWS=172.20.0.1` is the host gateway on the `stable-nat` Docker network in this setup.
-
-### Example: MSSQL (default)
-
-```env
-DB_TYPE=mssql
-DB_HOST_LINUX=mssql
-DB_HOST_WINDOWS=172.20.0.1
-DB_PORT=1433
-DB_NAME=origam
-DB_USERNAME=sa
-DB_PASSWORD='yourStrong(!)Password'
+```bash
+docker compose down
+rm -rf ./model/<PROJECT_NAME>
+# optional: also drop the `origam` database to start with a clean schema
 ```
 
+Then re-run the quick start command.
 
-### Example: PostgreSQL (default)
+## Windows containers — firewall rule
 
-```env
-DB_NAME=origam
-DB_USERNAME=postgres
-DB_PASSWORD=postgres
-```
-
-## Architecture at a glance
-
-1. Composer container creates project files in `./model/<PROJECT_NAME>`.
-2. Server/Architect wait for generated environment files in `./model/<PROJECT_NAME>/docker`.
-3. Server/Architect load env vars from generated files.
-4. Server/Architect map generated model/custom assets to runtime paths.
-
-## Idempotent behavior and regeneration
-
-`docker compose up` is idempotent for project generation:
-
-- if `./model/<PROJECT_NAME>/model` and `./model/<PROJECT_NAME>/docker` exist, Composer skips generation
-- services still start normally
-
-To regenerate project files from scratch:
-
-1. Stop stack: `docker compose down`
-2. Remove `./model/<PROJECT_NAME>`
-3. (Optional) Delete the `origam` database if you need to start with a clean database
-4. Run `docker compose up` again with your desired profiles
-
-## Windows-only note (Firewall)
-
-For Windows containers service, add inbound access from `stable-nat`:
+Windows containers on the `stable-nat` network need an inbound allow rule on the host:
 
 ```powershell
 New-NetFirewallRule `
@@ -151,36 +95,30 @@ New-NetFirewallRule `
 
 ## Troubleshooting
 
-- `port is already allocated`:
-  - change `SERVER_PORT`, `ARCHITECT_PORT`, or `DB_PORT` in `.env`
-- project was not generated:
-  - check Composer logs: `docker compose logs origam-composer-linux` or `docker compose logs origam-composer-windows`
-- Server/Architect waiting forever:
-  - verify generated env file exists in `./model/<PROJECT_NAME>/docker`
-- DB connection errors:
-  - confirm `DB_TYPE`, `DB_HOST_*`, `DB_PORT`, `DB_USERNAME`, `DB_PASSWORD`
-  - ensure corresponding DB profile is enabled when using internal DB
-- Windows DB host issues:
-  - verify `stable-nat` network exists and gateway `172.20.0.1` is reachable
+- **`port is already allocated`** — another process is using `443`, `8081`, `1433`, or `5432`. Free the port or edit the published port in `docker-compose.yml`.
+- **Composer failed** — check its logs:
+  - `docker compose logs origam-composer-linux`
+  - `docker compose logs origam-composer-windows`
+- **Server/Architect never start** — they wait for the composer to complete. Investigate composer logs first.
+- **DB connection error** — verify `DB_HOST`, `DB_USERNAME`, `DB_PASSWORD`. For `linux` use the service name; for `windows` use `172.20.0.1`.
+- **Windows DB unreachable** — confirm the `stable-nat` Docker network exists and gateway `172.20.0.1` is reachable from inside the container.
 
-## Security notes
+## Security
 
-- Do not commit real passwords to git.
-- Always replace default credentials before shared or production-like usage.
-- For team setups, keep sensitive overrides in local, untracked env files.
+The example uses weak passwords for convenience. Replace `DB_PASSWORD` and `ADMIN_PASSWORD` with strong values before any shared or production-like use. Do not commit real credentials.
 
 ## Useful commands
 
 ```bash
-# Start with selected profiles
-docker compose --profile mssql-internal --profile linux up
-
 # Start detached
-docker compose --profile mssql-internal --profile linux up -d
+docker compose up -d
 
-# Stop and remove containers/networks
+# Stop and remove containers + network
 docker compose down
 
-# Follow logs
+# Follow all logs
 docker compose logs -f
+
+# Follow one service
+docker compose logs -f origam-server-linux
 ```
