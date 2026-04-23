@@ -80,6 +80,7 @@ After startup:
 ## Windows containers firewall rule
 
 The compose file defines network `stable-nat` with subnet `172.20.0.0/20` and gateway `172.20.0.1`.
+If you run **Windows containers + local DB on the same Windows host**, this rule is required.
 Allow inbound traffic from that subnet on the DB host:
 
 ```powershell
@@ -96,6 +97,8 @@ Prerequisites for Windows runtime:
 - PostgreSQL or MSSQL is installed on host or reachable remotely.
 - DB allows incoming connections from `172.20.0.0/20`.
 - DB auth allows container clients (for example SQL auth / `pg_hba.conf`).
+
+If DB is remote and network/firewall already allows traffic from your container host, you usually do not need this specific host firewall rule.
 ## Profiles reference
 
 | `COMPOSE_PROFILES` | Starts |
