@@ -58,9 +58,6 @@ services:
       ORIGAM_PROJECT_BOOTSTRAP: ${ORIGAM_PROJECT_BOOTSTRAP:-true}
     volumes:
       - "./:/model-src"
-    entrypoint:
-      - /bin/bash
-      - /model-src/docker/linux/bootstrap-entrypoint.sh
     depends_on:
       origam-composer-linux:
         condition: service_completed_successfully
@@ -79,13 +76,10 @@ services:
       ORIGAM_PROJECT_BOOTSTRAP: ${ORIGAM_PROJECT_BOOTSTRAP:-true}
     volumes:
       - "./:/model-src"
-    entrypoint:
-      - /bin/bash
-      - /model-src/docker/linux/bootstrap-entrypoint.sh
     depends_on:
       origam-composer-linux:
         condition: service_completed_successfully
-  
+
   origam-composer-windows:
     image: ${ORIGAM_COMPOSER_IMAGE_WINDOWS}
     profiles: ["windows"]
@@ -150,12 +144,6 @@ services:
       ORIGAM_PROJECT_BOOTSTRAP: ${ORIGAM_PROJECT_BOOTSTRAP:-true}
     volumes:
       - "./:c:/model-src"
-    entrypoint:
-      - pwsh
-      - -ExecutionPolicy
-      - Bypass
-      - -File
-      - c:\model-src\docker\windows\bootstrap-entrypoint.ps1
     depends_on:
       origam-composer-windows:
         condition: service_completed_successfully
@@ -177,15 +165,6 @@ services:
       ORIGAM_PROJECT_BOOTSTRAP: ${ORIGAM_PROJECT_BOOTSTRAP:-true}
     volumes:
       - "./:c:/model-src"
-    entrypoint:
-      - pwsh
-      - -ExecutionPolicy
-      - Bypass
-      - -File
-      - c:\model-src\docker\windows\bootstrap-entrypoint.ps1
-      - -EntryPointDir
-      - C:\home\origam\Architect
-      - -CopyTemplate
     depends_on:
       origam-composer-windows:
         condition: service_completed_successfully
