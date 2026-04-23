@@ -29,7 +29,7 @@ services:
           --commands-output-format cmd \
           --db-type "${DB_TYPE}" \
           --db-host "${DB_HOST}" \
-          --db-port "5432" \
+          --db-port "${DB_PORT}" \
           --db-name "${DB_NAME}" \
           --db-username "${DB_USERNAME}" \
           --db-password "${DB_PASSWORD}" \
@@ -98,7 +98,7 @@ services:
       - --db-host
       - ${DB_HOST}
       - --db-port
-      - "5432"
+      - ${DB_PORT}
       - --db-name
       - ${DB_NAME}
       - --db-username

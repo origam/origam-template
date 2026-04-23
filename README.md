@@ -17,7 +17,7 @@ Use this when Docker Desktop runs in Linux containers mode.
 #### Command Prompt CMD
 
 ```bat
-set DB_TYPE=postgres&& set DB_HOST=postgres&& set DB_NAME=origam&& set DB_USERNAME=postgres&& set DB_PASSWORD=postgres&& set PROJECT_NAME=MainOrigam2&& set ADMIN_USERNAME=admin&& set ADMIN_PASSWORD=change-me&& set ADMIN_EMAIL=no-reply@origam.com&& set COMPOSE_PROFILES=%DB_TYPE%,linux&& docker compose up
+set DB_TYPE=mssql&& set DB_HOST=mssql&& set DB_PORT=1433&& set DB_NAME=origam&& set DB_USERNAME=sa&& set DB_PASSWORD=YourStrong!Passw0rd&& set PROJECT_NAME=MainOrigam2&& set ADMIN_USERNAME=admin&& set ADMIN_PASSWORD=change-me&& set ADMIN_EMAIL=no-reply@origam.com&& set COMPOSE_PROFILES=%DB_TYPE%,linux&& docker compose up
 ```
 
 ### Install with Docker on Linux or Mac
@@ -25,7 +25,7 @@ set DB_TYPE=postgres&& set DB_HOST=postgres&& set DB_NAME=origam&& set DB_USERNA
 Same runtime profile as WSL (`linux`):
 
 ```bash
-export DB_TYPE=postgres; export DB_HOST=postgres; export DB_NAME=origam; export DB_USERNAME=postgres; export DB_PASSWORD=postgres; export PROJECT_NAME=MainOrigam2; export ADMIN_USERNAME=admin; export ADMIN_PASSWORD=change-me; export ADMIN_EMAIL=no-reply@origam.com; export COMPOSE_PROFILES=$DB_TYPE,linux; docker compose up
+export DB_TYPE=mssql; export DB_HOST=mssql; export DB_PORT=1433; export DB_NAME=origam; export DB_USERNAME=sa; export DB_PASSWORD='YourStrong!Passw0rd'; export PROJECT_NAME=MainOrigam2; export ADMIN_USERNAME=admin; export ADMIN_PASSWORD=change-me; export ADMIN_EMAIL=no-reply@origam.com; export COMPOSE_PROFILES=$DB_TYPE,linux; docker compose up
 ```
 
 ### Install with Docker on Windows Container Service
@@ -33,7 +33,7 @@ export DB_TYPE=postgres; export DB_HOST=postgres; export DB_NAME=origam; export 
 Use this when Docker is running Windows containers.
 
 ```powershell
-$env:DB_TYPE="postgres"; $env:DB_HOST="172.20.0.1"; $env:DB_NAME="origam"; $env:DB_USERNAME="postgres"; $env:DB_PASSWORD="postgres"; $env:PROJECT_NAME="MainOrigam2"; $env:ADMIN_USERNAME="admin"; $env:ADMIN_PASSWORD="change-me"; $env:ADMIN_EMAIL="no-reply@origam.com"; $env:COMPOSE_PROFILES="$env:DB_TYPE,windows"; docker compose up
+$env:DB_TYPE="mssql"; $env:DB_HOST="172.20.0.1"; $env:DB_PORT="1433"; $env:DB_NAME="origam"; $env:DB_USERNAME="sa"; $env:DB_PASSWORD="YourStrong!Passw0rd"; $env:PROJECT_NAME="MainOrigam2"; $env:ADMIN_USERNAME="admin"; $env:ADMIN_PASSWORD="change-me"; $env:ADMIN_EMAIL="no-reply@origam.com"; $env:COMPOSE_PROFILES="$env:DB_TYPE,windows"; docker compose up
 ```
 
 After startup:
@@ -48,6 +48,7 @@ After startup:
 | `PROJECT_NAME` | Project name and output folder `./model/<PROJECT_NAME>` |
 | `DB_TYPE` | `postgres` or `mssql` |
 | `DB_HOST` | Database hostname from the rules above |
+| `DB_PORT` | Database port (default: `1433` for MSSQL, `5432` for PostgreSQL) |
 | `DB_NAME` | Application database name |
 | `DB_USERNAME` | Database user |
 | `DB_PASSWORD` | Database password |
@@ -62,6 +63,12 @@ After startup:
 |---|---|---|
 | `linux` | Supported (`postgres` or `mssql` profile) | `postgres` or `mssql` |
 | `windows` | Not supported (DB images are Linux-based) | `172.20.0.1` (host / gateway) |
+
+## Database port defaults
+
+- MSSQL default: `DB_PORT=1433`
+- PostgreSQL default: `DB_PORT=5432`
+- You can change the port if your DB listens on another one (for example managed DB or custom host setup).
 
 ## Runtime notes
 
@@ -111,3 +118,5 @@ If DB is remote and network/firewall already allows traffic from your container 
 Note: `postgres,windows` and `mssql,windows` are not supported in Windows containers mode.
 
 Tip: to switch PostgreSQL -> MSSQL, set `DB_TYPE=mssql`, `COMPOSE_PROFILES=mssql,<runtime>`, and set matching DB credentials.
+
+For PostgreSQL defaults, use `DB_TYPE=postgres`, `DB_HOST=postgres` (Linux internal DB) or your external host, and `DB_PORT=5432`.
