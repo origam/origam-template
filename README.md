@@ -76,6 +76,20 @@ DB_HOST=postgres   # or mssql
 No additional setup is required — the database service starts automatically with the rest of the stack.
  
 ## Windows Runtime
+
+
+## Windows containers firewall rule
+
+For `stable-nat`, allow inbound traffic from `172.20.0.0/20`:
+
+```powershell
+New-NetFirewallRule `
+  -DisplayName "Allow from stable-nat" `
+  -Direction Inbound `
+  -Action Allow `
+  -RemoteAddress 172.20.0.0/20 `
+  -Profile Any
+```
  
 Windows containers do not support running PostgreSQL or MSSQL as internal Docker services. Instead, you need to install and run the database engine directly on the host machine (or connect to a remote database server).
  
@@ -106,18 +120,6 @@ DB_HOST=172.20.0.1
 
 Tip: to switch PostgreSQL -> MSSQL, set `DB_TYPE=mssql`, `COMPOSE_PROFILES=mssql,<runtime>`, and set matching DB credentials.
 
-## Windows containers firewall rule
-
-For `stable-nat`, allow inbound traffic from `172.20.0.0/20`:
-
-```powershell
-New-NetFirewallRule `
-  -DisplayName "Allow from stable-nat" `
-  -Direction Inbound `
-  -Action Allow `
-  -RemoteAddress 172.20.0.0/20 `
-  -Profile Any
-```
 
 ## Common operations
 
