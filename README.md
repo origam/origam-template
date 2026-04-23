@@ -58,29 +58,29 @@ After startup:
 
 ## Database host rules
 
-| Runtime | Internal DB (in Docker) | `DB_HOST` Value |
-|---------|------------------------|-----------------|
-| Linux   | **Supported** — PostgreSQL and MSSQL run as Docker services alongside the app | Service name: `postgres` or `mssql` |
-| Windows | **Not supported** — Windows containers cannot run PostgreSQL/MSSQL as Docker services | Host machine IP: `172.20.0.1` |
- 
-## Linux Runtime
- 
-PostgreSQL or MSSQL can be started as separate services within the same Docker Compose stack. Since all containers share a Docker network, they communicate using service names as hostnames.
- 
-**Configuration:**
- 
-```env
-DB_HOST=postgres   # or mssql
-```
- 
-No additional setup is required — the database service starts automatically with the rest of the stack.
- 
-## Windows Runtime
+| Runtime | Internal DB in this compose | `DB_HOST` |
+|---|---|---|
+| `linux` | Supported (`postgres` or `mssql` profile) | `postgres` or `mssql` |
+| `windows` | Not supported (DB images are Linux-based) | `172.20.0.1` (host / gateway) |
 
+## Runtime notes
+
+### Linux runtime (`COMPOSE_PROFILES=...,linux`)
+
+- You can run ORIGAM with internal PostgreSQL or MSSQL.
+- Use `DB_HOST=postgres` or `DB_HOST=mssql`.
+- App and DB communicate by Docker service name.
+
+### Windows runtime (`COMPOSE_PROFILES=windows`)
+
+- Use external DB (on host machine or remote server).
+- Set `DB_HOST=172.20.0.1` for DB on the same Windows host.
+- If DB is remote, set `DB_HOST=<remote-host-or-ip>`.
 
 ## Windows containers firewall rule
 
-For `stable-nat`, allow inbound traffic from `172.20.0.0/20`:
+The compose file defines network `stable-nat` with subnet `172.20.0.0/20` and gateway `172.20.0.1`.
+Allow inbound traffic from that subnet on the DB host:
 
 ```powershell
 New-NetFirewallRule `
@@ -90,32 +90,21 @@ New-NetFirewallRule `
   -RemoteAddress 172.20.0.0/20 `
   -Profile Any
 ```
- 
-Windows containers do not support running PostgreSQL or MSSQL as internal Docker services. Instead, you need to install and run the database engine directly on the host machine (or connect to a remote database server).
- 
-The application container connects to the host via the Docker network gateway address.
- 
-**Configuration:**
- 
-```env
-DB_HOST=172.20.0.1
-```
- 
-**Prerequisites:**
- 
-- PostgreSQL or MSSQL must be installed and running on the host machine (or on a remote server accessible from the container).
-- The database must accept connections from the Docker network subnet (`172.20.0.0/16`).
-- Authentication must be configured to allow connections from the container (e.g., SQL Server authentication or `pg_hba.conf` for PostgreSQL).
-> **Note:** The gateway address `172.20.0.1` corresponds to the default Docker network configuration. If you are using a custom Docker network, verify the gateway address by running `docker network inspect <network_name>`.
+
+Prerequisites for Windows runtime:
+
+- PostgreSQL or MSSQL is installed on host or reachable remotely.
+- DB allows incoming connections from `172.20.0.0/20`.
+- DB auth allows container clients (for example SQL auth / `pg_hba.conf`).
 ## Profiles reference
 
 | `COMPOSE_PROFILES` | Starts |
 |---|---|
 | `postgres,linux` | Linux ORIGAM + internal PostgreSQL |
 | `mssql,linux` | Linux ORIGAM + internal MSSQL |
-| `postgres,windows` | Windows ORIGAM + internal PostgreSQL |
-| `mssql,windows` | Windows ORIGAM + internal MSSQL |
-| `linux` | Linux ORIGAM only (external DB) |
 | `windows` | Windows ORIGAM only (external DB) |
+| `linux` | Linux ORIGAM only (external DB) |
+
+Note: `postgres,windows` and `mssql,windows` are not supported in Windows containers mode.
 
 Tip: to switch PostgreSQL -> MSSQL, set `DB_TYPE=mssql`, `COMPOSE_PROFILES=mssql,<runtime>`, and set matching DB credentials.
