@@ -125,7 +125,7 @@ For PostgreSQL defaults, use `DB_TYPE=postgres`, `DB_HOST=postgres` (Linux inter
 
 Docker Compose supports layered configuration, so you can replace images or tweak any service setting without editing `docker-compose.yml` directly. This is useful for pinning to a specific published ORIGAM build, swapping in a custom image, or changing ports per environment.
 
-### Option 1: `docker-compose.override.yml` (auto-loaded)
+### Option: `docker-compose.override.yml` (auto-loaded)
 
 Create `docker-compose.override.yml` next to `docker-compose.yml`. Compose merges it automatically — no extra flags needed.
 
@@ -144,33 +144,3 @@ Then start as usual:
 ```bash
 docker compose up
 ```
-
-### Option 2: Named override file (explicit)
-
-Useful when you want per-environment overrides (staging, prod, personal) that are not applied by default.
-
-`docker-compose.custom.yml`:
-
-```yaml
-services:
-  origam-server-linux:
-    image: origam/server:2026.4.alpha.4228.linux
-    ports:
-      - "8443:443"
-```
-
-Start by listing both files. Order matters — later files win on conflicts:
-
-```bash
-docker compose -f docker-compose.yml -f docker-compose.custom.yml up
-```
-
-### Merge rules (short version)
-
-- Scalar fields (`image`, `container_name`, `restart`): replaced by the override.
-- Lists (`ports`, `volumes`): appended — duplicates are kept, so avoid re-declaring the same mapping.
-- Maps (`environment` as key/value, `labels`): merged per key, override wins.
-
-### Note on the Composer service
-
-The `origam-composer-*` services generate project metadata that embeds image tags via `--p-docker-image-linux`, `--p-docker-image-win`, `--arch-docker-image-linux`, `--arch-docker-image-win`. If you override the server/architect image and also want the generated project config to reference the same tag, override the composer's `entrypoint` (Linux) or `command` (Windows) in your override file with the matching arguments. Otherwise the runtime containers use your new image, but the project files on disk still reference the default `local.*` tags.
