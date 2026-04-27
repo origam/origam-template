@@ -17,6 +17,7 @@ services:
   origam-composer-linux:
     image: origam/composer:2026.4.alpha.4232.linux
     profiles: ["linux"]
+    container_name: ${PROJECT_NAME}-composer-linux
     volumes:
       - .:/model
     entrypoint:
