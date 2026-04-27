@@ -2,3 +2,4 @@ customAssets/
 l10n/
 model/
 *_Environments.env
+/.vs
