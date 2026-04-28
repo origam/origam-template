@@ -18,6 +18,13 @@ services:
     image: origam/composer:2026.4.alpha.4232.linux
     profiles: ["linux"]
     container_name: ${PROJECT_NAME}-composer-linux
+    depends_on:
+      mssql:
+        condition: service_healthy
+        required: false
+      postgres:
+        condition: service_healthy
+        required: false
     volumes:
       - .:/model
     entrypoint:
@@ -183,6 +190,12 @@ services:
       MSSQL_PID: Developer
     volumes:
       - mssql_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -Q \"SELECT 1\" -b -No"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
 
   postgres:
     profiles: ["postgres"]
@@ -198,6 +211,12 @@ services:
       PGUSER: ${DB_USERNAME}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
 volumes:
   mssql_data:

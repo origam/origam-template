@@ -17,7 +17,7 @@ Use this when Docker Desktop runs in Linux containers mode.
 #### Command Prompt CMD
 
 ```bat
-set DB_TYPE=mssql&& set DB_HOST=mssql&& set DB_PORT=1433&& set DB_NAME=origam&& set DB_USERNAME=sa&& set DB_PASSWORD=YourStrong!Passw0rd&& set PROJECT_NAME=MainOrigam&& set ADMIN_USERNAME=admin&& set ADMIN_PASSWORD=change-me&& set ADMIN_EMAIL=no-reply@origam.com&& set COMPOSE_PROFILES=%DB_TYPE%,linux&& docker compose up
+set DB_TYPE=mssql&& set DB_HOST=mssql&& set DB_PORT=1433&& set DB_NAME=origam&& set DB_USERNAME=sa&& set DB_PASSWORD=YourStrong!Passw0rd&& set PROJECT_NAME=mainorigam&& set ADMIN_USERNAME=admin&& set ADMIN_PASSWORD=change-me&& set ADMIN_EMAIL=no-reply@origam.com&& set COMPOSE_PROFILES=%DB_TYPE%,linux&& docker compose up
 ```
 
 ### Install with Docker on Linux or Mac
@@ -25,7 +25,7 @@ set DB_TYPE=mssql&& set DB_HOST=mssql&& set DB_PORT=1433&& set DB_NAME=origam&& 
 Same runtime profile as WSL (`linux`):
 
 ```bash
-export DB_TYPE=mssql; export DB_HOST=mssql; export DB_PORT=1433; export DB_NAME=origam; export DB_USERNAME=sa; export DB_PASSWORD='YourStrong!Passw0rd'; export PROJECT_NAME=MainOrigam; export ADMIN_USERNAME=admin; export ADMIN_PASSWORD=change-me; export ADMIN_EMAIL=no-reply@origam.com; export COMPOSE_PROFILES=$DB_TYPE,linux; docker compose up
+export DB_TYPE=mssql; export DB_HOST=mssql; export DB_PORT=1433; export DB_NAME=origam; export DB_USERNAME=sa; export DB_PASSWORD='YourStrong!Passw0rd'; export PROJECT_NAME=mainorigam; export ADMIN_USERNAME=admin; export ADMIN_PASSWORD=change-me; export ADMIN_EMAIL=no-reply@origam.com; export COMPOSE_PROFILES=$DB_TYPE,linux; docker compose up
 ```
 
 ### Install with Docker on Windows Container Service
@@ -33,7 +33,7 @@ export DB_TYPE=mssql; export DB_HOST=mssql; export DB_PORT=1433; export DB_NAME=
 Use this when Docker is running Windows containers.
 
 ```powershell
-$env:DB_TYPE="mssql"; $env:DB_HOST="172.20.0.1"; $env:DB_PORT="1433"; $env:DB_NAME="origam"; $env:DB_USERNAME="sa"; $env:DB_PASSWORD="yourStrong(!)Password"; $env:PROJECT_NAME="MainOrigam"; $env:ADMIN_USERNAME="admin"; $env:ADMIN_PASSWORD="change-me"; $env:ADMIN_EMAIL="no-reply@origam.com"; $env:COMPOSE_PROFILES="windows"; docker compose up
+$env:DB_TYPE="mssql"; $env:DB_HOST="172.20.0.1"; $env:DB_PORT="1433"; $env:DB_NAME="origam"; $env:DB_USERNAME="sa"; $env:DB_PASSWORD="yourStrong(!)Password"; $env:PROJECT_NAME="mainorigam"; $env:ADMIN_USERNAME="admin"; $env:ADMIN_PASSWORD="change-me"; $env:ADMIN_EMAIL="no-reply@origam.com"; $env:COMPOSE_PROFILES="windows"; docker compose up
 ```
 
 After startup:
