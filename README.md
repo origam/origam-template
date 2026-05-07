@@ -1,4 +1,5 @@
 <img width="1200" height="675" alt="image" src="https://github.com/user-attachments/assets/29e224eb-c077-4201-85eb-70547bab082a" />
+<p></p>
 
 Install and run ORIGAM Server + Architect with Docker Compose.
 
