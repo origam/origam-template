@@ -15,7 +15,7 @@ name: ${PROJECT_NAME}
 
 services:
   origam-composer-linux:
-    image: origam/composer:2026.4.alpha.4232.linux
+    image: origam/composer:master-latest.linux
     profiles: ["linux"]
     container_name: ${PROJECT_NAME}-composer-linux
     depends_on:
@@ -54,7 +54,7 @@ services:
 
   origam-server-linux:
     profiles: ["linux"]
-    image: origam/server:2026.4.alpha.4232.linux
+    image: origam/server:master-latest.linux
     container_name: ${PROJECT_NAME}-server-linux
     restart: unless-stopped
     stdin_open: true
@@ -72,7 +72,7 @@ services:
 
   origam-architect-linux:
     profiles: ["linux"]
-    image: origam/architect:2026.4.alpha.4232.linux
+    image: origam/architect:master-latest.linux
     container_name: ${PROJECT_NAME}-architect-linux
     restart: unless-stopped
     stdin_open: true
@@ -89,7 +89,7 @@ services:
         condition: service_completed_successfully
 
   origam-composer-windows:
-    image: origam/composer:2026.4.alpha.4232.win-nano
+    image: origam/composer:master-latest.win-nano
     profiles: ["windows"]
     container_name: ${PROJECT_NAME}-composer-windows
     isolation: hyperv
@@ -136,7 +136,7 @@ services:
 
   origam-server-windows:
     profiles: ["windows"]
-    image: origam/server:2026.4.alpha.4232.win-nano
+    image: origam/server:master-latest.win-nano
     container_name: ${PROJECT_NAME}-server-windows
     restart: unless-stopped
     isolation: process
@@ -158,7 +158,7 @@ services:
 
   origam-architect-windows:
     profiles: ["windows"]
-    image: origam/architect:2026.4.alpha.4232.win-nano
+    image: origam/architect:master-latest.win-nano
     container_name: ${PROJECT_NAME}-architect-windows
     restart: unless-stopped
     isolation: process
