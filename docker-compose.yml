@@ -16,6 +16,7 @@ name: ${PROJECT_NAME}
 services:
   origam-composer-linux:
     image: origam/composer:master-latest.linux
+    pull_policy: always
     profiles: ["linux"]
     container_name: ${PROJECT_NAME}-composer-linux
     depends_on:
@@ -55,6 +56,7 @@ services:
   origam-server-linux:
     profiles: ["linux"]
     image: origam/server:master-latest.linux
+    pull_policy: always
     container_name: ${PROJECT_NAME}-server-linux
     restart: unless-stopped
     stdin_open: true
@@ -73,6 +75,7 @@ services:
   origam-architect-linux:
     profiles: ["linux"]
     image: origam/architect:master-latest.linux
+    pull_policy: always
     container_name: ${PROJECT_NAME}-architect-linux
     restart: unless-stopped
     stdin_open: true
@@ -90,6 +93,7 @@ services:
 
   origam-composer-windows:
     image: origam/composer:master-latest.win-nano
+    pull_policy: always
     profiles: ["windows"]
     container_name: ${PROJECT_NAME}-composer-windows
     isolation: hyperv
@@ -137,6 +141,7 @@ services:
   origam-server-windows:
     profiles: ["windows"]
     image: origam/server:master-latest.win-nano
+    pull_policy: always
     container_name: ${PROJECT_NAME}-server-windows
     restart: unless-stopped
     isolation: process
@@ -159,6 +164,7 @@ services:
   origam-architect-windows:
     profiles: ["windows"]
     image: origam/architect:master-latest.win-nano
+    pull_policy: always
     container_name: ${PROJECT_NAME}-architect-windows
     restart: unless-stopped
     isolation: process
