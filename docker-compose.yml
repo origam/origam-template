@@ -68,6 +68,10 @@ services:
       WARMUP_ENABLED: ${XSLFO_WARMUP_ENABLED:-true}
     volumes:
       - "./:/app/work:ro"
+    networks:
+      default:
+        aliases:
+          - xslfo
 
   origam-server-linux:
     profiles: ["linux"]
@@ -82,7 +86,7 @@ services:
     environment:
       PROJECT_NAME: ${PROJECT_NAME}
       ORIGAM_PROJECT_BOOTSTRAP: ${ORIGAM_PROJECT_BOOTSTRAP:-true}
-      XSLFO_RENDERER_URL: ${XSLFO_RENDERER_URL:-http://origam-xslfo-linux:8080}
+      XSLFO_RENDERER_URL: ${XSLFO_RENDERER_URL:-http://xslfo:8080}
     volumes:
       - "./:/model-src"
     depends_on:
