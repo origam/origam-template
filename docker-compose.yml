@@ -53,6 +53,22 @@ services:
           --arch-docker-image-win "origam/architect:local.win-nano" \
           --arch-port "8081"
 
+  origam-xslfo-linux:
+    profiles: ["linux"]
+    image: origam/xsl-fo-server:master-latest.linux
+    pull_policy: always
+    container_name: ${PROJECT_NAME}-xslfo-linux
+    restart: unless-stopped
+    environment:
+      APP_PORT: "8080"
+      FOP_BASE_URI: "file:/app/work/"
+      FOP_CONFIG_FILE: "/app/config/fop.xconf"
+      MAX_REQUEST_BYTES: ${XSLFO_MAX_REQUEST_BYTES:-20971520}
+      RENDER_TIMEOUT_SECONDS: ${XSLFO_RENDER_TIMEOUT_SECONDS:-60}
+      WARMUP_ENABLED: ${XSLFO_WARMUP_ENABLED:-true}
+    volumes:
+      - "./:/app/work:ro"
+
   origam-server-linux:
     profiles: ["linux"]
     image: origam/server:master-latest.linux
@@ -66,11 +82,14 @@ services:
     environment:
       PROJECT_NAME: ${PROJECT_NAME}
       ORIGAM_PROJECT_BOOTSTRAP: ${ORIGAM_PROJECT_BOOTSTRAP:-true}
+      XSLFO_RENDERER_URL: ${XSLFO_RENDERER_URL:-http://origam-xslfo-linux:8080}
     volumes:
       - "./:/model-src"
     depends_on:
       origam-composer-linux:
         condition: service_completed_successfully
+      origam-xslfo-linux:
+        condition: service_healthy
 
   origam-architect-linux:
     profiles: ["linux"]
