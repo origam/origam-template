@@ -92,6 +92,7 @@ services:
       XSLFO_RENDERER_URL: ${XSLFO_RENDERER_URL:-http://xslfo:8080}
     volumes:
       - "./:/model-src"
+      - "./.docker-gitconfig:/etc/gitconfig:ro"
     depends_on:
       origam-composer-linux:
         condition: service_completed_successfully
@@ -114,6 +115,7 @@ services:
       ORIGAM_PROJECT_BOOTSTRAP: ${ORIGAM_PROJECT_BOOTSTRAP:-true}
     volumes:
       - "./:/model-src"
+      - "./.docker-gitconfig:/etc/gitconfig:ro"
     depends_on:
       origam-composer-linux:
         condition: service_completed_successfully
