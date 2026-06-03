@@ -16,6 +16,7 @@ name: ${PROJECT_NAME}
 services:
   origam-composer-linux:
     image: origam/composer:master-latest.linux
+    platform: linux/amd64
     pull_policy: always
     profiles: ["linux"]
     container_name: ${PROJECT_NAME}-composer-linux
@@ -56,6 +57,7 @@ services:
   origam-xslfo-linux:
     profiles: ["linux"]
     image: origam/xsl-fo-server:master-latest.linux
+    platform: linux/amd64
     pull_policy: always
     container_name: ${PROJECT_NAME}-xslfo-linux
     restart: unless-stopped
@@ -76,6 +78,7 @@ services:
   origam-server-linux:
     profiles: ["linux"]
     image: origam/server:master-latest.linux
+    platform: linux/amd64
     pull_policy: always
     container_name: ${PROJECT_NAME}-server-linux
     restart: unless-stopped
@@ -98,6 +101,7 @@ services:
   origam-architect-linux:
     profiles: ["linux"]
     image: origam/architect:master-latest.linux
+    platform: linux/amd64
     pull_policy: always
     container_name: ${PROJECT_NAME}-architect-linux
     restart: unless-stopped
