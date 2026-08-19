@@ -151,3 +151,14 @@ Then start as usual:
 ```bash
 docker compose up
 ```
+
+To update your project 
+```
+unset PROJECT_NAME DB_TYPE DB_HOST DB_PORT DB_NAME DB_USERNAME DB_PASSWORD ADMIN_USERNAME ADMIN_PASSWORD ADMIN_EMAIL
+```
+
+Then, run your docker compose up command with the injected environment variables
+```
+export DB_TYPE=mssql; export DB_HOST=mssql; export DB_PORT=1433; export DB_NAME=origam; export DB_USERNAME=sa; export DB_PASSWORD='YourStrong!Passw0rd'; export PROJECT_NAME=mainorigam; export ADMIN_USERNAME=admin; export ADMIN_PASSWORD=change-me; export ADMIN_EMAIL=no-reply@origam.com; export COMPOSE_PROFILES=$DB_TYPE,linux; docker compose up
+```
+
