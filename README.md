@@ -152,7 +152,7 @@ Then start as usual:
 docker compose up
 ```
 
-To update your project 
+<b>To update your project</b> 
 ```
 unset PROJECT_NAME DB_TYPE DB_HOST DB_PORT DB_NAME DB_USERNAME DB_PASSWORD ADMIN_USERNAME ADMIN_PASSWORD ADMIN_EMAIL
 ```
