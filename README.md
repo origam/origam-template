@@ -161,4 +161,5 @@ Then, run your docker compose up command with the injected environment variables
 ```
 export DB_TYPE=mssql; export DB_HOST=mssql; export DB_PORT=1433; export DB_NAME=origam; export DB_USERNAME=sa; export DB_PASSWORD='YourStrong!Passw0rd'; export PROJECT_NAME=mainorigam; export ADMIN_USERNAME=admin; export ADMIN_PASSWORD=change-me; export ADMIN_EMAIL=no-reply@origam.com; export COMPOSE_PROFILES=$DB_TYPE,linux; docker compose up
 ```
+If you want to apply a configuration update, such as adding an Origam AI API Key https://github.com/origam/origam/tree/master/backend/Origam.AI.Agent, add it to the `_Environments.env` file. Your settings will be loaded after a restart.
 
