@@ -163,3 +163,11 @@ export DB_TYPE=mssql; export DB_HOST=mssql; export DB_PORT=1433; export DB_NAME=
 ```
 If you want to apply a configuration update, such as adding an Origam AI API Key https://github.com/origam/origam/tree/master/backend/Origam.AI.Agent, add it to the `_Environments.env` file. Your settings will be loaded after a restart.
 
+For example:
+
+Ai__Endpoint=https://api.openai.com/v1
+
+Ai__Model=gpt-6-luna
+
+Ai__ApiKey=sk-proj-O4FMlW-
+
