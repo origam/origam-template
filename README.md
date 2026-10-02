@@ -171,3 +171,8 @@ Ai__Model=gpt-6-luna
 
 Ai__ApiKey=sk-proj-O4FMlW-
 
+Sometimes if you have problems with updates type this command 
+```
+docker system prune -f -a 
+```
+
