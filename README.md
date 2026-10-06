@@ -53,7 +53,7 @@ After startup:
 | Variable | Description |
 |---|---|
 | `PROJECT_NAME` | Project name and output folder `./model/<PROJECT_NAME>` |
-| `DB_TYPE` | `postgres` or `mssql` |
+| `DB_TYPE` | `postgresql` or `mssql` |
 | `DB_HOST` | Database hostname from the rules above |
 | `DB_PORT` | Database port (default: `1433` for MSSQL, `5432` for PostgreSQL) |
 | `DB_NAME` | Application database name |
@@ -126,7 +126,11 @@ Note: `postgres,windows` and `mssql,windows` are not supported in Windows contai
 
 Tip: to switch PostgreSQL -> MSSQL, set `DB_TYPE=mssql`, `COMPOSE_PROFILES=mssql,<runtime>`, and set matching DB credentials.
 
-For PostgreSQL defaults, use `DB_TYPE=postgres`, `DB_HOST=postgres` (Linux internal DB) or your external host, and `DB_PORT=5432`.
+For PostgreSQL defaults, use `DB_TYPE=postgresql`, `DB_HOST=postgres` (Linux internal DB) or your external host, and `DB_PORT=5432`. The database type is `postgresql`, but the compose profile is `postgres`, so set `COMPOSE_PROFILES=postgres,linux` explicitly instead of `$DB_TYPE,linux`:
+
+```bash
+export DB_TYPE=postgresql; export DB_HOST=postgres; export DB_PORT=5432; export DB_NAME=origam; export DB_USERNAME=postgres; export DB_PASSWORD='YourStrong!Passw0rd'; export PROJECT_NAME=mainorigam; export ADMIN_USERNAME=admin; export ADMIN_PASSWORD=change-me; export ADMIN_EMAIL=no-reply@origam.com; export COMPOSE_PROFILES=postgres,linux; docker compose up
+```
 
 ## Overriding services (images, ports, environment)
 
