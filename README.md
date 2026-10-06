@@ -48,6 +48,32 @@ After startup:
 - Server: https://localhost:443
 - Architect: http://localhost:8081
 
+## Start from your own model (optional, first start only)
+
+By default the new project is created from the ORIGAM model bundled in the composer image.
+To create it from another model, set `CUSTOM_MODEL_PATH` to a folder that contains `model/`
+(for example the `model-tests` folder of the [origam repository](https://github.com/origam/origam))
+and run the usual command from above with this one extra variable.
+
+CMD:
+```bat
+set CUSTOM_MODEL_PATH=C:\Repos\origam\model-tests&& set DB_TYPE=mssql&& set DB_HOST=mssql&& set DB_PORT=1433&& set DB_NAME=origam&& set DB_USERNAME=sa&& set DB_PASSWORD=YourStrong!Passw0rd&& set PROJECT_NAME=mainorigam&& set ADMIN_USERNAME=admin&& set ADMIN_PASSWORD=change-me&& set ADMIN_EMAIL=no-reply@origam.com&& set COMPOSE_PROFILES=mssql,linux&& docker compose up
+```
+
+Linux or Mac:
+```bash
+export CUSTOM_MODEL_PATH="$HOME/repos/origam/model-tests"; export DB_TYPE=mssql; export DB_HOST=mssql; export DB_PORT=1433; export DB_NAME=origam; export DB_USERNAME=sa; export DB_PASSWORD='YourStrong!Passw0rd'; export PROJECT_NAME=mainorigam; export ADMIN_USERNAME=admin; export ADMIN_PASSWORD=change-me; export ADMIN_EMAIL=no-reply@origam.com; export COMPOSE_PROFILES=$DB_TYPE,linux; docker compose up
+```
+
+What happens:
+
+- `model/` is taken from the custom model (without `index.bin`). `l10n/` and `customAssets/` are taken from it too when present, otherwise the bundled ones are used.
+- The custom model must contain the `Root Menu` package, because the composer always builds the new project package on top of it, exactly as with the bundled model.
+- All packages of the custom model are copied to `model/` and visible in Architect. As with the bundled model, the new project package references only `Root Menu`, so the server starts with `Root`, `Security`, `Root Menu` and your project package. Packages whose deployment scripts only work in a fresh database deployed in one pass (for example the test packages in `model-tests`) cannot be activated later in this database.
+- It is applied only when the project is created (`model/` is empty). If `model/<PROJECT_NAME>` already exists, it is ignored. After the first start clear it (CMD: `set CUSTOM_MODEL_PATH=`, Linux/Mac: `unset CUSTOM_MODEL_PATH`).
+- If the first start failed, the composer stops with an error. To start again from scratch, run `docker compose down -v` in the same shell with the same variables set (removes the containers and the database volume), delete `model/`, `l10n/`, `customAssets/`, `origam-project.json` and `<PROJECT_NAME>_Environments.env`, then run the command again.
+- Linux containers only (`linux` profile).
+
 ## Important variables
 
 | Variable | Description |
@@ -63,6 +89,7 @@ After startup:
 | `ADMIN_PASSWORD` | First ORIGAM admin password |
 | `ADMIN_EMAIL` | First ORIGAM admin email |
 | `COMPOSE_PROFILES` | Active runtime and database profiles |
+| `CUSTOM_MODEL_PATH` | Optional. Folder with `model/` to create the project from instead of the bundled model (first start only) |
 
 ## Database host rules
 
@@ -158,7 +185,7 @@ docker compose up
 
 <b>To update your project</b> 
 ```
-unset PROJECT_NAME DB_TYPE DB_HOST DB_PORT DB_NAME DB_USERNAME DB_PASSWORD ADMIN_USERNAME ADMIN_PASSWORD ADMIN_EMAIL
+unset PROJECT_NAME DB_TYPE DB_HOST DB_PORT DB_NAME DB_USERNAME DB_PASSWORD ADMIN_USERNAME ADMIN_PASSWORD ADMIN_EMAIL CUSTOM_MODEL_PATH
 ```
 
 Then, run your docker compose up command with the injected environment variables

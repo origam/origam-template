@@ -20,6 +20,7 @@ services:
     pull_policy: always
     profiles: ["linux"]
     container_name: ${PROJECT_NAME}-composer-linux
+    init: true
     depends_on:
       mssql:
         condition: service_healthy
@@ -27,15 +28,19 @@ services:
       postgres:
         condition: service_healthy
         required: false
+    environment:
+      PROJECT_NAME: ${PROJECT_NAME}
+      CUSTOM_MODEL_PATH: ${CUSTOM_MODEL_PATH:-}
     volumes:
       - .:/model
+      - ${CUSTOM_MODEL_PATH:-.}:/custom-model:ro
     entrypoint:
       - /bin/bash
       - -c
       - |
         set -e
        
-        exec dotnet /home/origam/Composer/Origam.Composer.dll create \
+        set -- dotnet /home/origam/Composer/Origam.Composer.dll create \
           --commands-output-format cmd \
           --db-type "${DB_TYPE}" \
           --db-host "${DB_HOST}" \
@@ -53,6 +58,11 @@ services:
           --arch-docker-image-linux "origam/architect:local.linux" \
           --arch-docker-image-win "origam/architect:local.win-nano" \
           --arch-port "8081"
+
+        if [ -n "$${CUSTOM_MODEL_PATH}" ]; then
+          exec bash /model/custom-model.sh "$$@"
+        fi
+        exec "$$@"
 
   origam-xslfo-linux:
     profiles: ["linux"]
