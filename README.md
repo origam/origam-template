@@ -202,8 +202,8 @@ Ai__Model=gpt-6-luna
 
 Ai__ApiKey=sk-proj-O4FMlW-
 
-Sometimes if you have problems with updates type this command 
+Docker uses a lot of disk space. If you run low on space, run this command. It removes all unused Docker data without confirmation: stopped containers, networks, images and build cache. Volumes are kept ( in this solution volume is db data ) 
 ```
-docker system prune -f -a 
+docker system prune -a 
 ```
 
