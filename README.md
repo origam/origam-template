@@ -187,8 +187,13 @@ docker compose up
 ```
 unset PROJECT_NAME DB_TYPE DB_HOST DB_PORT DB_NAME DB_USERNAME DB_PASSWORD ADMIN_USERNAME ADMIN_PASSWORD ADMIN_EMAIL CUSTOM_MODEL_PATH
 ```
+or Windows Cmd 
 
-Then, run your docker compose up command with the injected environment variables
+```
+for %v in (PROJECT_NAME DB_TYPE DB_HOST DB_PORT DB_NAME DB_USERNAME DB_PASSWORD ADMIN_USERNAME ADMIN_PASSWORD ADMIN_EMAIL CUSTOM_MODEL_PATH) do @set "%v="
+```
+
+Then, run your docker compose up command with the injected environment variables ( its Mac and Linux version ) 
 ```
 export DB_TYPE=mssql; export DB_HOST=mssql; export DB_PORT=1433; export DB_NAME=origam; export DB_USERNAME=sa; export DB_PASSWORD='YourStrong!Passw0rd'; export PROJECT_NAME=mainorigam; export ADMIN_USERNAME=admin; export ADMIN_PASSWORD=change-me; export ADMIN_EMAIL=no-reply@origam.com; export COMPOSE_PROFILES=$DB_TYPE,linux; docker compose up
 ```
