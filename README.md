@@ -48,12 +48,13 @@ After startup:
 - Server: https://localhost:443
 - Architect: http://localhost:8081
 
-## Start from your own model (optional, first start only)
+## Work with your own model (optional)
 
 By default the new project is created from the ORIGAM model bundled in the composer image.
-To create it from another model, set `CUSTOM_MODEL_PATH` to a folder that contains `model/`
+To work with another model instead, set `CUSTOM_MODEL_PATH` to a folder that contains `model/`
 (for example the `model-tests` folder of the [origam repository](https://github.com/origam/origam))
-and run the usual command from above with this one extra variable.
+and run the usual command from above with this one extra variable. Use a new project folder (without `model/`)
+and keep the variable set on every start.
 
 CMD:
 ```bat
@@ -67,10 +68,11 @@ export CUSTOM_MODEL_PATH="$HOME/repos/origam/model-tests"; export DB_TYPE=mssql;
 
 What happens:
 
-- `model/` is taken from the custom model (without `index.bin`). `l10n/` and `customAssets/` are taken from it too when present, otherwise the bundled ones are used.
-- The custom model must contain the `Root Menu` package, because the composer always builds the new project package on top of it, exactly as with the bundled model.
-- All packages of the custom model are copied to `model/` and visible in Architect. As with the bundled model, the new project package references only `Root Menu`, so the server starts with `Root`, `Security`, `Root Menu` and your project package. Packages whose deployment scripts only work in a fresh database deployed in one pass (for example the test packages in `model-tests`) cannot be activated later in this database.
-- It is applied only when the project is created (`model/` is empty). If `model/<PROJECT_NAME>` already exists, it is ignored. After the first start clear it (CMD: `set CUSTOM_MODEL_PATH=`, Linux/Mac: `unset CUSTOM_MODEL_PATH`).
+- The server and Architect work directly with `CUSTOM_MODEL_PATH/model` (a link, not a copy). Changes made in Architect are written to that folder. Neither of them reloads the model while running: after changing files in that folder outside Architect (for example `git pull`), restart both with the same variables set (`docker compose restart origam-server-linux origam-architect-linux`) and do not save in Architect before that, or it may overwrite the changed files. The server deploys new versions of the active packages to the database when it starts.
+- On the first start the composer creates the database, the admin user and the project files from a copy of that model (`model/` without `index.bin`, plus `l10n/` and `customAssets/` when present, otherwise the bundled ones). Keep this copy in the project folder: the server and Architect do not read its `model/`, but `model/<PROJECT_NAME>` marks the project as created and `customAssets/` is served from the project folder.
+- The custom model must contain the `Root Menu` package. It is the active package on the server, so the server starts with `Root`, `Security` and `Root Menu`. All other packages can be opened and edited in Architect. Packages whose deployment scripts only work in a fresh database deployed in one pass (for example the test packages in `model-tests`) cannot be activated on the server in this database.
+- On Linux (Docker Engine) the containers run as user id 1655 and write to `CUSTOM_MODEL_PATH/model`. Give that user and yourself write access to everything in it, including files created later, for example `setfacl -R -m u:1655:rwX -m d:u:1655:rwX -m d:u:$(id -u):rwX "$CUSTOM_MODEL_PATH/model"` (needs the `acl` package). Otherwise Architect cannot save, or `git pull` fails with Permission denied in folders created by Architect.
+- A project created without `CUSTOM_MODEL_PATH` cannot be switched to it, and a project created with it cannot be started without it. In both cases the composer stops with an error.
 - If the first start failed, the composer stops with an error. To start again from scratch, run `docker compose down -v` in the same shell with the same variables set (removes the containers and the database volume), delete `model/`, `l10n/`, `customAssets/`, `origam-project.json` and `<PROJECT_NAME>_Environments.env`, then run the command again.
 - Linux containers only (`linux` profile).
 
@@ -89,7 +91,7 @@ What happens:
 | `ADMIN_PASSWORD` | First ORIGAM admin password |
 | `ADMIN_EMAIL` | First ORIGAM admin email |
 | `COMPOSE_PROFILES` | Active runtime and database profiles |
-| `CUSTOM_MODEL_PATH` | Optional. Folder with `model/` to create the project from instead of the bundled model (first start only) |
+| `CUSTOM_MODEL_PATH` | Optional. Folder with `model/` that the server and Architect work with instead of the bundled model (set it on every start) |
 
 ## Database host rules
 
@@ -197,6 +199,7 @@ Then, run your docker compose up command with the injected environment variables
 ```
 export DB_TYPE=mssql; export DB_HOST=mssql; export DB_PORT=1433; export DB_NAME=origam; export DB_USERNAME=sa; export DB_PASSWORD='YourStrong!Passw0rd'; export PROJECT_NAME=mainorigam; export ADMIN_USERNAME=admin; export ADMIN_PASSWORD=change-me; export ADMIN_EMAIL=no-reply@origam.com; export COMPOSE_PROFILES=$DB_TYPE,linux; docker compose up
 ```
+If the project was created with `CUSTOM_MODEL_PATH`, set it again as well.
 If you want to apply a configuration update, such as adding an Origam AI API Key https://github.com/origam/origam/tree/master/backend/Origam.AI.Agent, add it to the `_Environments.env` file. Your settings will be loaded after a restart.
 
 For example:

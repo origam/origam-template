@@ -62,6 +62,10 @@ services:
         if [ -n "$${CUSTOM_MODEL_PATH}" ]; then
           exec bash /model/custom-model.sh "$$@"
         fi
+        if grep -qs "^OrigamSettings__DefaultSchemaExtensionId=b9ab12fe-7f7d-43f7-bedc-93747647d6e4" /model/*_Environments.env; then
+          echo "This project was created with CUSTOM_MODEL_PATH, set it again on every start." >&2
+          exit 1
+        fi
         exec "$$@"
 
   origam-xslfo-linux:
@@ -100,9 +104,11 @@ services:
       PROJECT_NAME: ${PROJECT_NAME}
       ORIGAM_PROJECT_BOOTSTRAP: ${ORIGAM_PROJECT_BOOTSTRAP:-true}
       XSLFO_RENDERER_URL: ${XSLFO_RENDERER_URL:-http://xslfo:8080}
+      OrigamSettings__ModelSourceControlLocation: ${CUSTOM_MODEL_PATH:+/custom-model/model}
     volumes:
       - "./:/model-src"
       - "./.docker-gitconfig:/etc/gitconfig:ro"
+      - ${CUSTOM_MODEL_PATH:-.}:/custom-model
     depends_on:
       origam-composer-linux:
         condition: service_completed_successfully
@@ -123,9 +129,11 @@ services:
     environment:
       PROJECT_NAME: ${PROJECT_NAME}
       ORIGAM_PROJECT_BOOTSTRAP: ${ORIGAM_PROJECT_BOOTSTRAP:-true}
+      OrigamSettings__ModelSourceControlLocation: ${CUSTOM_MODEL_PATH:+/custom-model/model}
     volumes:
       - "./:/model-src"
       - "./.docker-gitconfig:/etc/gitconfig:ro"
+      - ${CUSTOM_MODEL_PATH:-.}:/custom-model
     depends_on:
       origam-composer-linux:
         condition: service_completed_successfully
