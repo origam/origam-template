@@ -31,6 +31,7 @@ services:
     environment:
       PROJECT_NAME: ${PROJECT_NAME}
       CUSTOM_MODEL_PATH: ${CUSTOM_MODEL_PATH:-}
+      ACTIVE_PACKAGE_ID: ${ACTIVE_PACKAGE_ID:-}
     volumes:
       - .:/model
       - ${CUSTOM_MODEL_PATH:-.}:/custom-model:ro
@@ -39,7 +40,15 @@ services:
       - -c
       - |
         set -e
-       
+        if [ ! -w /model ]; then
+          echo "The project folder is not writable for the container user (uid $$(id -u)). On Linux give that user write access to it, see README.md." >&2
+          exit 1
+        fi
+        project_folder=/model
+        if [ -n "$${CUSTOM_MODEL_PATH}" ]; then
+          project_folder=/tmp/project
+        fi
+
         set -- dotnet /home/origam/Composer/Origam.Composer.dll create \
           --commands-output-format cmd \
           --db-type "${DB_TYPE}" \
@@ -49,7 +58,7 @@ services:
           --db-username "${DB_USERNAME}" \
           --db-password "${DB_PASSWORD}" \
           --p-name "${PROJECT_NAME}" \
-          --p-folder "/model" \
+          --p-folder "$$project_folder" \
           --p-admin-username "${ADMIN_USERNAME}" \
           --p-admin-password "${ADMIN_PASSWORD}" \
           --p-admin-email "${ADMIN_EMAIL}" \
@@ -62,7 +71,7 @@ services:
         if [ -n "$${CUSTOM_MODEL_PATH}" ]; then
           exec bash /model/custom-model.sh "$$@"
         fi
-        if grep -qsE "^OrigamSettings__DefaultSchemaExtensionId=(b9ab12fe-7f7d-43f7-bedc-93747647d6e4|f17329d6-3143-420a-a2e6-30e431eea51d)" /model/*_Environments.env; then
+        if grep -qsE "^(CUSTOM_MODEL=true|OrigamSettings__DefaultSchemaExtensionId=(b9ab12fe-7f7d-43f7-bedc-93747647d6e4|f17329d6-3143-420a-a2e6-30e431eea51d))" /model/*_Environments.env; then
           echo "This project was created with CUSTOM_MODEL_PATH, set it again on every start." >&2
           exit 1
         fi
@@ -105,6 +114,7 @@ services:
       ORIGAM_PROJECT_BOOTSTRAP: ${ORIGAM_PROJECT_BOOTSTRAP:-true}
       XSLFO_RENDERER_URL: ${XSLFO_RENDERER_URL:-http://xslfo:8080}
       OrigamSettings__ModelSourceControlLocation: ${CUSTOM_MODEL_PATH:+/custom-model/model}
+      ACTIVE_PACKAGE_ID: ${ACTIVE_PACKAGE_ID:-}
     volumes:
       - "./:/model-src"
       - "./.docker-gitconfig:/etc/gitconfig:ro"
