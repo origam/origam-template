@@ -55,17 +55,22 @@ After startup:
 By default the new project is created from the ORIGAM model bundled in the composer image.
 To work with another model instead, set `CUSTOM_MODEL_PATH` to a folder that contains `model/`
 (for example the `model-tests` folder of the [origam repository](https://github.com/origam/origam))
-and run the usual command from above with this one extra variable. Use a new project folder
-and keep the variable set on every start. `ACTIVE_PACKAGE_ID` optionally chooses the package the server works with (see below).
+and run the usual command from above with this extra variable. Use a new project folder
+and keep the variable set on every start.
+
+`ACTIVE_PACKAGE_ID` sets the main (active) package of the project, the one the server works with. It is optional: without it
+`Widgets` (`f17329d6-3143-420a-a2e6-30e431eea51d`) is used, which is the right package for `model-tests`. For your own model,
+put the id of its main package there. The id is the `x:id` in `model/<package>/.origamPackage`. When the id is not in the model,
+the composer stops and lists all packages with their ids.
 
 CMD:
 ```bat
-set CUSTOM_MODEL_PATH=C:\Repos\origam\model-tests&& set DB_TYPE=mssql&& set DB_HOST=mssql&& set DB_PORT=1433&& set DB_NAME=origam&& set DB_USERNAME=sa&& set DB_PASSWORD=YourStrong!Passw0rd&& set PROJECT_NAME=mainorigam&& set ADMIN_USERNAME=admin&& set ADMIN_PASSWORD=change-me&& set ADMIN_EMAIL=no-reply@origam.com&& set COMPOSE_PROFILES=mssql,linux&& docker compose up
+set CUSTOM_MODEL_PATH=C:\Repos\origam\model-tests&& set ACTIVE_PACKAGE_ID=f17329d6-3143-420a-a2e6-30e431eea51d&& set DB_TYPE=mssql&& set DB_HOST=mssql&& set DB_PORT=1433&& set DB_NAME=origam&& set DB_USERNAME=sa&& set DB_PASSWORD=YourStrong!Passw0rd&& set PROJECT_NAME=mainorigam&& set ADMIN_USERNAME=admin&& set ADMIN_PASSWORD=change-me&& set ADMIN_EMAIL=no-reply@origam.com&& set COMPOSE_PROFILES=mssql,linux&& docker compose up
 ```
 
 Linux or Mac:
 ```bash
-export CUSTOM_MODEL_PATH="$HOME/repos/origam/model-tests"; export DB_TYPE=mssql; export DB_HOST=mssql; export DB_PORT=1433; export DB_NAME=origam; export DB_USERNAME=sa; export DB_PASSWORD='YourStrong!Passw0rd'; export PROJECT_NAME=mainorigam; export ADMIN_USERNAME=admin; export ADMIN_PASSWORD=change-me; export ADMIN_EMAIL=no-reply@origam.com; export COMPOSE_PROFILES=$DB_TYPE,linux; docker compose up
+export CUSTOM_MODEL_PATH="$HOME/repos/origam/model-tests"; export ACTIVE_PACKAGE_ID=f17329d6-3143-420a-a2e6-30e431eea51d; export DB_TYPE=mssql; export DB_HOST=mssql; export DB_PORT=1433; export DB_NAME=origam; export DB_USERNAME=sa; export DB_PASSWORD='YourStrong!Passw0rd'; export PROJECT_NAME=mainorigam; export ADMIN_USERNAME=admin; export ADMIN_PASSWORD=change-me; export ADMIN_EMAIL=no-reply@origam.com; export COMPOSE_PROFILES=$DB_TYPE,linux; docker compose up
 ```
 
 What happens:
