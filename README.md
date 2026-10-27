@@ -50,6 +50,30 @@ After startup:
 - Server: https://localhost:443
 - Architect: http://localhost:8081
 
+## Packages created in Architect
+
+The server works with one package and the packages it references, and reads them when it starts. In a new project
+that is the `<PROJECT_NAME>` package. Without `CUSTOM_MODEL_PATH` the server instead takes the package built on top of
+it: the one package that references `<PROJECT_NAME>`, directly or through other packages, and that no other such
+package references. The server log shows which package it uses (`Active package: ...`).
+
+To see a package created with **New Package** in Architect in the client:
+
+1. In the Packages panel of Architect click **References** at the new package (right after **New Package** it is
+   open; otherwise double-click it first), tick the package created before it (`<PROJECT_NAME>` for the first one)
+   and click **OK**. This also makes the `Menu` of `Root Menu` available in the new package.
+2. Restart the server, for example `docker restart <PROJECT_NAME>-server-linux`.
+
+So every next package references the one before it, for example `Test11` references `Test10` and `Test10`
+references `<PROJECT_NAME>`. When several packages are built on `<PROJECT_NAME>` and none of them references the
+others, the server stays on `<PROJECT_NAME>` and its log names them. After the last package is deleted in Architect,
+the server uses the package before it on its next start. `<PROJECT_NAME>_Environments.env` is not changed. A project
+created with an older version of this template needs `docker compose up` once to get this. Linux containers only
+(`linux` profile).
+
+With `CUSTOM_MODEL_PATH`, tick the current active package (for example `Widgets`) in **References** of the new
+package, then set `ACTIVE_PACKAGE_ID` to the id of the new package and run `docker compose up` (see below).
+
 ## Work with your own model (optional)
 
 By default the new project is created from the ORIGAM model bundled in the composer image.

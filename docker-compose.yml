@@ -107,6 +107,7 @@ services:
     restart: unless-stopped
     stdin_open: true
     tty: true
+    entrypoint: ["/bin/bash", "/model-src/active-package.sh"]
     ports:
       - "443:443"
     environment:
